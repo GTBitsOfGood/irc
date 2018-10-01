@@ -1,0 +1,33 @@
+{
+  "name": "irc",
+  "version": "0.0.1",
+  "description": "VADR System for IRC",
+  "main": "server.js",
+  "scripts": {
+    "test": "noop"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GTBitsOfGood/irc.git"
+  },
+  "keywords": [
+    "database",
+    "irc",
+    "inventory"
+  ],
+  "author": "GT Bits of Good",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GTBitsOfGood/irc/issues"
+  },
+  "homepage": "https://github.com/GTBitsOfGood/irc#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.3.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
+  }
+}
