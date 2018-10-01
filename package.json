@@ -22,8 +22,10 @@
   },
   "homepage": "https://github.com/GTBitsOfGood/irc#readme",
   "dependencies": {
+    "bcrypt": "^3.0.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.3.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
