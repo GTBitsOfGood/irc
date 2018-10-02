@@ -13,8 +13,8 @@ const port =  config.port || 3000;
 const api = require('./backend/routes');
 
 // DB Connection
-mongoose.connect(config.db_path, { useMongoClient: true });
-congoose.Promise = global.Promise;
+mongoose.connect(config.db_url, { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
 
 // Route creation
 app.use(express.static(path.join(__dirname, 'public')));
@@ -26,7 +26,7 @@ app.get('/*', (req, res) => {
 
 // Hosting
 app.listen(port, err => {
-  err? console.error(err) : console.info('Dragons are on port ${port}');
+  err ? console.error(err) : console.info(`Dragons are on port ${port}`);
 });
 
 module.exports = app;
