@@ -6,12 +6,16 @@ import TodoList from "./components/TodoList";
 import TodoListModel from "./models/TodoListModel";
 import TodoModel from "./models/TodoModel";
 
+import App from './App';
+
+import '../assets/bootstrap/css/bootstrap.min.css';
+
 const store = new TodoListModel();
 
 render(
   <div>
     <DevTools />
-    <TodoList store={store} />
+    <App store={store} />
   </div>,
   document.getElementById("root")
 );
