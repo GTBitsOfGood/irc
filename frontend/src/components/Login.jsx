@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import '../../assets/css/Login-Form-Clean.css';
+import '../../assets/css/styles.css';
 
 @observer
 class Login extends Component {
