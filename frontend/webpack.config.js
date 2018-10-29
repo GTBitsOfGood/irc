@@ -12,6 +12,9 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
+  devServer: {
+    historyApiFallback: true
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ],
