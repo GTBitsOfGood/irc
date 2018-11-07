@@ -12,6 +12,9 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
+  devServer: {
+    historyApiFallback: true
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ],
@@ -23,6 +26,9 @@ module.exports = {
       test: /\.jsx?$/,
       use: ['babel-loader'],
       include: path.join(__dirname, 'src')
+    }, {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader']
     }]
   }
 };
