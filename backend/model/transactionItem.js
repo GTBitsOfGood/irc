@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Item = new Schema({
+const TransactionItem = new Schema({
     name : {
         type : String,
         required : true,
@@ -10,12 +10,16 @@ const Item = new Schema({
         type : Number,
         required : true,
     },
+    percentageMatched : {
+        type : Number,
+        required : true,
+    },
     dateUpdated : {
         type : Date,
-        required : true
+        default : Date.now
     }
 });
 
-const Item = mongoose.model('item',UserSchema);
+const TransactionItem = mongoose.model('TransactionItem', TransactionItem);
 
-module.exports = Item;
+module.exports = TransactionItem;
