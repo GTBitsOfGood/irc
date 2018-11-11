@@ -3,6 +3,12 @@
 //
 
 const mongoose = require('mongoose');
+const config = require('./../../config');
+mongoose.connect(config.db_url, { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
+mongoose.set('useCreateIndex', true);
+
+
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
@@ -31,6 +37,7 @@ UserSchema.methods.isValidPassword = async function(password){
   return compare;
 }
 
-const UserModel = mongoose.model('user',UserSchema);
+const UserModel = mongoose.model('User', UserSchema);
 
 module.exports = UserModel;
+module.exports.__Schema = UserSchema;
