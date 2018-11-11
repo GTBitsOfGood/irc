@@ -13,6 +13,7 @@ import '../assets/bootstrap/css/bootstrap.min.css';
 
 const store = new RootStore();
 
+
 render(
   <div>
     <DevTools />
