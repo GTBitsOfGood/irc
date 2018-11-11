@@ -60,3 +60,11 @@
   opacity: 1;
   text-decoration: none;
 }
+
+#store .container {
+  margin: 10px;
+}
+
+.list-container {
+  margin: 10px;
+}
