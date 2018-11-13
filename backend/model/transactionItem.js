@@ -17,6 +17,10 @@ const TransactionItem = new Schema({
     dateUpdated : {
         type : Date,
         default : Date.now
+    },
+    revisionNumber : {
+        type : Number,
+        required : true,
     }
 });
 

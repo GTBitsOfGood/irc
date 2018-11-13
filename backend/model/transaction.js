@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const TransactionItem = require('transactionItem.js');
-const User = require('user.js');
-const Client = require('client.js');
 
 const Transaction = new Schema({
     items : {
@@ -10,11 +8,11 @@ const Transaction = new Schema({
         required : true,
     }, 
     authorizedUser : {
-        type : User,
+        type : ObjectId,
         required : true,
     }, 
-    client : {
-        type : Client,
+    clientId : {
+        type : ObjectId,
         required : true,
     },
     type : {
@@ -29,7 +27,6 @@ const Transaction = new Schema({
 });
 
 const Transaction = mongoose.model('Transaction', Transaction);
-
 module.exports = Transaction;
 
 

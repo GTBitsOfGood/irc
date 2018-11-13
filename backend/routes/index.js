@@ -7,6 +7,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
 const router = express.Router();
+const transactionsApi = require('./transactions');
 
 router.post('/signup', passport.authenticate('signup', { session : false }) , async (req, res, next) => {
   res.json({ 
@@ -35,6 +36,8 @@ router.post('/login', async (req, res, next) => {
     }
   })(req, res, next);
 });
+
+router.use('/transactions', transactionsApi);
 
 module.exports = router;
 
