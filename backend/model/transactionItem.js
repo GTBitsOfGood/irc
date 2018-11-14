@@ -24,6 +24,7 @@ const TransactionItem = new Schema({
     }
 });
 
-const TransactionItem = mongoose.model('TransactionItem', TransactionItem);
+const ShopItem = mongoose.model('ShopItem', TransactionItem);
+const VolunteerItem = mongoose.model('VolunteerItem', TransactionItem);
 
-module.exports = TransactionItem;
+module.exports = { ShopItem, VolunteerItem };

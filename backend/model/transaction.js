@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const TransactionItem = require('transactionItem.js');
+const { ShopItem, VolunteerItem } = require('transactionItem.js');
 
 const Transaction = new Schema({
-    items : {
-        type : [TransactionItem],
-        required : true,
-    }, 
+    volunteerItems : {
+        type : [VolunteerItem],
+    },
+    shopItems : {
+        type : [ShopItem],
+    },
     authorizedUser : {
         type : ObjectId,
         required : true,
