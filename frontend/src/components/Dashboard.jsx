@@ -12,7 +12,7 @@ class AdminDashboard extends Component {
                 <Link to="/store" className="btn btn-primary">Shop</Link>
               </div>
               <div className="button">
-                <button className="btn btn-primary">Register</button>
+                <Link to="/register" className="btn btn-primary">Register</Link>
               </div>
               <div className="button">
                 <button className="btn btn-primary">Change Profile</button>
@@ -63,7 +63,7 @@ class Dashboard extends Component {
     // } else {
     //   return <UserDashboard />
     // }
-    return <UserDashboard />
+    return <AdminDashboard />
   }
 }
 
