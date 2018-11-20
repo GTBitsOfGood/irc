@@ -5,6 +5,7 @@ import { createBrowserHistory } from 'history';
 import AppHeader from './components/AppHeader';
 import Store from './components/Store';
 import ShoppingCart from './components/ShoppingCart';
+import VolunteerTime from './components/VolunteerTime';
 
 import Login from './components/Login';
 
@@ -21,6 +22,7 @@ class App extends Component {
               <Route exact path="/" component={Login} />
               <Route path="/cart" component={() => <ShoppingCart store={this.props.store} />} />
               <Route path="/store" component={() => <Store store={this.props.store} />} />
+              <Route path="/volunteer" component={() => <VolunteerTime store={this.props.store} />} />
             </Switch>
           </div>
         </HashRouter>
