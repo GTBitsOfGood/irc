@@ -3,7 +3,7 @@ import { observable, computed, action } from "mobx";
 import ItemModel from "./ItemModel";
 
 export default class StoreModel {
-  @observable items = [{name: 'Item1'}];
+  @observable items = [{name: 'Item1'}, {name: 'Thing'}, {name: 'Stuff'}];
 
   @computed
   get unfinishedTodoCount() {
