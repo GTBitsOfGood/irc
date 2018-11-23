@@ -1,6 +1,7 @@
 import StoreModel from './StoreModel';
 import ItemModel from './ItemModel';
 import ShoppingCartModel from './ShoppingCartModel';
+
 import RegisterModel from './RegisterModel';
 
 export default class RootStore {

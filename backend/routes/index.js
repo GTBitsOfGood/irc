@@ -135,6 +135,6 @@ router.use(async function(req, res, next) {
 
 // ROUTES PROTECTED BELOW THIS LINE
 
-
+router.use('/transactions', transactionsApi);
 
 module.exports = router;
