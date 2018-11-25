@@ -3,28 +3,28 @@ const Schema = mongoose.Schema;
 const { ShopItem, VolunteerItem } = require('transactionItem.js');
 
 const Transaction = new Schema({
-    volunteerItems : {
-        type : [VolunteerItem],
+    volunteerItems: {
+        type: [VolunteerItem],
     },
-    shopItems : {
-        type : [ShopItem],
+    shopItems: {
+        type: [ShopItem],
     },
-    authorizedUser : {
-        type : ObjectId,
-        required : true,
-    }, 
-    clientId : {
-        type : ObjectId,
-        required : true,
+    authorizedUser: {
+        type: ObjectId,
+        required: true,
     },
-    type : {
-        type : String,
-        enum : ['VOLUNTEER', 'SHOP'],
-        required : true,
+    clientId: {
+        type: ObjectId,
+        required: true,
     },
-    date : {
-        type : Date,
-        default : Date.now
+    type: {
+        type: String,
+        enum: ['VOLUNTEER', 'SHOP'],
+        required: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 

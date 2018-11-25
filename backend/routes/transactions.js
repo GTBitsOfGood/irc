@@ -7,7 +7,7 @@ const TransactionItem = require('../model/transactionItem.js')
 router.get('/client', async (req, res, next) => {
     try {
         const allTransactionsByClient = await Transaction.find({
-            clientId : req.query.id
+            clientId: req.query.id
         });
         res.json(allTransactionsByClient);
     } catch (err) {
@@ -18,7 +18,7 @@ router.get('/client', async (req, res, next) => {
 router.get('/authorizedUser', async (req, res, next) => {
     try {
         const allTransactionsByAuthorizer = await Transaction.find({
-            authorizedUser : req.query.id
+            authorizedUser: req.query.id
         });
         res.json(allTransactionsByAuthorizer);
     } catch (err) {
@@ -29,7 +29,7 @@ router.get('/authorizedUser', async (req, res, next) => {
 router.get('/items', async (req, res, next) => {
     try {
         const allItemsByVersion = await TransactionItem.find({
-            revisionNumber : req.query.revisionNumber
+            revisionNumber: req.query.revisionNumber
         });
         res.json(allItemsByVersion);
     } catch (err) {
@@ -46,11 +46,11 @@ router.get('/', async (req, res, next) => {
     }
 
     if (startDate) {
-        query.date['$gte'] = new Date(startDate); 
+        query.date['$gte'] = new Date(startDate);
     }
 
     if (endDate) {
-        query.date['$lt'] = new Date(endDate); 
+        query.date['$lt'] = new Date(endDate);
     }
 
     try {
