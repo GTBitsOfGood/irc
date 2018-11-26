@@ -10,7 +10,7 @@ const path = require('path');
 const app = express();
 
 const port =  config.port || 3000;
-const api = require('./backend/routes');
+const api = require('./routes');
 
 // DB Connection
 mongoose.connect(config.db_url, { useNewUrlParser: true });
