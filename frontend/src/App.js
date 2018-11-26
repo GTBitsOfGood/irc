@@ -4,6 +4,8 @@ import { createBrowserHistory } from 'history';
 import { observer } from 'mobx-react';
 
 import AppHeader from './components/AppHeader';
+import Register from './components/Register';
+import Dashboard from './components/Dashboard';
 import Store from './components/Store';
 import ShoppingCart from './components/ShoppingCart';
 
@@ -23,6 +25,8 @@ const Main = (props) => (
       <div id="content">
         <AppHeader />
         <Switch>
+          <Route path="/dashboard" component={() => <Dashboard store={this.props.store} />} />
+          <Route path="/register" component={() => <Register store={this.props.store} />} />
           <Route path="/cart" component={() => <ShoppingCart store={props.store} />} />
           <Route path="/store" component={() => <Store store={props.store} />} />
         </Switch>

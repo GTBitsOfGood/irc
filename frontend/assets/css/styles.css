@@ -68,3 +68,12 @@
 .list-container {
   margin: 10px;
 }
+
+#dashboard .container {
+  margin: 10px;
+}
+
+#dashboard .button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
