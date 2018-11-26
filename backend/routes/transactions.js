@@ -61,7 +61,6 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-
 router.post('/updateItems', async (req, res, next) => {
     const { updatedItems, itemType } = req.body;
 
