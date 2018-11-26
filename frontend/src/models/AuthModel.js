@@ -10,9 +10,12 @@ export default class AuthModel {
     this.state = 'pending';
     api.post('/api/login', { email: username, password})
       .then((res) => {
-        this.user = res.setCookies.token;
+        if (res && res.setCookies && res.setCookies.token) {
+          this.user = res.setCookies.token;
+          console.log("user", this.user);
+        }
         this.state = 'success'
-      });
+      })
       .catch(() => this.state = 'error');
   }
 }

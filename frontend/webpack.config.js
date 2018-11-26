@@ -13,7 +13,10 @@ module.exports = {
     publicPath: '/static/'
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    proxy: {
+      '/api': 'http://localhost:5000/api'
+    }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
