@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const TransactionItem = new Schema({
+const TransactionItemSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -24,7 +24,7 @@ const TransactionItem = new Schema({
     }
 });
 
-const ShopItem = mongoose.model('ShopItem', TransactionItem);
-const VolunteerItem = mongoose.model('VolunteerItem', TransactionItem);
+const ShopItem = mongoose.model('ShopItem', TransactionItemSchema);
+const VolunteerItem = mongoose.model('VolunteerItem', TransactionItemSchema);
 
-module.exports = { ShopItem, VolunteerItem };
+module.exports = { ShopItem, VolunteerItem, TransactionItemSchema };

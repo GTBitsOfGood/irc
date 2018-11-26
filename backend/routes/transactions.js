@@ -60,3 +60,20 @@ router.get('/', async (req, res, next) => {
         next(err);
     }
 });
+
+
+router.post('/updateItems', async (req, res, next) => {
+    const { updatedItems, itemType } = req.body;
+
+    if (itemType === 'SHOP') {
+
+    } else if (itemType === 'VOLUNTEER') {
+
+    } else {
+        res.status(500).send("Invalid item type: should be either SHOP or VOLUNTEER.");
+    }
+
+
+});
+
+module.exports = router;

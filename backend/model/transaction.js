@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { ShopItem, VolunteerItem } = require('transactionItem.js');
+const { TransactionItemSchema } = require('./transactionItem');
 
-const Transaction = new Schema({
+const TransactionSchema = new Schema({
     volunteerItems: {
-        type: [VolunteerItem],
+        type: [TransactionItemSchema],
     },
     shopItems: {
-        type: [ShopItem],
+        type: [TransactionItemSchema],
     },
     authorizedUser: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
     clientId: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
     type: {
@@ -28,7 +28,7 @@ const Transaction = new Schema({
     }
 });
 
-const Transaction = mongoose.model('Transaction', Transaction);
+const Transaction = mongoose.model('Transaction', TransactionSchema);
 module.exports = Transaction;
 
 

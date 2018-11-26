@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Client = new Schema({
+const ClientSchema = new Schema({
     caseNumber: {
         type: Number,
         required: true
@@ -16,6 +16,6 @@ const Client = new Schema({
     }
 });
 
-const Client = mongoose.model('Client', Client);
+const Client = mongoose.model('Client', ClientSchema);
 
 module.exports = Client;
