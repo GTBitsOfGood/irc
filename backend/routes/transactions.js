@@ -82,7 +82,7 @@ router.get('/getVolunteerItems', async (req, res, next) => {
                         }
                     },
                     // Sort the groups by _id descending to put the max revisionNumber group first.
-                    { $sort: { revisionNumber: -1 } },
+                    { $sort: { _id: -1 } },
                     // Return just the first (max revisionNumber) group of docs.
                     { $limit: 1 }
                 ]
@@ -103,10 +103,14 @@ router.get('/getTransaction', async (req, res, next) => {
     }
 
     if (startDate) {
+        query.date = {};
         query.date['$gte'] = new Date(startDate);
     }
 
     if (endDate) {
+        if (!query.date) {
+            query.date = {};
+        }
         query.date['$lt'] = new Date(endDate);
     }
 
@@ -150,6 +154,18 @@ router.post('/updateItems', async (req, res, next) => {
     } else {
         res.status(500).send("Invalid item type: should be either SHOP or VOLUNTEER.");
     }
+});
+
+router.post("/addTransaction", async (req, res, next) => {
+    const { transaction } = req.body;
+    Transaction.create(transaction, (err) => {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+
+        res.status(200).send("Success");
+    });
 });
 
 module.exports = router;
