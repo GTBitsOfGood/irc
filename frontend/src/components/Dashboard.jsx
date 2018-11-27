@@ -17,6 +17,9 @@ class AdminDashboard extends Component {
               <div className="button">
                 <button className="btn btn-primary">Change Profile</button>
               </div>
+              <div className="button">
+                <Link to="/volunteer" className="btn btn-primary">Add Volunteer Time</Link>
+              </div>
             </div>
             <div className="col">
               <div className="button">
