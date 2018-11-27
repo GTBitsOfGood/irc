@@ -5,6 +5,7 @@ import { createBrowserHistory } from 'history';
 import AppHeader from './components/AppHeader';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+import DisplayReports from './components/DisplayReports';
 import Store from './components/Store';
 import ShoppingCart from './components/ShoppingCart';
 import VolunteerTime from './components/VolunteerTime';
@@ -24,6 +25,7 @@ class App extends Component {
               <Route exact path="/" component={Login} />
               <Route path="/dashboard" component={() => <Dashboard store={this.props.store} />} />
               <Route path="/register" component={() => <Register store={this.props.store} />} />
+              <Route path="/displayReports" component={() => <DisplayReports store={this.props.store} />} />
               <Route path="/cart" component={() => <ShoppingCart store={this.props.store} />} />
               <Route path="/store" component={() => <Store store={this.props.store} />} />
               <Route path="/volunteer" component={() => <VolunteerTime store={this.props.store} />} />
