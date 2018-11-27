@@ -53,7 +53,7 @@ router.get('/getShopItems', async (req, res, next) => {
                     { $limit: 1 }
                 ]
             );
-            res.json(allItemsByMostRecentVersion);
+            res.json(allItemsByMostRecentVersion[0].items);
         } catch (err) {
             next(err);
         }
@@ -87,7 +87,7 @@ router.get('/getVolunteerItems', async (req, res, next) => {
                     { $limit: 1 }
                 ]
             );
-            res.json(allItemsByMostRecentVersion);
+            res.json(allItemsByMostRecentVersion[0].items);
         } catch (err) {
             next(err);
         }

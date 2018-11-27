@@ -3,12 +3,20 @@ const Schema = mongoose.Schema;
 const { TransactionItemSchema } = require('./transactionItem');
 
 const TransactionSchema = new Schema({
-    volunteerItems: {
-        type: [TransactionItemSchema],
-    },
-    shopItems: {
-        type: [TransactionItemSchema],
-    },
+    volunteerItems: [
+        {
+            _id: false,
+            item: TransactionItemSchema,
+            count: Number
+        }
+    ],
+    shopItems: [
+        {
+            _id: false,
+            item: TransactionItemSchema,
+            count: Number
+        }
+    ],
     authorizedUser: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
