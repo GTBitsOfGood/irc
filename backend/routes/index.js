@@ -7,7 +7,6 @@ const router = express.Router({});
 const transactionsApi = require('./transactions')
 const Client = require('../model/client');
 
-
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const passportJWT = require("passport-jwt");
