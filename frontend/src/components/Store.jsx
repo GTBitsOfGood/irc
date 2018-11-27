@@ -28,8 +28,22 @@ class Store extends Component {
 
   renderListItem(item, id) {
     return (
-      <li className="list-group-item" key={id}>{item.name}</li>
-    );
+      <li className="list-group-item" key={id}>
+        {item.name}
+        {/*<div style={{float: 'right'}}>
+          <div className="input-group">
+            <input type="text" style={{maxWidth: 100}} className="form-control" onChange={(e) => {
+              this.setState({ [`${item.name}`]: e.target.value });
+            }} />
+            <div className="input-group-append">
+              <button className="btn btn-outline-success" onClick={() => {
+                this.addItem(item.name, this.state[`${item.name}`]);
+              }}>Add</button>
+            </div>
+          </div>
+        </div>*/}
+      </li>
+    )
   }
 
   openModal() {

@@ -4,7 +4,8 @@
 
 const express = require('express');
 const router = express.Router({});
-const transactionsApi = require('./transactions');
+const transactionsApi = require('./transactions')
+const Client = require('../model/client');
 
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
@@ -14,6 +15,7 @@ const ExtractJWT = passportJWT.ExtractJwt;
 
 const config = require('./../../config');
 const mongoose = require('mongoose');
+
 mongoose.connect(config.db_url, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 mongoose.set('useCreateIndex', true);
@@ -113,25 +115,25 @@ router.post('/login', function (req, res) {
 });
 
 router.post('/verify', async function (req, res, next) {
-	try {
-		const encodedToken = req.cookies.token || req.body.token || (() => { throw "No token cookie provided" })();
-		const decodedToken = await jwt.verify(encodedToken, config.JWT_SECRET);
+  try {
+    const encodedToken = req.cookies.token || req.body.token || (() => { throw "No token cookie provided" })();
+    const decodedToken = await jwt.verify(encodedToken, config.JWT_SECRET);
 
-		const email = decodedToken.email;
-		const password = decodedToken.password;
+    const email = decodedToken.email;
+    const password = decodedToken.password;
 
-		const user = await UserDB.findOne({ email }) || (() => { throw `No user with email "${email}" found` })();
-		const validate = await user.isValidPassword(password);
+    const user = await UserDB.findOne({ email }) || (() => { throw `No user with email "${email}" found` })();
+    const validate = await user.isValidPassword(password);
 
-		if (user && validate) {
-			return res.json({ userVerify : true, user : { _id : user._id, email : user.email } });
-		}
+    if (user && validate) {
+      return res.json({ userVerify: true, user: { _id: user._id, email: user.email } });
+    }
 
-		return res.json({ userVerify: false, urlRedirect: "login" })
-	} catch (error) {
-		console.log(error);
-		return res.json({ userVerify: false, urlRedirect: "login", message : error })
-	}
+    return res.json({ userVerify: false, urlRedirect: "login" })
+  } catch (error) {
+    console.log(error);
+    return res.json({ userVerify: false, urlRedirect: "login", message: error })
+  }
 });
 
 router.use(async function (req, res, next) {
@@ -142,7 +144,7 @@ router.use(async function (req, res, next) {
     const email = decodedToken.email;
     const password = decodedToken.password;
 
-	  console.log(decodedToken.email);
+    console.log(decodedToken.email);
     const user = await UserDB.findOne({ email }) || (() => { throw `No user with email "${email}" found` })();
     console.log(email);
     const validate = await user.isValidPassword(password);
@@ -154,12 +156,33 @@ router.use(async function (req, res, next) {
     return res.json({ userVerify: false, urlRedirect: "login" })
   } catch (error) {
     console.log(error);
-    return res.json({ userVerify: false, urlRedirect: "login", message : error })
+    return res.json({ userVerify: false, urlRedirect: "login", message: error })
   }
 });
 
 // ROUTES PROTECTED BELOW THIS LINE
 
 router.use('/transactions', transactionsApi);
+
+router.post('/addClient', async (req, res, next) => {
+  const { client } = req.body;
+  Client.create(client, (err) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+
+    res.status(200).send("Success");
+  });
+});
+
+router.get('/getAllClients', async (req, res, next) => {
+  try {
+    const allClients = await Client.find();
+    res.json(allClients);
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;

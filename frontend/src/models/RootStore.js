@@ -1,7 +1,7 @@
 import StoreModel from './StoreModel';
 import ItemModel from './ItemModel';
 import ShoppingCartModel from './ShoppingCartModel';
-import AuthModel from './AuthModel';
+import VolunteerTimeModel from './VolunteerTimeModel';
 
 import RegisterModel from './RegisterModel';
 
@@ -10,6 +10,6 @@ export default class RootStore {
     this.StoreModel = new StoreModel();
     this.ShoppingCartModel = new ShoppingCartModel();
     this.RegisterModel = new RegisterModel();
-    this.AuthModel = new AuthModel();
+    this.VolunteerTimeModel = new VolunteerTimeModel();
   }
 }

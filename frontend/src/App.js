@@ -6,8 +6,10 @@ import { observer } from 'mobx-react';
 import AppHeader from './components/AppHeader';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+import DisplayReports from './components/DisplayReports';
 import Store from './components/Store';
 import ShoppingCart from './components/ShoppingCart';
+import VolunteerTime from './components/VolunteerTime';
 
 import Login from './components/Login';
 
@@ -38,10 +40,24 @@ const Main = (props) => (
 @observer
 class App extends Component {
   render() {
-    if (this.props.store.AuthModel.user) {
-      return <Main store={this.props.store}/>
-    }
-    return <Auth store={this.props.store.AuthModel} />;
+    return (
+      <div>
+        <HashRouter history={history}>
+          <div id="content">
+            <AppHeader />
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route path="/dashboard" component={() => <Dashboard store={this.props.store} />} />
+              <Route path="/register" component={() => <Register store={this.props.store} />} />
+              <Route path="/displayReports" component={() => <DisplayReports store={this.props.store} />} />
+              <Route path="/cart" component={() => <ShoppingCart store={this.props.store} />} />
+              <Route path="/store" component={() => <Store store={this.props.store} />} />
+              <Route path="/volunteer" component={() => <VolunteerTime store={this.props.store} />} />
+            </Switch>
+          </div>
+        </HashRouter>
+      </div>
+    );
   }
 }
 
