@@ -17,7 +17,7 @@ const history = createBrowserHistory();
 
 const Auth = (props) => (
   <div id="content">
-    <Login store={props.store} />
+    <Login store={props.store.AuthModel} />
   </div>
 );
 
@@ -40,24 +40,10 @@ const Main = (props) => (
 @observer
 class App extends Component {
   render() {
-    return (
-      <div>
-        <HashRouter history={history}>
-          <div id="content">
-            <AppHeader />
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route path="/dashboard" component={() => <Dashboard store={this.props.store} />} />
-              <Route path="/register" component={() => <Register store={this.props.store} />} />
-              <Route path="/displayReports" component={() => <DisplayReports store={this.props.store} />} />
-              <Route path="/cart" component={() => <ShoppingCart store={this.props.store} />} />
-              <Route path="/store" component={() => <Store store={this.props.store} />} />
-              <Route path="/volunteer" component={() => <VolunteerTime store={this.props.store} />} />
-            </Switch>
-          </div>
-        </HashRouter>
-      </div>
-    );
+    if (this.props.store.AuthModel.user) {
+      return <Main store={this.props.store} />
+    }
+    return <Auth store={this.props.store} />
   }
 }
 

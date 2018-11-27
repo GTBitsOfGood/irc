@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 
 import '../../assets/css/styles.css';
 
-@observer
 class Login extends Component {
   @observable username = '';
   @observable password = '';
