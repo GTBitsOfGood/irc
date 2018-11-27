@@ -26,6 +26,7 @@ class ShoppingCart extends Component {
     return (
       <div id="cart">
         <div className="list-container">
+          <h2>Items in Cart</h2>
           <ul className="list-group">
             {Object.entries(items).map((item, id) => this.renderItem(item[0], item[1], id))}
           </ul>

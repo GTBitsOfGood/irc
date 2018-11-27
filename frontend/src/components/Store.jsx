@@ -4,6 +4,8 @@ import { observer } from 'mobx-react';
 import Modal from 'react-modal';
 import Autocomplete from 'react-autocomplete';
 
+import ShoppingCart from './ShoppingCart';
+
 @observer
 class Store extends Component {
 
@@ -11,7 +13,8 @@ class Store extends Component {
     super(props);
 
     this.state = {
-      value: '',
+      itemName: '',
+      quantity: '',
       modalIsOpen: false,
     };
 
@@ -58,7 +61,7 @@ class Store extends Component {
         <div className="list-container">
           <Autocomplete
             getItemValue={(item) => item.name}
-            items={StoreModel.items.filter(item => item.name.toLowerCase().includes(this.state.value.toLowerCase()) && this.state.value !== '')}
+            items={StoreModel.items.filter(item => item.name.toLowerCase().includes(this.state.itemName.toLowerCase()))}
             renderItem={(item, isHighlighted) => {
               console.log(item.name)
               return (
@@ -67,14 +70,14 @@ class Store extends Component {
                 </div>
               )
             }}
-            value={this.state.value}
+            value={this.state.itemName}
             onChange={(e) => {
               console.log(e.target.value)
-              this.setState({ value: e.target.value })
+              this.setState({ itemName: e.target.value })
             }}
             onSelect={(value) => {
               this.openModal()
-              this.setState({ value })
+              this.setState({ itemName: value })
             }}
           />
           <Modal
@@ -85,11 +88,11 @@ class Store extends Component {
             <h2>Add Donation Item</h2>
             <div className="input-group">
               <input type="text" style={{maxWidth: 100}} className="form-control" onChange={(e) => {
-                this.setState({ [`${item.name}`]: e.target.value });
+                this.setState({ [`${this.state.quantity}`]: e.target.value });
               }} />
               <div className="input-group-append">
                 <button className="btn btn-outline-success" onClick={() => {
-                  this.addItem(item.name, this.state[`${item.name}`]);
+                  this.addItem(this.state.itemName, this.state[`${this.state.quantity}`]);
                   this.closeModal();
                 }}>Add</button>
               </div>
@@ -98,9 +101,7 @@ class Store extends Component {
               this.closeModal();
             }}>Cancel</button>
           </Modal>
-          {/*<ul className="list-group">
-            {StoreModel.items.map((item, id) => this.renderListItem(item, id))}
-          </ul>*/}
+          <ShoppingCart store={this.props.store}/>
         </div>
       </div>
     );
