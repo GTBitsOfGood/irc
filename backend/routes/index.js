@@ -5,6 +5,8 @@
 const express = require('express');
 const router = express.Router({});
 const transactionsApi = require('./transactions')
+const Client = require('../model/client');
+
 
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
@@ -14,6 +16,7 @@ const ExtractJWT = passportJWT.ExtractJwt;
 
 const config = require('./../../config');
 const mongoose = require('mongoose');
+
 mongoose.connect(config.db_url, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 mongoose.set('useCreateIndex', true);
@@ -137,5 +140,17 @@ router.use(async function (req, res, next) {
 // ROUTES PROTECTED BELOW THIS LINE
 
 router.use('/transactions', transactionsApi);
+
+router.post('/addClient', async (req, res, next) => {
+  const { client } = req.body;
+  Client.create(client, (err) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+
+    res.status(200).send("Success");
+  });
+});
 
 module.exports = router;
