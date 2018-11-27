@@ -23,7 +23,7 @@ class AdminDashboard extends Component {
                 <button className="btn btn-primary">Add Users</button>
               </div>
               <div className="button">
-                <button className="btn btn-primary">Generate Reports</button>
+                <Link to="/displayReports" className="btn btn-primary">Generate Reports</Link>
               </div>
               <div className="button">
                 <button className="btn btn-primary">Modify Inventory/Time</button>
