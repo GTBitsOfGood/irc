@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
-class ShoppingCart extends Component {
+class VolunteerTimeList extends Component {
   constructor(props) {
     super(props);
 
     this.renderItem = this.renderItem.bind(this);
   }
 
-  renderItem(name, quantity, id) {
+  renderItem(name, hours, id) {
+    console.log(name, hours);
     return (
       <li className="list-group-item" key={id}>
         {name}
         <div style={{float: 'right'}}>
           <div className="input-group">
-            <div className="input-group-append">{quantity}</div>
+            <div className="input-group-append">{hours}</div>
           </div>
         </div>
       </li>
@@ -22,13 +23,17 @@ class ShoppingCart extends Component {
   }
 
   render() {
-    const { items } = this.props.store.ShoppingCartModel;
+    const { volunteers } = this.props.store.VolunteerTimeModel;
     return (
       <div id="cart">
         <div className="list-container">
-          <h2>Items in Cart</h2>
+          <h2>Volunteer Time</h2>
           <ul className="list-group">
-            {Object.entries(items).map((item, id) => this.renderItem(item[0], item[1], id))}
+            {volunteers.map((volunteer, id) => {
+              if (volunteer.hours !== 0) {
+                return this.renderItem(volunteer.name, volunteer.hours, id)
+              }
+            })}
           </ul>
         </div>
       </div>
@@ -36,4 +41,4 @@ class ShoppingCart extends Component {
   }
 }
 
-export default ShoppingCart;
+export default VolunteerTimeList;

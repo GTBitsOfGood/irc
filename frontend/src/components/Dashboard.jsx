@@ -17,13 +17,16 @@ class AdminDashboard extends Component {
               <div className="button">
                 <button className="btn btn-primary">Change Profile</button>
               </div>
+              <div className="button">
+                <Link to="/volunteer" className="btn btn-primary">Add Volunteer Time</Link>
+              </div>
             </div>
             <div className="col">
               <div className="button">
                 <button className="btn btn-primary">Add Users</button>
               </div>
               <div className="button">
-                <button className="btn btn-primary">Generate Reports</button>
+                <Link to="/displayReports" className="btn btn-primary">Generate Reports</Link>
               </div>
               <div className="button">
                 <button className="btn btn-primary">Modify Inventory/Time</button>
