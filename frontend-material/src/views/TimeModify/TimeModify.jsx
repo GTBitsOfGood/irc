@@ -81,7 +81,7 @@ const CustomSkinMap = withScriptjs(
   ))
 );
 
-function Maps({ ...props }) {
+function TimeModify({ ...props }) {
   return (
     <CustomSkinMap
       googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
@@ -92,4 +92,4 @@ function Maps({ ...props }) {
   );
 }
 
-export default Maps;
+export default TimeModify;

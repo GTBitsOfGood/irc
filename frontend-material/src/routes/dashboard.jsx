@@ -1,36 +1,30 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
-// import ContentPaste from "@material-ui/icons/ContentPaste";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
+import AccountBox from "@material-ui/icons/AccountBox";
 import BubbleChart from "@material-ui/icons/BubbleChart";
-import LocationOn from "@material-ui/icons/LocationOn";
-import Notifications from "@material-ui/icons/Notifications";
-import Unarchive from "@material-ui/icons/Unarchive";
+import AccessTime from "@material-ui/icons/AccessTime";
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import List from "@material-ui/icons/List";
+
 // core components/views
-import DashboardPage from "views/Dashboard/Dashboard.jsx";
-import UserProfile from "views/UserProfile/UserProfile.jsx";
-import TableList from "views/TableList/TableList.jsx";
-import Typography from "views/Typography/Typography.jsx";
-import Icons from "views/Icons/Icons.jsx";
-import Maps from "views/Maps/Maps.jsx";
-import NotificationsPage from "views/Notifications/Notifications.jsx";
-import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 import LandingPage from "views/LandingPage/LandingPage.jsx";
+import UserProfile from "views/UserProfile/UserProfile.jsx";
+import ShopList from "views/ShopList/ShopList.jsx";
+import TimeList from "views/TimeList/TimeList.jsx";
+// admin views
+import DashboardPage from "views/Dashboard/Dashboard.jsx";
+import ShopModify from "views/ShopModify/ShopModify.jsx";
+import TimeModify from "views/TimeModify/TimeModify.jsx";
+import UserModify from "views/Notifications/Notifications.jsx";
 
 const dashboardRoutes = [
   {
     path: "/landing",
     sidebarName: "Landing",
     navbarName: "Landing Page",
+    icon: BubbleChart,
     component: LandingPage
-  }
-  {
-    path: "/dashboard",
-    sidebarName: "Dashboard",
-    navbarName: "Material Dashboard",
-    icon: Dashboard,
-    component: DashboardPage
   },
   {
     path: "/user",
@@ -40,48 +34,49 @@ const dashboardRoutes = [
     component: UserProfile
   },
   {
-    path: "/table",
-    sidebarName: "Table List",
-    navbarName: "Table List",
-    icon: "content_paste",
-    component: TableList
+    path: "/shop",
+    sidebarName: "Storefront",
+    navbarName: "Storefront",
+    icon: ShoppingCart,
+    component: ShopList
   },
   {
-    path: "/typography",
-    sidebarName: "Typography",
-    navbarName: "Typography",
-    icon: LibraryBooks,
-    component: Typography
+    path: "/time",
+    sidebarName: "Volunteer Time",
+    navbarName: "Volunteer Time",
+    icon: AccessTime,
+    component: TimeList
+  },
+  // Admin Features
+    {
+    path: "/dashboard",
+    sidebarName: "Reporting",
+    navbarName: "Reports Dashboard",
+    icon: Dashboard,
+    component: DashboardPage
   },
   {
-    path: "/icons",
-    sidebarName: "Icons",
-    navbarName: "Icons",
-    icon: BubbleChart,
-    component: Icons
+    path: "/modifyShop",
+    sidebarName: "Modify Shop",
+    navbarName: "Modify Shop",
+    icon: List,
+    component: ShopModify
   },
   {
-    path: "/maps",
-    sidebarName: "Maps",
-    navbarName: "Map",
-    icon: LocationOn,
-    component: Maps
+    path: "/modifyTime",
+    sidebarName: "Modify Time",
+    navbarName: "Modify Time",
+    icon: List,
+    component: TimeModify
   },
   {
-    path: "/notifications",
-    sidebarName: "Notifications",
-    navbarName: "Notifications",
-    icon: Notifications,
-    component: NotificationsPage
+    path: "/modifyUser",
+    sidebarName: "Edit Users",
+    navbarName: "Edit Users",
+    icon: AccountBox,
+    component: UserModify
   },
-  {
-    path: "/upgrade-to-pro",
-    sidebarName: "Upgrade To PRO",
-    navbarName: "Upgrade To PRO",
-    icon: Unarchive,
-    component: UpgradeToPro
-  },
-  { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: "/landing", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;

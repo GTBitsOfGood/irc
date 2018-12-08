@@ -12,14 +12,14 @@ import CardBody from "components/Card/CardBody.jsx";
 
 import iconsStyle from "assets/jss/material-dashboard-react/views/iconsStyle.jsx";
 
-function Icons(props) {
+function ShopModify(props) {
   const { classes } = props;
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
         <Card plain>
           <CardHeader plain color="primary">
-            <h4 className={classes.cardTitleWhite}>Material Design Icons</h4>
+            <h4 className={classes.cardTitleWhite}>Material Design ShopModify</h4>
             <p className={classes.cardCategoryWhite}>
               Handcrafted by our friends from{" "}
               <a
@@ -36,7 +36,7 @@ function Icons(props) {
               <iframe
                 className={classes.iframe}
                 src="https://material.io/icons/"
-                title="Icons iframe"
+                title="ShopModify iframe"
               >
                 <p>Your browser does not support iframes.</p>
               </iframe>
@@ -52,7 +52,7 @@ function Icons(props) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Material Icons
+                    Material ShopModify
                   </a>
                 </h5>
               </GridItem>
@@ -64,8 +64,8 @@ function Icons(props) {
   );
 }
 
-Icons.propTypes = {
+ShopModify.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(iconsStyle)(Icons);
+export default withStyles(iconsStyle)(ShopModify);
