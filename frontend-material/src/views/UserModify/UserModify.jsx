@@ -44,7 +44,7 @@ const styles = {
   }
 };
 
-class Notifications extends React.Component {
+class UserModify extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,7 +80,7 @@ class Notifications extends React.Component {
     return (
       <Card>
         <CardHeader color="primary">
-          <h4 className={classes.cardTitleWhite}>Notifications</h4>
+          <h4 className={classes.cardTitleWhite}>UserModify</h4>
           <p className={classes.cardCategoryWhite}>
             Handcrafted by our friends from{" "}
             <a target="_blank" href="https://material-ui-next.com/">
@@ -98,7 +98,7 @@ class Notifications extends React.Component {
         <CardBody>
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
-              <h5>Notifications Style</h5>
+              <h5>UserModify Style</h5>
               <br />
               <SnackbarContent message={"This is a plain notification"} />
               <SnackbarContent
@@ -119,7 +119,7 @@ class Notifications extends React.Component {
               />
             </GridItem>
             <GridItem xs={12} sm={12} md={6}>
-              <h5>Notifications States</h5>
+              <h5>UserModify States</h5>
               <br />
               <SnackbarContent
                 message={
@@ -163,7 +163,7 @@ class Notifications extends React.Component {
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={6} style={{ textAlign: "center" }}>
               <h5>
-                Notifications Places
+                UserModify Places
                 <small>Click to view notifications</small>
               </h5>
             </GridItem>
@@ -294,4 +294,4 @@ class Notifications extends React.Component {
   }
 }
 
-export default withStyles(styles)(Notifications);
+export default withStyles(styles)(UserModify);
