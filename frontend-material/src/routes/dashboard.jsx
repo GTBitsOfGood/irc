@@ -16,7 +16,7 @@ import TimeList from "views/TimeList/TimeList.jsx";
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import ShopModify from "views/ShopModify/ShopModify.jsx";
 import TimeModify from "views/TimeModify/TimeModify.jsx";
-import UserModify from "views/Notifications/Notifications.jsx";
+import UserModify from "views/UserModify/UserModify.jsx";
 
 const dashboardRoutes = [
   {
