@@ -10,7 +10,7 @@ import List from "@material-ui/icons/List";
 // core components/views
 import LandingPage from "views/LandingPage/LandingPage.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
-import App from "views/veggy/index.js";
+import ShopList from "views/ShopList/ShopList.jsx";
 import TimeList from "views/TimeList/TimeList.jsx";
 // admin views
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
@@ -38,7 +38,7 @@ const dashboardRoutes = [
     sidebarName: "Storefront",
     navbarName: "Product Storefront",
     icon: ShoppingCart,
-    component: App
+    component: ShopList
   },
   {
     path: "/time",

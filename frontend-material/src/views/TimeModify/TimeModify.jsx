@@ -1,95 +1,201 @@
-import React from "react";
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker
-} from "react-google-maps";
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
+import Header from "components/Shop_Header";
+import Products from "components/Products";
+import "assets/css/style.css";
+import withStyles from "@material-ui/core/styles/withStyles";
 
-const CustomSkinMap = withScriptjs(
-  withGoogleMap(props => (
-    <GoogleMap
-      defaultZoom={13}
-      defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
-      defaultOptions={{
-        scrollwheel: false,
-        zoomControl: true,
-        styles: [
-          {
-            featureType: "water",
-            stylers: [
-              { saturation: 43 },
-              { lightness: -11 },
-              { hue: "#0088ff" }
-            ]
-          },
-          {
-            featureType: "road",
-            elementType: "geometry.fill",
-            stylers: [
-              { hue: "#ff0000" },
-              { saturation: -100 },
-              { lightness: 99 }
-            ]
-          },
-          {
-            featureType: "road",
-            elementType: "geometry.stroke",
-            stylers: [{ color: "#808080" }, { lightness: 54 }]
-          },
-          {
-            featureType: "landscape.man_made",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#ece2d9" }]
-          },
-          {
-            featureType: "poi.park",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#ccdca1" }]
-          },
-          {
-            featureType: "road",
-            elementType: "labels.text.fill",
-            stylers: [{ color: "#767676" }]
-          },
-          {
-            featureType: "road",
-            elementType: "labels.text.stroke",
-            stylers: [{ color: "#ffffff" }]
-          },
-          { featureType: "poi", stylers: [{ visibility: "off" }] },
-          {
-            featureType: "landscape.natural",
-            elementType: "geometry.fill",
-            stylers: [{ visibility: "on" }, { color: "#b8cb93" }]
-          },
-          { featureType: "poi.park", stylers: [{ visibility: "on" }] },
-          {
-            featureType: "poi.sports_complex",
-            stylers: [{ visibility: "on" }]
-          },
-          { featureType: "poi.medical", stylers: [{ visibility: "on" }] },
-          {
-            featureType: "poi.business",
-            stylers: [{ visibility: "simplified" }]
-          }
-        ]
-      }}
-    >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
-    </GoogleMap>
-  ))
-);
 
-function TimeModify({ ...props }) {
-  return (
-    <CustomSkinMap
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
-      loadingElement={<div style={{ height: `100%` }} />}
-      containerElement={<div style={{ height: `100vh` }} />}
-      mapElement={<div style={{ height: `100%` }} />}
-    />
-  );
+const styles = {
+  cardCategoryWhite: {
+    "&,& a,& a:hover,& a:focus": {
+      color: "rgba(255,255,255,.62)",
+      margin: "0",
+      fontSize: "14px",
+      marginTop: "0",
+      marginBottom: "0"
+    },
+    "& a,& a:hover,& a:focus": {
+      color: "#FFFFFF"
+    }
+  },
+  cardTitleWhite: {
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: "3px",
+    textDecoration: "none",
+    "& small": {
+      color: "#777",
+      fontSize: "65%",
+      fontWeight: "400",
+      lineHeight: "1"
+    }
+  }
+};
+
+class TimeMod extends Component {
+  constructor() {
+    super();
+    this.state = {
+      products: [],
+      cart: [],
+      totalItems: 0,
+      totalAmount: 0,
+      term: "",
+      category: "",
+      cartBounce: false,
+      quantity: 1,
+      modalActive: false
+    };
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleMobileSearch = this.handleMobileSearch.bind(this);
+    this.handleCategory = this.handleCategory.bind(this);
+    this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.sumTotalItems = this.sumTotalItems.bind(this);
+    this.sumTotalAmount = this.sumTotalAmount.bind(this);
+    this.checkProduct = this.checkProduct.bind(this);
+    this.updateQuantity = this.updateQuantity.bind(this);
+    this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
+
+  }
+  // Fetch Initial Set of Products from external API
+  getProducts() {
+    let url =
+      "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json";
+    axios.get(url).then(response => {
+      this.setState({
+        products: response.data
+      });
+    });
+  }
+  componentWillMount() {
+    this.getProducts();
+  }
+
+  // Search by Keyword
+  handleSearch(event) {
+    this.setState({ term: event.target.value });
+  }
+  // Mobile Search Reset
+  handleMobileSearch() {
+    this.setState({ term: "" });
+  }
+  // Filter by Category
+  handleCategory(event) {
+    this.setState({ category: event.target.value });
+    console.log(this.state.category);
+  }
+  // Add to Cart
+  handleAddToCart(selectedProducts) {
+    let cartItem = this.state.cart;
+    let productID = selectedProducts.id;
+    let productQty = selectedProducts.quantity;
+    if (this.checkProduct(productID)) {
+      console.log("hi");
+      let index = cartItem.findIndex(x => x.id == productID);
+      cartItem[index].quantity =
+        Number(cartItem[index].quantity) + Number(productQty);
+      this.setState({
+        cart: cartItem
+      });
+    } else {
+      cartItem.push(selectedProducts);
+    }
+    this.setState({
+      cart: cartItem,
+      cartBounce: true
+    });
+    setTimeout(
+      function() {
+        this.setState({
+          cartBounce: false,
+          quantity: 1
+        });
+        console.log(this.state.quantity);
+        console.log(this.state.cart);
+      }.bind(this),
+      1000
+    );
+    this.sumTotalItems(this.state.cart);
+    this.sumTotalAmount(this.state.cart);
+  }
+  handleRemoveProduct(id, e) {
+    let cart = this.state.cart;
+    let index = cart.findIndex(x => x.id == id);
+    cart.splice(index, 1);
+    this.setState({
+      cart: cart
+    });
+    this.sumTotalItems(this.state.cart);
+    this.sumTotalAmount(this.state.cart);
+    e.preventDefault();
+  }
+  checkProduct(productID) {
+    let cart = this.state.cart;
+    return cart.some(function(item) {
+      return item.id === productID;
+    });
+  }
+  sumTotalItems() {
+    let total = 0;
+    let cart = this.state.cart;
+    total = cart.length;
+    this.setState({
+      totalItems: total
+    });
+  }
+  sumTotalAmount() {
+    let total = 0;
+    let cart = this.state.cart;
+    for (var i = 0; i < cart.length; i++) {
+      total += cart[i].price * parseInt(cart[i].quantity);
+    }
+    this.setState({
+      totalAmount: total
+    });
+  }
+
+  //Reset Quantity
+  updateQuantity(qty) {
+    console.log("quantity added...");
+    this.setState({
+      quantity: qty
+    });
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <Header
+          placetext="Search for items"
+          cartActive={false}
+          cartBounce={this.state.cartBounce}
+          total={this.state.totalAmount}
+          totalItems={this.state.totalItems}
+          cartItems={this.state.cart}
+          removeProduct={this.handleRemoveProduct}
+          handleSearch={this.handleSearch}
+          handleMobileSearch={this.handleMobileSearch}
+          handleCategory={this.handleCategory}
+          categoryTerm={this.state.category}
+          updateQuantity={this.updateQuantity}
+          productQuantity={this.state.moq}
+        />
+        <Products
+          editMode={true}
+          productsList={this.state.products}
+          searchTerm={this.state.term}
+          addToCart={this.handleAddToCart}
+          productQuantity={this.state.quantity}
+          updateQuantity={this.updateQuantity}
+        />
+      </div>
+    );
+  }
 }
 
-export default TimeModify;
+export default withStyles(styles)(TimeMod);

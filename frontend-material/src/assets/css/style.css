@@ -16,11 +16,11 @@ body {
   box-sizing: border-box; }
 
 ::selection {
-  background: #077915;
+  background: #9c27b0;
   color: #fff; }
 
 ::-moz-selection {
-  background: #077915;
+  background: #9c27b0;
   color: #fff;
   text-shadow: none; }
 
@@ -62,7 +62,7 @@ button {
   border-radius: 2px;
   text-align: center;
   color: #fff;
-  background: #077915;
+  background: #9c27b0;
   border: 0;
   font-weight: 400;
   padding: 0 16px;
@@ -70,11 +70,11 @@ button {
   font-size: inherit;
   cursor: pointer; }
   button:hover {
-    background: #0aa91d; }
+    background: #bc37d3; }
   button:focus {
     outline: none; }
   button:active {
-    background: #0bc122; }
+    background: #c34cd7; }
 
 input,
 select {
@@ -85,7 +85,7 @@ form {
   margin: 0; }
 
 header {
-  background: rgba(255, 255, 255, 0.33);
+  background: rgba(255, 255, 255, 0.5);
   padding: 20px 0px;
   box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.033);
   position: fixed;
@@ -154,23 +154,15 @@ header {
         display: -webkit-flex; } }
   .search-form .search-keyword {
     height: 36px;
-    border: 1px solid #077915;
+    border: 1px solid #9c27b0;
     padding: 0 16px;
     border-radius: 2px 0 0 2px;
     width: 100%;
-    max-width: 330px; }
+    max-width: 444px; }
     .search-form .search-keyword:focus {
       outline: none; }
     @media (max-width: 480px) {
       .search-form .search-keyword {
-        height: 32px;
-        margin: 2px 0; } }
-  .search-form .search-button {
-    border-radius: 0 2px 2px 0;
-    background: #077915 url(https://res.cloudinary.com/sivadass/image/upload/v1494692031/icons/search.png) center no-repeat;
-    width: 96px; }
-    @media (max-width: 480px) {
-      .search-form .search-button {
         height: 32px;
         margin: 2px 0; } }
 
@@ -204,7 +196,7 @@ header {
 
 .cart-info table {
   font-size: 14px;
-  color: #077915;
+  color: #9c27b0;
   text-align: right; }
   .cart-info table tr {
     padding: 0;
@@ -334,7 +326,7 @@ header {
       color: #999;
       font-weight: 700; }
       .cart-item .product-info .product-price:before {
-        content: "₹ "; }
+        content: "$"; }
   .cart-item .product-total {
     margin-left: 16px; }
     .cart-item .product-total .quantity {
@@ -346,7 +338,7 @@ header {
       font-weight: 700;
       text-align: right; }
       .cart-item .product-total .amount:before {
-        content: "₹ "; }
+        content: "$"; }
   .cart-item .product-remove {
     margin-left: 24px;
     height: 24px;
@@ -358,7 +350,7 @@ header {
     .cart-item .product-remove:hover {
       color: #e23d3d; }
   .cart-item:hover {
-    background: rgba(147, 220, 156, 0.15); }
+    background: #9c27b0; }
 
 @keyframes tada {
   from {
@@ -384,156 +376,6 @@ header {
   animation-name: tada;
   animation-duration: 300ms;
   animation-fill-mode: both; }
-
-.products-wrapper {
-  padding-top: 98px;
-  animation: slideUp 300ms linear;
-  animation-delay: 150ms; }
-  @media (max-width: 991px) {
-    .products-wrapper {
-      padding-top: 68px; } }
-  @media (max-width: 480px) {
-    .products-wrapper {
-      padding-top: 52px; } }
-
-.products {
-  display: flex;
-  display: -webkit-flex;
-  flex-wrap: wrap;
-  -webkit-flex-wrap: wrap;
-  padding: 16px;
-  max-width: 960px;
-  margin: 0 auto; }
-  @media (max-width: 768px) {
-    .products {
-      padding: 8px; } }
-  .products .product {
-    min-height: 355px;
-    flex-basis: calc(25% - 32px);
-    -webkit-flex-basis: calc(25% - 32px); }
-    @media (max-width: 768px) {
-      .products .product {
-        flex-basis: calc(33% - 16px);
-        -webkit-flex-basis: calc(33% - 16px);
-        margin: 8px; } }
-    @media (max-width: 480px) {
-      .products .product {
-        flex-basis: calc(50% - 16px);
-        -webkit-flex-basis: calc(50% - 16px);
-        min-height: 313px; }
-        .products .product .product-name {
-          height: 20px;
-          overflow: hidden; }
-        .products .product .product-action {
-          padding: 16px 8px; } }
-    @media (max-width: 320px) {
-      .products .product {
-        flex-basis: 100%;
-        -webkit-flex-basis: 100%; } }
-
-.fadeIn-enter {
-  opacity: 0.01; }
-
-.fadeIn-enter.fadeIn-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in; }
-
-.fadeIn-leave {
-  opacity: 1; }
-
-.fadeIn-leave.fadeIn-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in; }
-
-.product:nth-child(1) {
-  transition-delay: 200ms; }
-
-.product:nth-child(2) {
-  transition-delay: 200ms; }
-
-.product:nth-child(3) {
-  transition-delay: 400ms; }
-
-.product:nth-child(4) {
-  transition-delay: 600ms; }
-
-.product:nth-child(5) {
-  transition-delay: 800ms; }
-
-.product:nth-child(6) {
-  transition-delay: 1000ms; }
-
-.product:nth-child(7) {
-  transition-delay: 1200ms; }
-
-.product:nth-child(8) {
-  transition-delay: 1400ms; }
-
-.product:nth-child(9) {
-  transition-delay: 1600ms; }
-
-.product:nth-child(10) {
-  transition-delay: 1800ms; }
-
-.product:nth-child(11) {
-  transition-delay: 2000ms; }
-
-.product:nth-child(12) {
-  transition-delay: 2200ms; }
-
-.product.loading {
-  animation-duration: 600ms;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: contentLoader;
-  animation-timing-function: linear;
-  background: #f6f7f8;
-  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-  background-size: 1000px 104px;
-  height: 200px;
-  position: relative;
-  overflow: hidden; }
-  .product.loading .product-image {
-    height: 168px;
-    width: 168px;
-    margin: 16px;
-    background: rgba(255, 255, 255, 0.25); }
-    @media (max-width: 768px) {
-      .product.loading .product-image {
-        width: auto; } }
-  .product.loading .product-text,
-  .product.loading .product-button {
-    margin: 12px 16px;
-    height: 16px;
-    background: rgba(255, 255, 255, 0.25); }
-  .product.loading .product-button {
-    position: absolute;
-    bottom: 8px;
-    width: 168px;
-    height: 36px; }
-    @media (max-width: 768px) {
-      .product.loading .product-button {
-        width: auto; } }
-
-@keyframes contentLoader {
-  0% {
-    background-position: -420px 0; }
-  100% {
-    background-position: 420px 0; } }
-
-.no-results {
-  text-align: center;
-  max-width: 520px;
-  margin: 0 auto; }
-  .no-results img {
-    width: 320px;
-    margin: 16px 0 32px 0;
-    opacity: 0.33; }
-  .no-results h2 {
-    margin-bottom: 16px;
-    color: #666; }
-  .no-results p {
-    color: #999; }
 
 .product {
   background: #fff;
@@ -566,7 +408,7 @@ header {
     line-height: 22px;
     margin-bottom: 16px; }
     .product .product-price:before {
-      content: "₹ "; }
+      content: "$"; }
   .product .product-name,
   .product .product-price {
     color: #666;
@@ -604,13 +446,13 @@ header {
     -webkit-user-select: none; }
     .stepper-input .increment:hover,
     .stepper-input .decrement:hover {
-      color: #077915;
-      border-color: #077915; }
+      color: #9c27b0;
+      border-color: #9c27b0; }
     .stepper-input .increment:active,
     .stepper-input .decrement:active {
       color: #fff;
-      border-color: #077915;
-      background: #0bc122; }
+      border-color: #9c27b0;
+      background: #c34cd7; }
   .stepper-input .quantity {
     height: 24px;
     width: 48px;
@@ -620,7 +462,7 @@ header {
     border: 1px solid #ccc; }
     .stepper-input .quantity:focus {
       outline: none;
-      border-color: #077915; }
+      border-color: #9c27b0; }
 
 footer {
   color: #999;
@@ -678,7 +520,7 @@ footer {
   .quick-view-details .product-price {
     font-size: 18px; }
   .quick-view-details .product-price {
-    color: #077915;
+    color: #9c27b0;
     font-weight: bold;
     font-size: 24px;
     float: right; }

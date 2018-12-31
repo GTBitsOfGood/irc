@@ -4,6 +4,9 @@ import Counter from "./Counter";
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import { findDOMNode } from "react-dom";
+import Search from "@material-ui/icons/Search";
+import Icon from "@material-ui/core/Icon";
+import bag from "assets/img/bag.png";
 
 class Header extends Component {
   constructor(props) {
@@ -115,9 +118,9 @@ class Header extends Component {
       <header>
         <div className="container">
           <div className="brand">
-            <img
+            <Icon
               className="logo"
-              src="https://res.cloudinary.com/sivadass/image/upload/v1493547373/dummy-logo/Veggy.png"
+              src={Search}
               alt="IRC Brand Logo"
             />
           </div>
@@ -129,7 +132,7 @@ class Header extends Component {
               onClick={this.handleMobileSearch.bind(this)}
             >
               <img
-                src="https://res.cloudinary.com/sivadass/image/upload/v1494756966/icons/search-green.png"
+                src={Search}
                 alt="search"
               />
             </a>
@@ -146,25 +149,20 @@ class Header extends Component {
                 onClick={this.handleSearchNav.bind(this)}
               >
                 <img
-                  src="https://res.cloudinary.com/sivadass/image/upload/v1494756030/icons/back.png"
+                  src={Search}
                   alt="back"
                 />
               </a>
               <input
                 type="search"
                 ref="searchBox"
-                placeholder="Search for store items"
+                placeholder={this.props.placetext}
                 className="search-keyword"
                 onChange={this.props.handleSearch}
               />
-              <button
-                className="search-button"
-                type="submit"
-                onClick={this.handleSubmit.bind(this)}
-              />
             </form>
           </div>
-
+          {this.props.cartActive?
           <div className="cart">
             <div className="cart-info">
               <table>
@@ -194,7 +192,7 @@ class Header extends Component {
             >
               <img
                 className={this.props.cartBounce ? "tada" : " "}
-                src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
+                src={bag}
                 alt="Cart"
               />
               {this.props.totalItems ? (
@@ -219,7 +217,8 @@ class Header extends Component {
                 </button>
               </div>
             </div>
-          </div>
+          </div> : <div></div>
+        }
         </div>
       </header>
     );

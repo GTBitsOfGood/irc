@@ -1,71 +1,201 @@
-import React from "react";
-import PropTypes from "prop-types";
-// @material-ui/core components
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
+import Header from "components/Shop_Header";
+import Products from "components/Products";
+import "assets/css/style.css";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Hidden from "@material-ui/core/Hidden";
-// core components
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
 
-import iconsStyle from "assets/jss/material-dashboard-react/views/iconsStyle.jsx";
 
-function ShopModify(props) {
-  const { classes } = props;
-  return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card plain>
-          <CardHeader plain color="primary">
-            <h4 className={classes.cardTitleWhite}>Material Design ShopModify</h4>
-            <p className={classes.cardCategoryWhite}>
-              Handcrafted by our friends from{" "}
-              <a
-                href="https://design.google.com/icons/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Google
-              </a>
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Hidden only={["sm", "xs"]}>
-              <iframe
-                className={classes.iframe}
-                src="https://material.io/icons/"
-                title="ShopModify iframe"
-              >
-                <p>Your browser does not support iframes.</p>
-              </iframe>
-            </Hidden>
-            <Hidden only={["lg", "md"]}>
-              <GridItem xs={12} sm={12} md={6}>
-                <h5>
-                  The icons are visible on Desktop mode inside an iframe. Since
-                  the iframe is not working on Mobile and Tablets please visit
-                  the icons on their original page on Google. Check the
-                  <a
-                    href="https://design.google.com/icons/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Material ShopModify
-                  </a>
-                </h5>
-              </GridItem>
-            </Hidden>
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
-  );
-}
-
-ShopModify.propTypes = {
-  classes: PropTypes.object.isRequired
+const styles = {
+  cardCategoryWhite: {
+    "&,& a,& a:hover,& a:focus": {
+      color: "rgba(255,255,255,.62)",
+      margin: "0",
+      fontSize: "14px",
+      marginTop: "0",
+      marginBottom: "0"
+    },
+    "& a,& a:hover,& a:focus": {
+      color: "#FFFFFF"
+    }
+  },
+  cardTitleWhite: {
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: "3px",
+    textDecoration: "none",
+    "& small": {
+      color: "#777",
+      fontSize: "65%",
+      fontWeight: "400",
+      lineHeight: "1"
+    }
+  }
 };
 
-export default withStyles(iconsStyle)(ShopModify);
+class ShopMod extends Component {
+  constructor() {
+    super();
+    this.state = {
+      products: [],
+      cart: [],
+      totalItems: 0,
+      totalAmount: 0,
+      term: "",
+      category: "",
+      cartBounce: false,
+      quantity: 1,
+      modalActive: false
+    };
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleMobileSearch = this.handleMobileSearch.bind(this);
+    this.handleCategory = this.handleCategory.bind(this);
+    this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.sumTotalItems = this.sumTotalItems.bind(this);
+    this.sumTotalAmount = this.sumTotalAmount.bind(this);
+    this.checkProduct = this.checkProduct.bind(this);
+    this.updateQuantity = this.updateQuantity.bind(this);
+    this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
+
+  }
+  // Fetch Initial Set of Products from external API
+  getProducts() {
+    let url =
+      "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json";
+    axios.get(url).then(response => {
+      this.setState({
+        products: response.data
+      });
+    });
+  }
+  componentWillMount() {
+    this.getProducts();
+  }
+
+  // Search by Keyword
+  handleSearch(event) {
+    this.setState({ term: event.target.value });
+  }
+  // Mobile Search Reset
+  handleMobileSearch() {
+    this.setState({ term: "" });
+  }
+  // Filter by Category
+  handleCategory(event) {
+    this.setState({ category: event.target.value });
+    console.log(this.state.category);
+  }
+  // Add to Cart
+  handleAddToCart(selectedProducts) {
+    let cartItem = this.state.cart;
+    let productID = selectedProducts.id;
+    let productQty = selectedProducts.quantity;
+    if (this.checkProduct(productID)) {
+      console.log("hi");
+      let index = cartItem.findIndex(x => x.id == productID);
+      cartItem[index].quantity =
+        Number(cartItem[index].quantity) + Number(productQty);
+      this.setState({
+        cart: cartItem
+      });
+    } else {
+      cartItem.push(selectedProducts);
+    }
+    this.setState({
+      cart: cartItem,
+      cartBounce: true
+    });
+    setTimeout(
+      function() {
+        this.setState({
+          cartBounce: false,
+          quantity: 1
+        });
+        console.log(this.state.quantity);
+        console.log(this.state.cart);
+      }.bind(this),
+      1000
+    );
+    this.sumTotalItems(this.state.cart);
+    this.sumTotalAmount(this.state.cart);
+  }
+  handleRemoveProduct(id, e) {
+    let cart = this.state.cart;
+    let index = cart.findIndex(x => x.id == id);
+    cart.splice(index, 1);
+    this.setState({
+      cart: cart
+    });
+    this.sumTotalItems(this.state.cart);
+    this.sumTotalAmount(this.state.cart);
+    e.preventDefault();
+  }
+  checkProduct(productID) {
+    let cart = this.state.cart;
+    return cart.some(function(item) {
+      return item.id === productID;
+    });
+  }
+  sumTotalItems() {
+    let total = 0;
+    let cart = this.state.cart;
+    total = cart.length;
+    this.setState({
+      totalItems: total
+    });
+  }
+  sumTotalAmount() {
+    let total = 0;
+    let cart = this.state.cart;
+    for (var i = 0; i < cart.length; i++) {
+      total += cart[i].price * parseInt(cart[i].quantity);
+    }
+    this.setState({
+      totalAmount: total
+    });
+  }
+
+  //Reset Quantity
+  updateQuantity(qty) {
+    console.log("quantity added...");
+    this.setState({
+      quantity: qty
+    });
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <Header
+          placetext="Search for items"
+          cartActive={false}
+          cartBounce={this.state.cartBounce}
+          total={this.state.totalAmount}
+          totalItems={this.state.totalItems}
+          cartItems={this.state.cart}
+          removeProduct={this.handleRemoveProduct}
+          handleSearch={this.handleSearch}
+          handleMobileSearch={this.handleMobileSearch}
+          handleCategory={this.handleCategory}
+          categoryTerm={this.state.category}
+          updateQuantity={this.updateQuantity}
+          productQuantity={this.state.moq}
+        />
+        <Products
+          editMode={true}
+          productsList={this.state.products}
+          searchTerm={this.state.term}
+          addToCart={this.handleAddToCart}
+          productQuantity={this.state.quantity}
+          updateQuantity={this.updateQuantity}
+        />
+      </div>
+    );
+  }
+}
+
+export default withStyles(styles)(ShopMod);

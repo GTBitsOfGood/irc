@@ -1,13 +1,11 @@
-import React from "react";
-// @material-ui/core components
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
+import Header from "components/Shop_Header";
+import Products from "components/Products";
+import "assets/css/style.css";
 import withStyles from "@material-ui/core/styles/withStyles";
-// core components
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
+
 
 const styles = {
   cardCategoryWhite: {
@@ -39,74 +37,164 @@ const styles = {
   }
 };
 
-function ShopList(props) {
-  const { classes } = props;
-  return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
-            <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"]
-              ]}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card plain>
-          <CardHeader plain color="primary">
-            <h4 className={classes.cardTitleWhite}>
-              Table on Plain Background
-            </h4>
-            <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["ID", "Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["1", "Dakota Rice", "$36,738", "Niger", "Oud-Turnhout"],
-                ["2", "Minerva Hooper", "$23,789", "Curaçao", "Sinaai-Waas"],
-                ["3", "Sage Rodriguez", "$56,142", "Netherlands", "Baileux"],
-                [
-                  "4",
-                  "Philip Chaney",
-                  "$38,735",
-                  "Korea, South",
-                  "Overland Park"
-                ],
-                [
-                  "5",
-                  "Doris Greene",
-                  "$63,542",
-                  "Malawi",
-                  "Feldkirchen in Kärnten"
-                ],
-                ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"]
-              ]}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
-  );
+class ShopStore extends Component {
+  constructor() {
+    super();
+    this.state = {
+      products: [],
+      cart: [],
+      totalItems: 0,
+      totalAmount: 0,
+      term: "",
+      category: "",
+      cartBounce: false,
+      quantity: 1,
+      modalActive: false
+    };
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleMobileSearch = this.handleMobileSearch.bind(this);
+    this.handleCategory = this.handleCategory.bind(this);
+    this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.sumTotalItems = this.sumTotalItems.bind(this);
+    this.sumTotalAmount = this.sumTotalAmount.bind(this);
+    this.checkProduct = this.checkProduct.bind(this);
+    this.updateQuantity = this.updateQuantity.bind(this);
+    this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
+
+  }
+  // Fetch Initial Set of Products from external API
+  getProducts() {
+    let url =
+      "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json";
+    axios.get(url).then(response => {
+      this.setState({
+        products: response.data
+      });
+    });
+  }
+  componentWillMount() {
+    this.getProducts();
+  }
+
+  // Search by Keyword
+  handleSearch(event) {
+    this.setState({ term: event.target.value });
+  }
+  // Mobile Search Reset
+  handleMobileSearch() {
+    this.setState({ term: "" });
+  }
+  // Filter by Category
+  handleCategory(event) {
+    this.setState({ category: event.target.value });
+  }
+  // Add to Cart
+  handleAddToCart(selectedProducts) {
+    let cartItem = this.state.cart;
+    let productID = selectedProducts.id;
+    let productQty = selectedProducts.quantity;
+    if (this.checkProduct(productID)) {
+      console.log("hi");
+      let index = cartItem.findIndex(x => x.id == productID);
+      cartItem[index].quantity =
+        Number(cartItem[index].quantity) + Number(productQty);
+      this.setState({
+        cart: cartItem
+      });
+    } else {
+      cartItem.push(selectedProducts);
+    }
+    this.setState({
+      cart: cartItem,
+      cartBounce: true
+    });
+    setTimeout(
+      function() {
+        this.setState({
+          cartBounce: false,
+          quantity: 1
+        });
+        console.log(this.state.quantity);
+        console.log(this.state.cart);
+      }.bind(this),
+      1000
+    );
+    this.sumTotalItems(this.state.cart);
+    this.sumTotalAmount(this.state.cart);
+  }
+  handleRemoveProduct(id, e) {
+    let cart = this.state.cart;
+    let index = cart.findIndex(x => x.id == id);
+    cart.splice(index, 1);
+    this.setState({
+      cart: cart
+    });
+    this.sumTotalItems(this.state.cart);
+    this.sumTotalAmount(this.state.cart);
+    e.preventDefault();
+  }
+  checkProduct(productID) {
+    let cart = this.state.cart;
+    return cart.some(function(item) {
+      return item.id === productID;
+    });
+  }
+  sumTotalItems() {
+    let total = 0;
+    let cart = this.state.cart;
+    total = cart.length;
+    this.setState({
+      totalItems: total
+    });
+  }
+  sumTotalAmount() {
+    let total = 0;
+    let cart = this.state.cart;
+    for (var i = 0; i < cart.length; i++) {
+      total += cart[i].price * parseInt(cart[i].quantity);
+    }
+    this.setState({
+      totalAmount: total
+    });
+  }
+
+  //Reset Quantity
+  updateQuantity(qty) {
+    console.log("quantity added...");
+    this.setState({
+      quantity: qty
+    });
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <Header
+          placetext="Search for items"
+          cartActive={true}
+          cartBounce={this.state.cartBounce}
+          total={this.state.totalAmount}
+          totalItems={this.state.totalItems}
+          cartItems={this.state.cart}
+          removeProduct={this.handleRemoveProduct}
+          handleSearch={this.handleSearch}
+          handleMobileSearch={this.handleMobileSearch}
+          handleCategory={this.handleCategory}
+          categoryTerm={this.state.category}
+          updateQuantity={this.updateQuantity}
+          productQuantity={this.state.moq}
+        />
+        <Products
+          editMode={false}
+          productsList={this.state.products}
+          searchTerm={this.state.term}
+          addToCart={this.handleAddToCart}
+          productQuantity={this.state.quantity}
+          updateQuantity={this.updateQuantity}
+        />
+      </div>
+    );
+  }
 }
 
-export default withStyles(styles)(ShopList);
+export default withStyles(styles)(ShopStore);
