@@ -81,7 +81,7 @@ class Header extends Component {
           </div>
           <div className="product-total">
             <p className="quantity">
-              {product.quantity} {product.quantity > 1 ? "Nos." : "No."}{" "}
+              {product.quantity} {product.quantity > 1 ? "items" : "item"}{" "}
             </p>
             <p className="amount">{product.quantity * product.price}</p>
           </div>
@@ -118,7 +118,7 @@ class Header extends Component {
             <img
               className="logo"
               src="https://res.cloudinary.com/sivadass/image/upload/v1493547373/dummy-logo/Veggy.png"
-              alt="Veggy Brand Logo"
+              alt="IRC Brand Logo"
             />
           </div>
 
@@ -153,7 +153,7 @@ class Header extends Component {
               <input
                 type="search"
                 ref="searchBox"
-                placeholder="Search for Vegetables and Fruits"
+                placeholder="Search for store items"
                 className="search-keyword"
                 onChange={this.props.handleSearch}
               />
