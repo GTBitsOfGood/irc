@@ -36,7 +36,7 @@ const dashboardRoutes = [
   {
     path: "/shop",
     sidebarName: "Storefront",
-    navbarName: "Storefront",
+    navbarName: "Product Storefront",
     icon: ShoppingCart,
     component: App
   },
