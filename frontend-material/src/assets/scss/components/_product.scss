@@ -33,7 +33,7 @@
     line-height: 22px;
     margin-bottom: 16px;
     &:before {
-      content: "₹ ";
+      content: "$";
     }
   }
   .product-name,
@@ -78,13 +78,13 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     &:hover {
-      color: $primary-green;
-      border-color: $primary-green;
+      color: #9c27b0;
+      border-color: #9c27b0;
     }
     &:active {
       color: $white;
-      border-color: $primary-green;
-      background: lighten($primary-green, 15%);
+      border-color: #9c27b0;
+      background: lighten(#9c27b0, 15%);
     }
   }
   .quantity {
@@ -96,7 +96,7 @@
     border: 1px solid $gray-eighty;
     &:focus {
       outline: none;
-      border-color: $primary-green;
+      border-color: #9c27b0;
     }
   }
 }

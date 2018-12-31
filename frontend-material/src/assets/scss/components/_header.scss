@@ -1,5 +1,5 @@
 header {
-  background: rgba(255,255,255, 0.33);
+  background: rgba(255,255,255, 0.5);
   padding: 20px 0px;
   box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.033);
   position: fixed;
@@ -76,25 +76,14 @@ header {
   }
   .search-keyword {
     height: 36px;
-    border: 1px solid $primary-green;
+    border: 1px solid #9c27b0;
     padding: 0 16px;
     border-radius: 2px 0 0 2px;
     width: 100%;
-    max-width: 330px;
+    max-width: 444px;
     &:focus {
       outline: none;
     }
-    @media (max-width: 480px) {
-      height: 32px;
-      margin: 2px 0;
-    }
-  }
-  .search-button {
-    border-radius: 0 2px 2px 0;
-    background: $primary-green
-      url(https://res.cloudinary.com/sivadass/image/upload/v1494692031/icons/search.png)
-      center no-repeat;
-    width: 96px;
     @media (max-width: 480px) {
       height: 32px;
       margin: 2px 0;
@@ -137,7 +126,7 @@ header {
 }
 .cart-info table {
   font-size: 14px;
-  color: $primary-green;
+  color: #9c27b0;
   text-align: right;
   tr {
     padding: 0;
@@ -283,7 +272,7 @@ header {
       color: $gray-light;
       font-weight: 700;
       &:before {
-        content: "₹ ";
+        content: "$";
       }
     }
   }
@@ -299,7 +288,7 @@ header {
       font-weight: 700;
       text-align: right;
       &:before {
-        content: "₹ ";
+        content: "$";
       }
     }
   }

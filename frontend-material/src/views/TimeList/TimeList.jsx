@@ -1,43 +1,24 @@
-import React from "react";
-// @material-ui/core components
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
+import Header from "components/Shop_Header";
+import Products from "components/Products";
+import "assets/css/style.css";
 import withStyles from "@material-ui/core/styles/withStyles";
-// core components
-import Quote from "components/Typography/Quote.jsx";
-import Muted from "components/Typography/Muted.jsx";
-import Primary from "components/Typography/Primary.jsx";
-import Info from "components/Typography/Info.jsx";
-import Success from "components/Typography/Success.jsx";
-import Warning from "components/Typography/Warning.jsx";
-import Danger from "components/Typography/Danger.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
 
-const style = {
-  typo: {
-    paddingLeft: "25%",
-    marginBottom: "40px",
-    position: "relative"
-  },
-  note: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    bottom: "10px",
-    color: "#c0c1c2",
-    display: "block",
-    fontWeight: "400",
-    fontSize: "13px",
-    lineHeight: "13px",
-    left: "0",
-    marginLeft: "20px",
-    position: "absolute",
-    width: "260px"
-  },
+
+const styles = {
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
+    "&,& a,& a:hover,& a:focus": {
+      color: "rgba(255,255,255,.62)",
+      margin: "0",
+      fontSize: "14px",
+      marginTop: "0",
+      marginBottom: "0"
+    },
+    "& a,& a:hover,& a:focus": {
+      color: "#FFFFFF"
+    }
   },
   cardTitleWhite: {
     color: "#FFFFFF",
@@ -46,113 +27,175 @@ const style = {
     fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
-    textDecoration: "none"
+    textDecoration: "none",
+    "& small": {
+      color: "#777",
+      fontSize: "65%",
+      fontWeight: "400",
+      lineHeight: "1"
+    }
   }
 };
-function TimeList(props) {
-  const { classes } = props;
-  return (
-    <Card>
-      <CardHeader color="primary">
-        <h4 className={classes.cardTitleWhite}>Material Dashboard Heading</h4>
-        <p className={classes.cardCategoryWhite}>
-          Created using Roboto Font Family
-        </p>
-      </CardHeader>
-      <CardBody>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 1</div>
-          <h1>The Life of Material Dashboard</h1>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 2</div>
-          <h2>The Life of Material Dashboard</h2>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 3</div>
-          <h3>The Life of Material Dashboard</h3>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 4</div>
-          <h4>The Life of Material Dashboard</h4>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 5</div>
-          <h5>The Life of Material Dashboard</h5>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Header 6</div>
-          <h6>The Life of Material Dashboard</h6>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Paragraph</div>
-          <p>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers. I understand culture. I am
-            the nucleus. I think that’s a responsibility that I have, to push
-            possibilities, to show people, this is the level that things could
-            be at.
-          </p>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Quote</div>
-          <Quote
-            text="I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at."
-            author=" Kanye West, Musician"
-          />
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Muted Text</div>
-          <Muted>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Muted>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Primary Text</div>
-          <Primary>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Primary>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Info Text</div>
-          <Info>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Info>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Success Text</div>
-          <Success>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Success>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Warning Text</div>
-          <Warning>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Warning>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Danger Text</div>
-          <Danger>
-            I will be the leader of a company that ends up being worth billions
-            of dollars, because I got the answers...
-          </Danger>
-        </div>
-        <div className={classes.typo}>
-          <div className={classes.note}>Small Tag</div>
-          <h2>
-            Header with small subtitle<br />
-            <small>Use "Small" tag for the headers</small>
-          </h2>
-        </div>
-      </CardBody>
-    </Card>
-  );
+
+class TimeStore extends Component {
+  constructor() {
+    super();
+    this.state = {
+      products: [],
+      cart: [],
+      totalItems: 0,
+      totalAmount: 0,
+      term: "",
+      category: "",
+      cartBounce: false,
+      quantity: 1,
+      modalActive: false
+    };
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleMobileSearch = this.handleMobileSearch.bind(this);
+    this.handleCategory = this.handleCategory.bind(this);
+    this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.sumTotalItems = this.sumTotalItems.bind(this);
+    this.sumTotalAmount = this.sumTotalAmount.bind(this);
+    this.checkProduct = this.checkProduct.bind(this);
+    this.updateQuantity = this.updateQuantity.bind(this);
+    this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
+
+  }
+  // Fetch Initial Set of Products from external API
+  getProducts() {
+    let url =
+      "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json";
+    axios.get(url).then(response => {
+      this.setState({
+        products: response.data
+      });
+    });
+  }
+  componentWillMount() {
+    this.getProducts();
+  }
+
+  // Search by Keyword
+  handleSearch(event) {
+    this.setState({ term: event.target.value });
+  }
+  // Mobile Search Reset
+  handleMobileSearch() {
+    this.setState({ term: "" });
+  }
+  // Filter by Category
+  handleCategory(event) {
+    this.setState({ category: event.target.value });
+    console.log(this.state.category);
+  }
+  // Add to Cart
+  handleAddToCart(selectedProducts) {
+    let cartItem = this.state.cart;
+    let productID = selectedProducts.id;
+    let productQty = selectedProducts.quantity;
+    if (this.checkProduct(productID)) {
+      console.log("hi");
+      let index = cartItem.findIndex(x => x.id == productID);
+      cartItem[index].quantity =
+        Number(cartItem[index].quantity) + Number(productQty);
+      this.setState({
+        cart: cartItem
+      });
+    } else {
+      cartItem.push(selectedProducts);
+    }
+    this.setState({
+      cart: cartItem,
+      cartBounce: true
+    });
+    setTimeout(
+      function() {
+        this.setState({
+          cartBounce: false,
+          quantity: 1
+        });
+        console.log(this.state.quantity);
+        console.log(this.state.cart);
+      }.bind(this),
+      1000
+    );
+    this.sumTotalItems(this.state.cart);
+    this.sumTotalAmount(this.state.cart);
+  }
+  handleRemoveProduct(id, e) {
+    let cart = this.state.cart;
+    let index = cart.findIndex(x => x.id == id);
+    cart.splice(index, 1);
+    this.setState({
+      cart: cart
+    });
+    this.sumTotalItems(this.state.cart);
+    this.sumTotalAmount(this.state.cart);
+    e.preventDefault();
+  }
+  checkProduct(productID) {
+    let cart = this.state.cart;
+    return cart.some(function(item) {
+      return item.id === productID;
+    });
+  }
+  sumTotalItems() {
+    let total = 0;
+    let cart = this.state.cart;
+    total = cart.length;
+    this.setState({
+      totalItems: total
+    });
+  }
+  sumTotalAmount() {
+    let total = 0;
+    let cart = this.state.cart;
+    for (var i = 0; i < cart.length; i++) {
+      total += cart[i].price * parseInt(cart[i].quantity);
+    }
+    this.setState({
+      totalAmount: total
+    });
+  }
+
+  //Reset Quantity
+  updateQuantity(qty) {
+    console.log("quantity added...");
+    this.setState({
+      quantity: qty
+    });
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <Header
+          placetext="Search for time"
+          cartActive={true}
+          cartBounce={this.state.cartBounce}
+          total={this.state.totalAmount}
+          totalItems={this.state.totalItems}
+          cartItems={this.state.cart}
+          removeProduct={this.handleRemoveProduct}
+          handleSearch={this.handleSearch}
+          handleMobileSearch={this.handleMobileSearch}
+          handleCategory={this.handleCategory}
+          categoryTerm={this.state.category}
+          updateQuantity={this.updateQuantity}
+          productQuantity={this.state.moq}
+        />
+        <Products
+          editMode={false}
+          productsList={this.state.products}
+          searchTerm={this.state.term}
+          addToCart={this.handleAddToCart}
+          productQuantity={this.state.quantity}
+          updateQuantity={this.updateQuantity}
+        />
+      </div>
+    );
+  }
 }
 
-export default withStyles(style)(TimeList);
+export default withStyles(styles)(TimeStore);

@@ -4,6 +4,9 @@ import LoadingProducts from "../loaders/Products";
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 
+import GridItem from "components/Grid/GridItem.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
+
 class Products extends Component {
   constructor() {
     super();
@@ -23,6 +26,7 @@ class Products extends Component {
       .map(product => {
         return (
           <Product
+            edit={this.props.editMode}
             key={product.id}
             price={product.price}
             name={product.name}
@@ -43,16 +47,18 @@ class Products extends Component {
     } else if (productsData.length <= 0 && term) {
       view = <NoResults />;
     } else {
+      let view_content;
+      view_content = productsData.map(product => {
+            return (
+              <GridItem xs={12} sm={6} md={3}>
+                {product}
+              </GridItem>
+              );
+          });
       view = (
-        <CSSTransitionGroup
-          transitionName="fadeIn"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
-          component="div"
-          className="products"
-        >
-          {productsData}
-        </CSSTransitionGroup>
+        <GridContainer>
+          {view_content}
+        </GridContainer>
       );
     }
     return <div className="products-wrapper">{view}</div>;

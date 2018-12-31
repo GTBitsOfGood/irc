@@ -33,7 +33,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mobileOpen: false
+      mobileOpen: false,
+      login: false
     };
     this.resizeFunction = this.resizeFunction.bind(this);
   }

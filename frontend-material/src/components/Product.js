@@ -1,20 +1,32 @@
 import React, { Component } from "react";
 import Counter from "./Counter";
 
+import GridItem from "components/Grid/GridItem.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
+import CustomTable from "components/Table/Table.jsx";
+import Tasks from "components/Tasks/Tasks.jsx";
+import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
+import Danger from "components/Typography/Danger.jsx";
+import Card from "components/Card/Card.jsx";
+import CardHeader from "components/Card/CardHeader.jsx";
+import CardIcon from "components/Card/CardIcon.jsx";
+import CardBody from "components/Card/CardBody.jsx";
+import CardFooter from "components/Card/CardFooter.jsx";
+
+import CustomField from "components/CustomField.jsx";
+
 class Product extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedProduct: {},
-      quickViewProdcut: {},
       isAdded: false
     };
   }
-  addToCart(image, name, price, id, quantity) {
+  addToCart(name, price, id, quantity) {
     this.setState(
       {
         selectedProduct: {
-          image: image,
           name: name,
           price: price,
           id: id,
@@ -39,68 +51,73 @@ class Product extends Component {
       }
     );
   }
-  quickView(image, name, price, id) {
-    this.setState(
-      {
-        quickViewProdcut: {
-          image: image,
-          name: name,
-          price: price,
-          id: id
-        }
-      },
-      function() {
-        this.props.openModal(this.state.quickViewProdcut);
-      }
-    );
-  }
   render() {
-    let image = this.props.image;
     let name = this.props.name;
     let price = this.props.price;
     let id = this.props.id;
     let quantity = this.props.productQuantity;
+    if (!this.props.edit) {
     return (
       <div className="product">
-        <div className="product-image">
-          <img
-            src={image}
-            alt={this.props.name}
-            onClick={this.quickView.bind(
-              this,
-              image,
-              name,
-              price,
-              id,
-              quantity
-            )}
-          />
-        </div>
-        <h4 className="product-name">{this.props.name}</h4>
-        <p className="product-price">{this.props.price}</p>
-        <Counter
-          productQuantity={quantity}
-          updateQuantity={this.props.updateQuantity}
-          resetQuantity={this.resetQuantity}
-        />
-        <div className="product-action">
-          <button
-            className={!this.state.isAdded ? "" : "added"}
-            type="button"
-            onClick={this.addToCart.bind(
-              this,
-              image,
-              name,
-              price,
-              id,
-              quantity
-            )}
-          >
-            {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
-          </button>
-        </div>
+        <Card>
+          <CardHeader color="warning" stats icon>
+            <p className="product-name"><br></br>{this.props.name}</p>
+          </CardHeader>
+
+          <center><h3 className="product-price">{this.props.price}</h3></center>
+          <center><Counter
+            productQuantity={quantity}
+            updateQuantity={this.props.updateQuantity}
+            resetQuantity={this.resetQuantity}
+            /></center>
+
+              <center><div className="product-action">
+                <button
+                className={!this.state.isAdded ? "" : "added"}
+                type="button"
+                onClick={this.addToCart.bind(
+                this, 
+                name,
+                price,
+                id,
+                quantity
+                )}
+                >
+                {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
+              </button>
+            </div></center>
+         </Card>
       </div>
-    );
+      );
+    } else {
+      return (
+      <div className="product">
+        <Card>
+          <CardHeader color="warning" stats icon>
+            <p className="product-name"><br></br>{this.props.name}</p>
+          </CardHeader>
+
+          <center><h3 className="product-price">{this.props.price}</h3></center>
+
+              <center><div className="product-action">
+                <button
+                className={!this.state.isAdded ? "" : "added"}
+                type="button"
+                onClick={this.addToCart.bind(
+                this, 
+                name,
+                price,
+                id,
+                quantity
+                )}
+                >
+                {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
+              </button>
+            </div></center>
+         </Card>
+      </div>
+        );
+  }
   }
 }
 
