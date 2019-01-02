@@ -15,6 +15,8 @@ import CardFooter from "components/Card/CardFooter.jsx";
 
 import CustomField from "components/CustomField.jsx";
 
+import TextField from "@material-ui/core/TextField"
+
 class Product extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,41 @@ class Product extends Component {
       selectedProduct: {},
       isAdded: false
     };
+
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
+
+
+  handleNameChange(event) {
+    let newName;
+    newName = event.target.value;
+    this.props.updateProduct(event, {
+          name: newName,
+          price: this.props.price,
+          id: this.props.id,
+          quantity: this.props.quantity
+        });
+  }
+
+  handlePriceChange(event) {
+    let newPrice;
+    newPrice = event.target.value;
+    if (!isNaN(newPrice)) {
+      this.props.updateProduct(event, {
+            name: this.props.name,
+            price: newPrice,
+            id: this.props.id,
+            quantity: this.props.quantity
+          });
+    }
+  }
+
+  handleDelete(event) {
+    this.props.deleteProduct(event, this.props.id);
+  }
+
   addToCart(name, price, id, quantity) {
     this.setState(
       {
@@ -63,8 +99,8 @@ class Product extends Component {
           <CardHeader color="warning" stats icon>
             <p className="product-name"><br></br>{this.props.name}</p>
           </CardHeader>
-
-          <center><h3 className="product-price">{this.props.price}</h3></center>
+          {this.props.time? <div></div> : <center><h3 className="product-price">{this.props.price}</h3></center>}
+          
           <center><Counter
             productQuantity={quantity}
             updateQuantity={this.props.updateQuantity}
@@ -93,27 +129,45 @@ class Product extends Component {
       return (
       <div className="product">
         <Card>
-          <CardHeader color="warning" stats icon>
-            <p className="product-name"><br></br>{this.props.name}</p>
-          </CardHeader>
-
-          <center><h3 className="product-price">{this.props.price}</h3></center>
-
-              <center><div className="product-action">
+           <CardBody>
+          <TextField 
+            label="Name" 
+            variant="outlined"
+            margin="normal"
+            type="text"
+            value={this.props.name}
+            onChange={this.handleNameChange}
+          />
+          {this.props.time? <div></div> :
+          <TextField 
+            label="Cost ($)" 
+            variant="outlined"
+            margin="normal"
+            type="text"
+            value={this.props.price}
+            onChange={this.handlePriceChange}
+          />
+          }
+          <TextField 
+            label="Match Amount (0-100%)" 
+            variant="outlined"
+            margin="normal"
+            type="text"
+            value="100"
+            onChange={this.handlePriceChange}
+          />
+          </CardBody>
+          <center>
+              <div className="product-action">
                 <button
                 className={!this.state.isAdded ? "" : "added"}
                 type="button"
-                onClick={this.addToCart.bind(
-                this, 
-                name,
-                price,
-                id,
-                quantity
-                )}
+                onClick={this.handleDelete}
                 >
-                {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
+                DELETE
               </button>
-            </div></center>
+            </div>
+          </center>
          </Card>
       </div>
         );

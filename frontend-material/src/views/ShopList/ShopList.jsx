@@ -46,14 +46,12 @@ class ShopStore extends Component {
       totalItems: 0,
       totalAmount: 0,
       term: "",
-      category: "",
       cartBounce: false,
       quantity: 1,
       modalActive: false
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
-    this.handleCategory = this.handleCategory.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.sumTotalItems = this.sumTotalItems.bind(this);
     this.sumTotalAmount = this.sumTotalAmount.bind(this);
@@ -84,17 +82,13 @@ class ShopStore extends Component {
   handleMobileSearch() {
     this.setState({ term: "" });
   }
-  // Filter by Category
-  handleCategory(event) {
-    this.setState({ category: event.target.value });
-  }
+
   // Add to Cart
   handleAddToCart(selectedProducts) {
     let cartItem = this.state.cart;
     let productID = selectedProducts.id;
     let productQty = selectedProducts.quantity;
     if (this.checkProduct(productID)) {
-      console.log("hi");
       let index = cartItem.findIndex(x => x.id == productID);
       cartItem[index].quantity =
         Number(cartItem[index].quantity) + Number(productQty);
@@ -114,14 +108,13 @@ class ShopStore extends Component {
           cartBounce: false,
           quantity: 1
         });
-        console.log(this.state.quantity);
-        console.log(this.state.cart);
       }.bind(this),
-      1000
+      500
     );
     this.sumTotalItems(this.state.cart);
     this.sumTotalAmount(this.state.cart);
   }
+
   handleRemoveProduct(id, e) {
     let cart = this.state.cart;
     let index = cart.findIndex(x => x.id == id);
@@ -133,6 +126,7 @@ class ShopStore extends Component {
     this.sumTotalAmount(this.state.cart);
     e.preventDefault();
   }
+
   checkProduct(productID) {
     let cart = this.state.cart;
     return cart.some(function(item) {
@@ -160,7 +154,6 @@ class ShopStore extends Component {
 
   //Reset Quantity
   updateQuantity(qty) {
-    console.log("quantity added...");
     this.setState({
       quantity: qty
     });
@@ -170,7 +163,7 @@ class ShopStore extends Component {
     return (
       <div className="container">
         <Header
-          placetext="Search for items"
+          placetext="Search for items..."
           cartActive={true}
           cartBounce={this.state.cartBounce}
           total={this.state.totalAmount}
@@ -191,6 +184,7 @@ class ShopStore extends Component {
           addToCart={this.handleAddToCart}
           productQuantity={this.state.quantity}
           updateQuantity={this.updateQuantity}
+          time={false}
         />
       </div>
     );

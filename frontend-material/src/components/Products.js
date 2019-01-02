@@ -35,7 +35,9 @@ class Products extends Component {
             addToCart={this.props.addToCart}
             productQuantity={this.props.productQuantity}
             updateQuantity={this.props.updateQuantity}
-            openModal={this.props.openModal}
+            updateProduct={this.props.updateProduct}
+            deleteProduct={this.props.deleteProduct}
+            time={this.props.time}
           />
         );
       });
@@ -50,7 +52,7 @@ class Products extends Component {
       let view_content;
       view_content = productsData.map(product => {
             return (
-              <GridItem xs={12} sm={6} md={3}>
+              <GridItem xs={12} sm={12} md={4}>
                 {product}
               </GridItem>
               );

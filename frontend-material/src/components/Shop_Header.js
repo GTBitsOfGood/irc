@@ -217,7 +217,18 @@ class Header extends Component {
                 </button>
               </div>
             </div>
-          </div> : <div></div>
+          </div> : <div> <button
+                  type="button"
+                  onClick={this.props.saveUpdate}
+                >
+                  SAVE
+                </button>
+                <button
+                  type="button"
+                  onClick={this.props.resetUpdate}
+                >
+                  RESET
+                </button> </div>
         }
         </div>
       </header>
