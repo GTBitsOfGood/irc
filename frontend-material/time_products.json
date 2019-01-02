@@ -1,67 +1,27 @@
 [
   {
     "id": 1,
-    "name": "Jacket",
-    "price": 31
+    "name": "Class Volunteering",
+    "price": 120,
   },
   {
     "id": 2,
-    "name": "Coat",
-    "price": 74
+    "name": "Run Shop",
+    "price": 120,
   },
   {
     "id": 3,
-    "name": "Trousers",
-    "price": 45
+    "name": "IT Support",
+    "price": 120,
   },
   {
     "id": 4,
-    "name": "Shorts",
-    "price": 39
+    "name": "Collection Drive",
+    "price": 120,
   },
   {
     "id": 5,
-    "name": "Underwear",
-    "price": 29
-  },
-  {
-    "id": 6,
-    "name": "Suit",
-    "price": 34
-  },
-  {
-    "id": 7,
-    "name": "Skirt",
-    "price": 45
-  },
-  {
-    "id": 8,
-    "name": "Dress",
-    "price": 76
-  },
-  {
-    "id": 9,
-    "name": "Shoes",
-    "price": 33
-  },
-  {
-    "id": 10,
-    "name": "Boots",
-    "price": 72
-  },
-  {
-    "id": 11,
-    "name": "Slippers",
-    "price": 42
-  },
-  {
-    "id": 12,
-    "name": "Sweater",
-    "price": 64
-  },
-  {
-    "id": 13,
-    "name": "Waistcoat",
-    "price": 95
+    "name": "Other (Misc.)",
+    "price": 120,
   }
 ]
