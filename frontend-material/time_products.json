@@ -4,22 +4,22 @@
     "name": "Class Volunteering",
     "price": 120,
   },
-    {
+  {
     "id": 2,
     "name": "Run Shop",
     "price": 120,
   },
-    {
+  {
     "id": 3,
     "name": "IT Support",
     "price": 120,
   },
-    {
+  {
     "id": 4,
     "name": "Collection Drive",
     "price": 120,
   },
-    {
+  {
     "id": 5,
     "name": "Other (Misc.)",
     "price": 120,
