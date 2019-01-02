@@ -67,7 +67,6 @@ class TimeStore extends Component {
     let url =
       "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/time_products.json";
     axios.get(url).then(response => {
-      console.log(response.data);
       this.setState({
         products: response.data
       });
