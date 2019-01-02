@@ -192,6 +192,7 @@ class TimeMod extends Component {
           addToCart={this.handleAddToCart}
           productQuantity={this.state.quantity}
           updateQuantity={this.updateQuantity}
+          time={true}
         />
       </div>
     );

@@ -60,7 +60,7 @@ class LandingPage extends React.Component {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}> <center> Welcome, USER </center></h4>
+            <h4 className={classes.cardTitleWhite}> <center> Welcome, test_user </center></h4>
           </CardHeader>
           <CardBody>
             <p> You are successfully authorized to use the VADR System. Please select an action on the left or logout below. </p>
