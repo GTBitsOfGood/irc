@@ -119,7 +119,7 @@ class Product extends Component {
                 quantity
                 )}
                 >
-                {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
+                {this.props.time? (!this.state.isAdded ? "ADD HOURS" : "✔ ADDED") : (!this.state.isAdded ? "ADD TO CART" : "✔ ADDED")}
               </button>
             </div></center>
          </Card>
