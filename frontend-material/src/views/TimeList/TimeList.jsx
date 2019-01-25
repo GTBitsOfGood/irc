@@ -65,11 +65,12 @@ class TimeStore extends Component {
   // Fetch Initial Set of Products from external API
   getProducts() {
     let url =
-      "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/time_products.json";
+      "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/shop_products.json";
     axios.get(url).then(response => {
       this.setState({
         products: response.data 
       });
+
       console.log(this.state.products);
     });
   }
@@ -172,7 +173,7 @@ class TimeStore extends Component {
     return (
       <div className="container">
         <Header
-          placetext="Search for time"
+          placetext="Search for time..."
           cartActive={true}
           cartBounce={this.state.cartBounce}
           total={this.state.totalAmount}
