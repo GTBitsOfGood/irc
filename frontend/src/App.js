@@ -17,9 +17,15 @@ const history = createBrowserHistory();
 
 const Auth = (props) => (
   <div id="content">
-    <Login store={props.store.AuthModel} />
+    <Login store = {props.store.AuthModel} />
   </div>
 );
+
+const Signup = (props) => (
+    <div id = "content">
+        <Signup store = {props.store.Signup} />
+    <div>
+)
 
 const Main = (props) => (
   <div>
@@ -41,8 +47,10 @@ const Main = (props) => (
 class App extends Component {
   render() {
     if (this.props.store.AuthModel.user) {
-      return <Main store={this.props.store} />
-    }
+      return <Main store = {this.props.store} />
+  } else if(this.props.store.SignupModel.onSignup) {
+      return <Signup store = {this.props.store} />
+  }
     return <Auth store={this.props.store} />
   }
 }
