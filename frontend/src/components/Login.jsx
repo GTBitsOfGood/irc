@@ -25,8 +25,8 @@ class Login extends Component {
               this.props.store.login(this.username, this.password);
             }}>Log In</button>
           </div>
-          <button className="signup" onClick = {() => {
-              this.props.store.changeToSignup();
+          <button className="btn btn-primary btn-block" onClick = {() => {
+              this.props.signup.changeToSignup();
           }}>Signup?</button>
         </div>
       </div>
