@@ -5,7 +5,7 @@ import api from '../../assets/js/api';
 export default class SignupModel {
   @observable user;
   @observable state;
-  @observable onSignup;
+  @observable onSignup = false;
 
   signup(username, password) {
     this.state = 'pending';
@@ -19,4 +19,9 @@ export default class SignupModel {
       })
       .catch(() => this.state = 'error');
   }
+
+  changeToSignup(){
+      this.onSignup = true;
+  }
+
 }

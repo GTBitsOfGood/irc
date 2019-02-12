@@ -26,8 +26,8 @@ class Login extends Component {
             }}>Log In</button>
           </div>
           <button className="signup" onClick = {() => {
-              this.props.store.SignupModel.onSignup = true;
-          }}>Signup?</a>
+              this.props.store.changeToSignup();
+          }}>Signup?</button>
         </div>
       </div>
     );
