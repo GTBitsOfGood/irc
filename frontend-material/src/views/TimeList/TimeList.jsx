@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
-import Header from "components/Shop_Header";
+import Header from "components/Volunteer_Header";
 import Products from "components/Products";
 import "assets/css/style.css";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -65,10 +65,10 @@ class TimeStore extends Component {
   // Fetch Initial Set of Products from external API
   getProducts() {
     let url =
-      "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/shop_products.json";
+      "https://raw.githubusercontent.com/GTBitsOfGood/irc/time_products_patch/frontend-material/time_products.json";
     axios.get(url).then(response => {
       this.setState({
-        products: response.data 
+        products: response.data
       });
 
       console.log(this.state.products);
@@ -97,7 +97,6 @@ class TimeStore extends Component {
     let productID = selectedProducts.id;
     let productQty = selectedProducts.quantity;
     if (this.checkProduct(productID)) {
-      console.log("hi");
       let index = cartItem.findIndex(x => x.id == productID);
       cartItem[index].quantity =
         Number(cartItem[index].quantity) + Number(productQty);
@@ -145,7 +144,9 @@ class TimeStore extends Component {
   sumTotalItems() {
     let total = 0;
     let cart = this.state.cart;
-    total = cart.length;
+    for (var i = 0; i < cart.length; i++) {
+      total += parseInt(cart[i].quantity);
+    }
     this.setState({
       totalItems: total
     });

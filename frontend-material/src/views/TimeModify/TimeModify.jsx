@@ -49,7 +49,8 @@ class TimeMod extends Component {
       category: "",
       cartBounce: false,
       quantity: 1,
-      modalActive: false
+      modalActive: false,
+      mod_products: []
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -65,10 +66,11 @@ class TimeMod extends Component {
   // Fetch Initial Set of Products from external API
   getProducts() {
     let url =
-      "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/shop_products.json";
+      "https://raw.githubusercontent.com/GTBitsOfGood/irc/time_products_patch/frontend-material/time_products.json";
     axios.get(url).then(response => {
       this.setState({
-        products: response.data
+        products: response.data,
+        mod_products: response.data
       });
     });
   }
@@ -192,7 +194,7 @@ class TimeMod extends Component {
           addToCart={this.handleAddToCart}
           productQuantity={this.state.quantity}
           updateQuantity={this.updateQuantity}
-          time={true}
+          time={false}
         />
       </div>
     );

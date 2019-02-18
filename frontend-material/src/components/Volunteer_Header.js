@@ -14,9 +14,7 @@ class Header extends Component {
     this.state = {
       showCart: false,
       cart: this.props.cartItems,
-      mobileSearch: false,
-      showConfirm: false,
-      showConfirmReset: false
+      mobileSearch: false
     };
   }
   handleCart(e) {
@@ -25,21 +23,6 @@ class Header extends Component {
       showCart: !this.state.showCart
     });
   }
-
-  handleConfirm(e) {
-    e.preventDefault();
-    this.setState({
-      showConfirm: !this.state.showConfirm
-    });
-  }
-
-  handleConfirmReset(e) {
-    e.preventDefault();
-    this.setState({
-      showConfirmReset: !this.state.showConfirmReset
-    });
-  }
-
   handleSubmit(e) {
     e.preventDefault();
   }
@@ -185,14 +168,14 @@ class Header extends Component {
               <table>
                 <tbody>
                   <tr>
-                    <td>No. of items</td>
+                    <td>Total Amount of Hours</td>
                     <td>:</td>
                     <td>
                       <strong>{this.props.totalItems}</strong>
                     </td>
                   </tr>
                   <tr>
-                    <td>Sub Total</td>
+                    <td>Total Cost of Hours</td>
                     <td>:</td>
                     <td>
                       <strong>{this.props.total}</strong>
@@ -236,47 +219,16 @@ class Header extends Component {
             </div>
           </div> : <div> <button
                   type="button"
-                  onClick={this.handleConfirm.bind(this)}
+                  onClick={this.props.saveUpdate}
                 >
                   SAVE
                 </button>
-                <div
-                  className={
-                    this.state.showConfirm ? "confirm active" : "confirm"
-                  }
-                  ref="confirm"
-                >
-                  <div className="action-block">
-                    <button
-                      type="button"
-                      className={""}
-                    >
-                      CONFIRM
-                    </button>
-                  </div>
-                </div>
                 <button
                   type="button"
-                  onClick={this.handleConfirmReset.bind(this)}
+                  onClick={this.props.resetUpdate}
                 >
                   RESET
-                </button>
-                <div
-                  className={
-                    this.state.showConfirmReset ? "confirm two active" : "confirm"
-                  }
-                  ref="confirm"
-                >
-                  <div className="action-block">
-                    <button
-                      type="button"
-                      className={""}
-                    >
-                      CONFIRM
-                    </button>
-                  </div>
-                </div>
-                 </div>
+                </button> </div>
         }
         </div>
       </header>

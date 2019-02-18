@@ -136,7 +136,9 @@ class ShopStore extends Component {
   sumTotalItems() {
     let total = 0;
     let cart = this.state.cart;
-    total = cart.length;
+    for (var i = 0; i < cart.length; i++) {
+      total += parseInt(cart[i].quantity);
+    }
     this.setState({
       totalItems: total
     });

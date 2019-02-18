@@ -50,7 +50,7 @@ class ShopMod extends Component {
       cartBounce: false,
       quantity: 1,
       modalActive: false,
-      mod_products: [] 
+      mod_products: []
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -203,7 +203,7 @@ class ShopMod extends Component {
 
   resetUpdate(e) {
     this.setState({
-      products: this.state.mod_products 
+      products: this.state.mod_products
     });
   }
 
