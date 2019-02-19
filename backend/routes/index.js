@@ -42,7 +42,7 @@ const jwtStrategy = new JWTStrategy({
     const password = decoded.password;
     const user = await UserDB.findOne({ email });
     if (!user) {
-      return done(null, false, { message: 'User not found' });
+      return done(null, false, generateUserNotFoundError(email));
     }
     const validate = await user.isValidPassword(password);
     if (!validate) {
@@ -64,7 +64,7 @@ const loginStrategy = new LocalStrategy({
   try {
     const user = await UserDB.findOne({ email });
     if (!user) {
-      return done(null, false, { message: 'User not found' });
+      return done(null, false, generateUserNotFoundError(email));
     }
     const validate = await user.isValidPassword(password);
     if (!validate) {
@@ -84,7 +84,14 @@ passport.use("jwt", jwtStrategy);
 router.post('/signup', function (req, res) {
   UserDB.create(req.body, async function (err, newUser) {
     if (err) {
-      if (err.code === 11000) return res.json({ complete: false, message: "User with that email already exists." });
+      if (err.code === 11000) 
+        return res.json(
+        { 
+          complete: false, 
+          message: "User with that email already exists.", 
+          error: "Error 409 - Conflict with current resource - A user with" +
+          " that e-mail already exists."
+        });
       if (err.errors) return res.json({
         complete: false,
         message: `The following required fields are missing: ${Object.keys(err.errors).join(", ")}`
@@ -104,7 +111,7 @@ router.post('/signup', function (req, res) {
 router.post('/login', function (req, res) {
   passport.authenticate('login', { session: false }, async function (err, user, obj) {
     if (!user) {
-      res.json({ complete: false, message: obj.message });
+      res.json({ complete: false, message: obj.message, error: obj.error });
       return;
     }
     const email = req.body.email;
@@ -116,36 +123,42 @@ router.post('/login', function (req, res) {
 
 router.post('/verify', async function (req, res, next) {
   try {
-    const encodedToken = req.cookies.token || req.body.token || (() => { throw "No token cookie provided" })();
+    const encodedToken = req.cookies.token || req.body.token || 
+    (() => { throw generateTokenError() })();
     const decodedToken = await jwt.verify(encodedToken, config.JWT_SECRET);
 
     const email = decodedToken.email;
     const password = decodedToken.password;
 
-    const user = await UserDB.findOne({ email }) || (() => { throw `No user with email "${email}" found` })();
+    const user = await UserDB.findOne({ email }) 
+      || (() => { throw generateUserNotFoundError(email) })();
     const validate = await user.isValidPassword(password);
 
     if (user && validate) {
-      return res.json({ userVerify: true, user: { _id: user._id, email: user.email } });
+      return res.json({ userVerify: true, 
+        user: { _id: user._id, email: user.email } });
     }
 
     return res.json({ userVerify: false, urlRedirect: "login" })
   } catch (error) {
     console.log(error);
-    return res.json({ userVerify: false, urlRedirect: "login", message: error })
+    return res.json({ userVerify: false, urlRedirect: "login", 
+      message: error.message, error: error.error })
   }
 });
 
 router.use(async function (req, res, next) {
   try {
-    const encodedToken = req.cookies.token || req.body.token || (() => { throw "No token cookie provided" })();
+    const encodedToken = req.cookies.token || req.body.token || 
+      (() => { throw generateTokenError() })();
     const decodedToken = await jwt.verify(encodedToken, config.JWT_SECRET);
 
     const email = decodedToken.email;
     const password = decodedToken.password;
 
     console.log(decodedToken.email);
-    const user = await UserDB.findOne({ email }) || (() => { throw `No user with email "${email}" found` })();
+    const user = await UserDB.findOne({ email }) || 
+    (() => { throw generateUserNotFoundError(email)})();
     console.log(email);
     const validate = await user.isValidPassword(password);
 
@@ -156,7 +169,9 @@ router.use(async function (req, res, next) {
     return res.json({ userVerify: false, urlRedirect: "login" })
   } catch (error) {
     console.log(error);
-    return res.json({ userVerify: false, urlRedirect: "login", message: error })
+    return res.json({ userVerify: false, urlRedirect: "login", 
+      message: error.message,
+      error: error.error })
   }
 });
 
@@ -184,5 +199,23 @@ router.get('/getAllClients', async (req, res, next) => {
     next(err);
   }
 });
+
+/**
+ * Returns message body for when the user cannot be found
+ * @param {string} user email 
+ */
+function generateUserNotFoundError(email) {
+  return { message: 'User not found', error: 'Error 404 - ' +
+      'Resource Not Found - A user could not be found with the associated email, ' 
+        + email 
+  }
+}
+
+function generateTokenError() {
+  return {
+    message: "Token cookie provided",
+    error: "Error 401 - Unauthorized - No login token  provided"
+  }
+}
 
 module.exports = router;

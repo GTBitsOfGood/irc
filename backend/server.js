@@ -18,7 +18,7 @@ mongoose.Promise = global.Promise;
 
 // Route creation
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/api', api);
+app.use('/aaaapi', api);
 
 app.get('/*', (req, res) => {
   res.sendFile(__dirname + 'public/index.html');

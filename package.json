@@ -4,7 +4,8 @@
   "description": "VADR System for IRC",
   "main": "server.js",
   "scripts": {
-    "test": "noop"
+    "test": "noop",
+    "devBackend": "pm2 start ./server.js --name=irc-backend --watch --ignore-watch \"frontend frontend-materials\""
   },
   "repository": {
     "type": "git",
