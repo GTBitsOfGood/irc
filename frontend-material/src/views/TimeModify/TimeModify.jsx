@@ -61,6 +61,10 @@ class TimeMod extends Component {
     this.checkProduct = this.checkProduct.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
+    this.saveUpdate = this.saveUpdate.bind(this);
+    this.resetUpdate = this.resetUpdate.bind(this);
+    this.handleUpdateProduct = this.handleUpdateProduct.bind(this);
+    this.handleDeleteProduct = this.handleDeleteProduct.bind(this);
 
   }
   // Fetch Initial Set of Products from external API
@@ -169,11 +173,45 @@ class TimeMod extends Component {
     });
   }
 
+  // Update product list
+  handleUpdateProduct(e, product) {
+
+    let up_products = this.state.mod_products;
+    let index = up_products.findIndex(x => x.id == product.id);
+    up_products[index] = product;
+
+    this.setState({
+      mod_products: up_products
+    });
+    e.preventDefault();
+  }
+
+  // Update product list
+  handleDeleteProduct(e, id) {
+    let products = this.state.products;
+    let index = products.findIndex(x => x.id == id);
+    products.splice(index, 1);
+    this.setState({
+      products: products
+    });
+  }
+
+  saveUpdate(e) {
+    console.log(this.state.products);
+    console.log(this.state.mod_products);
+  }
+
+  resetUpdate(e) {
+    this.setState({
+      products: this.state.mod_products
+    });
+  }
+
   render() {
     return (
       <div className="container">
         <Header
-          placetext="Search for time..."
+          placetext="Search for items..."
           cartActive={false}
           cartBounce={this.state.cartBounce}
           total={this.state.totalAmount}
@@ -186,14 +224,18 @@ class TimeMod extends Component {
           categoryTerm={this.state.category}
           updateQuantity={this.updateQuantity}
           productQuantity={this.state.moq}
+          saveUpdate={this.saveUpdate}
+          resetUpdate={this.resetUpdate}
         />
         <Products
           editMode={true}
-          productsList={this.state.products}
+          productsList={this.state.mod_products}
           searchTerm={this.state.term}
           addToCart={this.handleAddToCart}
           productQuantity={this.state.quantity}
           updateQuantity={this.updateQuantity}
+          updateProduct={this.handleUpdateProduct}
+          deleteProduct={this.handleDeleteProduct}
           time={false}
         />
       </div>

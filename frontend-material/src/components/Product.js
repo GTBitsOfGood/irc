@@ -27,6 +27,7 @@ class Product extends Component {
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
+    this.handleMatchAmountChange = this.handleMatchAmountChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
@@ -51,6 +52,19 @@ class Product extends Component {
             price: newPrice,
             id: this.props.id,
             quantity: this.props.quantity
+          });
+    }
+  }
+
+  handleMatchAmountChange(event) {
+    let newAmount;
+    newAmount = event.target.value;
+    if (!isNaN(newAmount)) {
+      this.props.updateProduct(event, {
+            name: this.props.name,
+            price: this.props.price,
+            id: this.props.id,
+            quantity: newAmount
           });
     }
   }
@@ -100,7 +114,7 @@ class Product extends Component {
             <p className="product-name"><br></br>{this.props.name}</p>
           </CardHeader>
           {this.props.time? <div></div> : <center><h3 className="product-price">{this.props.price}</h3></center>}
-          
+
           <center><Counter
             productQuantity={quantity}
             updateQuantity={this.props.updateQuantity}
@@ -112,7 +126,7 @@ class Product extends Component {
                 className={!this.state.isAdded ? "" : "added"}
                 type="button"
                 onClick={this.addToCart.bind(
-                this, 
+                this,
                 name,
                 price,
                 id,
@@ -130,8 +144,8 @@ class Product extends Component {
       <div className="product">
         <Card>
            <CardBody>
-          <TextField 
-            label="Name" 
+          <TextField
+            label="Name"
             variant="outlined"
             margin="normal"
             type="text"
@@ -139,8 +153,8 @@ class Product extends Component {
             onChange={this.handleNameChange}
           />
           {this.props.time? <div></div> :
-          <TextField 
-            label="Cost ($)" 
+          <TextField
+            label="Cost ($)"
             variant="outlined"
             margin="normal"
             type="text"
@@ -148,13 +162,13 @@ class Product extends Component {
             onChange={this.handlePriceChange}
           />
           }
-          <TextField 
-            label="Match Amount (0-100%)" 
+          <TextField
+            label="Match Amount (0-100%)"
             variant="outlined"
             margin="normal"
             type="text"
-            value="100"
-            onChange={this.handlePriceChange}
+            value={this.props.matchAmount}
+            onChange={this.handleAmountChange}
           />
           </CardBody>
           <center>

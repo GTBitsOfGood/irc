@@ -28,6 +28,11 @@ class Header extends Component {
 
   handleConfirm(e) {
     e.preventDefault();
+    if(this.state.showConfirmReset) {
+        this.setState({
+          showConfirmReset: !this.state.showConfirmReset
+        });
+    }
     this.setState({
       showConfirm: !this.state.showConfirm
     });
@@ -35,6 +40,11 @@ class Header extends Component {
 
   handleConfirmReset(e) {
     e.preventDefault();
+    if(this.state.showConfirm) {
+        this.setState({
+          showConfirm: !this.state.showConfirm
+        });
+    }
     this.setState({
       showConfirmReset: !this.state.showConfirmReset
     });
@@ -90,46 +100,48 @@ class Header extends Component {
     );
   }
   render() {
-    let cartItems;
-    cartItems = this.state.cart.map(product => {
-      return (
-        <li className="cart-item" key={product.name}>
-          <img className="product-image" src={product.image} />
-          <div className="product-info">
-            <p className="product-name">{product.name}</p>
-            <p className="product-price">{product.price}</p>
-          </div>
-          <div className="product-total">
-            <p className="quantity">
-              {product.quantity} {product.quantity > 1 ? "items" : "item"}{" "}
-            </p>
-            <p className="amount">{product.quantity * product.price}</p>
-          </div>
-          <a
-            className="product-remove"
-            href="#"
-            onClick={this.props.removeProduct.bind(this, product.id)}
-          >
-            ×
-          </a>
-        </li>
-      );
-    });
     let view;
-    if (cartItems.length <= 0) {
-      view = <EmptyCart />;
-    } else {
-      view = (
-        <CSSTransitionGroup
-          transitionName="fadeIn"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
-          component="ul"
-          className="cart-items"
-        >
-          {cartItems}
-        </CSSTransitionGroup>
-      );
+    if (this.props.cartActive) {
+        let cartItems;
+        cartItems = this.state.cart.map(product => {
+          return (
+            <li className="cart-item" key={product.name}>
+              <img className="product-image" src={product.image} />
+              <div className="product-info">
+                <p className="product-name">{product.name}</p>
+                <p className="product-price">{product.price}</p>
+              </div>
+              <div className="product-total">
+                <p className="quantity">
+                  {product.quantity} {product.quantity > 1 ? "items" : "item"}{" "}
+                </p>
+                <p className="amount">{product.quantity * product.price}</p>
+              </div>
+              <a
+                className="product-remove"
+                href="#"
+                onClick={this.props.removeProduct.bind(this, product.id)}
+              >
+                ×
+              </a>
+            </li>
+          );
+        });
+        if (cartItems.length <= 0) {
+          view = <EmptyCart />;
+        } else {
+          view = (
+            <CSSTransitionGroup
+              transitionName="fadeIn"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={300}
+              component="ul"
+              className="cart-items"
+            >
+              {cartItems}
+            </CSSTransitionGroup>
+          );
+        }
     }
     return (
       <header>
@@ -243,7 +255,7 @@ class Header extends Component {
                     </button>
                     <div
                       className={
-                        this.state.showConfirm ? "confirm-preview active" : "confirm-preview"
+                        this.state.showConfirm ? "confirm-preview two active" : "confirm-preview"
                       }
                       ref="confirm"
                     >
@@ -264,7 +276,7 @@ class Header extends Component {
                     </button>
                 <div
                   className={
-                    this.state.showConfirmReset ? "confirm-preview two active" : "confirm-preview"
+                    this.state.showConfirmReset ? "confirm-preview active" : "confirm-preview"
                   }
                   ref="confirm"
                 >

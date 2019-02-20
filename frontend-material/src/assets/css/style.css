@@ -338,8 +338,8 @@ header {
       .confirm-preview.active .stepper-input a {
         display: none; } }
 
-.confirm.two {
-  right: 240px; }
+.confirm-preview.two {
+  right: 70px; }
 
 .action-block {
   background: #fff;
