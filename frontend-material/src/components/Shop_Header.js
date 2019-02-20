@@ -234,36 +234,37 @@ class Header extends Component {
                 </button>
               </div>
             </div>
-          </div> : <div> <button
-                  type="button"
-                  onClick={this.handleConfirm.bind(this)}
-                >
-                  SAVE
-                </button>
-                <div
-                  className={
-                    this.state.showConfirm ? "confirm active" : "confirm"
-                  }
-                  ref="confirm"
-                >
-                  <div className="action-block">
+          </div> : <div className ={"confirm"}>
                     <button
                       type="button"
-                      className={""}
+                      onClick={this.handleConfirm.bind(this)}
                     >
-                      CONFIRM
+                        SAVE
                     </button>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={this.handleConfirmReset.bind(this)}
-                >
-                  RESET
-                </button>
+                    <div
+                      className={
+                        this.state.showConfirm ? "confirm-preview active" : "confirm-preview"
+                      }
+                      ref="confirm"
+                    >
+                      <div className="action-block">
+                        <button
+                          type="button"
+                          className={""}
+                        >
+                          CONFIRM
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={this.handleConfirmReset.bind(this)}
+                    >
+                        RESET
+                    </button>
                 <div
                   className={
-                    this.state.showConfirmReset ? "confirm two active" : "confirm"
+                    this.state.showConfirmReset ? "confirm-preview two active" : "confirm-preview"
                   }
                   ref="confirm"
                 >
