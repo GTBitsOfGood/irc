@@ -1,7 +1,7 @@
 //
 // Header for routes/index.js
 //
-
+const OK_CODE = 200; // the ok code
 const express = require('express');
 const router = express.Router({});
 const transactionsApi = require('./transactions')
@@ -50,7 +50,9 @@ const jwtStrategy = new JWTStrategy({
     }
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
 
-    return done(null, user, { message: 'Logged in Successfully', token });
+    return done(null, user, 
+      { message: 'Logged in Successfully', token,
+      errorCode: OK_CODE });
   } catch (error) {
     return done(error);
   }
@@ -72,7 +74,11 @@ const loginStrategy = new LocalStrategy({
     }
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
 
-    return done(null, user, { message: 'Logged in Successfully', token });
+    return done(null, user, 
+      { message: 'Logged in Successfully', 
+        token,
+         errorCode: OK_CODE
+      });
   } catch (error) {
     return done(error);
   }
@@ -89,6 +95,7 @@ router.post('/signup', function (req, res) {
         { 
           complete: false, 
           message: "User with that email already exists.", 
+          errorCode: 409,
           error: "Error 409 - Conflict with current resource - A user with" +
           " that e-mail already exists."
         });
@@ -117,7 +124,9 @@ router.post('/login', function (req, res) {
     const email = req.body.email;
     const password = req.body.password; // Password is scrambled in newUser, must get original
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
-    res.cookie("token", token).json({ complete: true, userVerify: true, urlRedirect: "dashboard", setCookies: { token } })
+    res.cookie("token", token).json(
+      { complete: true, userVerify: true, urlRedirect: "dashboard", setCookies: { token }, errorCode: OK_CODE 
+    });
   })(req, res)
 });
 
@@ -187,7 +196,7 @@ router.post('/addClient', async (req, res, next) => {
       return;
     }
 
-    res.status(200).send("Success");
+    res.status(OK_CODE).send("Success");
   });
 });
 
@@ -205,16 +214,20 @@ router.get('/getAllClients', async (req, res, next) => {
  * @param {string} user email 
  */
 function generateUserNotFoundError(email) {
-  return { message: 'User not found', error: 'Error 404 - ' +
+  return { 
+    message: 'User not found', 
+    error: 'Error 404 - ' +
       'Resource Not Found - A user could not be found with the associated email, ' 
-        + email 
+        + email,
+    errorCode: 404
   }
 }
 
 function generateTokenError() {
   return {
     message: "Token cookie provided",
-    error: "Error 401 - Unauthorized - No login token  provided"
+    error: "Error 401 - Unauthorized - No login token  provided",
+    errorCode: 401
   }
 }
 
