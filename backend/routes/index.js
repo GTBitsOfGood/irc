@@ -91,27 +91,41 @@ router.post('/signup', function (req, res) {
   UserDB.create(req.body, async function (err, newUser) {
     if (err) {
       if (err.code === 11000) 
-        return res.json(
-        { 
-          complete: false, 
-          message: "User with that email already exists.", 
-          errorCode: 409,
-          error: "Error 409 - Conflict with current resource - A user with" +
-          " that e-mail already exists."
-        });
-      if (err.errors) return res.json({
-        complete: false,
-        message: `The following required fields are missing: ${Object.keys(err.errors).join(", ")}`
-      });
-
-      return res.json({ complete: false, message: "Email and password are required." });
+        return res.json(generateResponseMessage(
+          "User with that email already exists.",
+          409, 
+          "Error 409 - Conflict with current resource - A user with" +
+          " that e-mail already exists.", 
+          {
+            complete: false, 
+          }
+        ));
+        
+      if (err.errors) {
+        const response = generateResponseMessage(
+          `The following required fields are missing: ${Object.keys(err.errors).join(", ")}`,
+          400,
+          "Error 400 - Invalid syntax when trying to signup",
+          {complete: false}
+        )
+        return res.json(response)
+      }
+      return res.json(generateResponseMessage("Internal server error", 500,
+      error = "Error 500 - Internal Server Error - Line 114 in main route."))
     }
 
     // Account created. Redirect to login
     const email = newUser.email;
     const password = req.body.password; // Password is scrambled in newUser, must get original
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
-    return res.json({ complete: true, userVerify: true, urlRedirect: "dashboard", setCookies: { token: token } })
+    const params = {
+      complete: true, 
+      userVerify: true, 
+      urlRedirect: "dashboard", 
+      setCookies: { token: token } 
+    };
+    const message = generateResponseMessage("Success", 200, null, additionalParameters = params);
+    return res.json(message)
   });
 });
 
@@ -125,7 +139,12 @@ router.post('/login', function (req, res) {
     const password = req.body.password; // Password is scrambled in newUser, must get original
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
     res.cookie("token", token).json(
-      { complete: true, userVerify: true, urlRedirect: "dashboard", setCookies: { token }, errorCode: OK_CODE 
+      { 
+        complete: true, 
+        userVerify: true, 
+        urlRedirect: "dashboard", 
+        setCookies: { token }, 
+        errorCode: OK_CODE 
     });
   })(req, res)
 });
@@ -189,14 +208,15 @@ router.use(async function (req, res, next) {
 router.use('/transactions', transactionsApi);
 
 router.post('/addClient', async (req, res, next) => {
-  const { client } = req.body;
+  const client = req.body;
   Client.create(client, (err) => {
-    if (err) {
-      res.status(500).send(err);
-      return;
+    if (!!err) {
+      res.json(generateResponseMessage('Error 400 - Bad Request- ' +
+      'Invalid syntax when trying to' + 
+      ' create client (see error)', 400, error = err));
+    } else {
+      res.json(generateResponseMessage("Client added successfully", 200));
     }
-
-    res.status(OK_CODE).send("Success");
   });
 });
 
@@ -214,21 +234,36 @@ router.get('/getAllClients', async (req, res, next) => {
  * @param {string} user email 
  */
 function generateUserNotFoundError(email) {
-  return { 
-    message: 'User not found', 
-    error: 'Error 404 - ' +
-      'Resource Not Found - A user could not be found with the associated email, ' 
-        + email,
-    errorCode: 404
-  }
+  return generateResponseMessage('User not found', 404, error = 'Error 404 - ' +
+  'Resource Not Found - A user could not be found with the associated email, ' 
+    + email);
 }
 
 function generateTokenError() {
-  return {
-    message: "Token cookie provided",
-    error: "Error 401 - Unauthorized - No login token  provided",
-    errorCode: 401
+  return generateResponseMessage('No token cookie provided', 401, 
+  error = 'Error 401 - Unauthorized - No login token  provided')
+}
+
+/**
+ * Generates error message and returns json object in appropriate format
+ * @param {string} message 
+ * @param {int} errorCode 
+ * @param {string} error 
+ */
+function generateResponseMessage(message, errorCode, error = null,
+  additionalParameters = null) {
+  let response = {
+    message: message,
+    errorCode: errorCode
+  };
+  response
+  if (errorCode != OK_CODE) {
+    response.error = error;
   }
+  if (!!additionalParameters) {
+    response = Object.assign(response, additionalParameters)
+  }
+  return response;
 }
 
 module.exports = router;
