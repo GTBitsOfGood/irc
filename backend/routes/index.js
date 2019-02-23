@@ -1,7 +1,6 @@
 //
 // Header for routes/index.js
 //
-const OK_CODE = 200; // the ok code
 const express = require('express');
 const router = express.Router({});
 const transactionsApi = require('./transactions')
@@ -15,6 +14,11 @@ const ExtractJWT = passportJWT.ExtractJwt;
 
 const config = require('./../../config');
 const mongoose = require('mongoose');
+
+// for formatted responses
+const response = require('../utilities/response.js');
+const OK_CODE = response.OK_CODE;
+const generateResponseMessage = response.generateResponseMessage;
 
 mongoose.connect(config.db_url, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
@@ -42,14 +46,14 @@ const jwtStrategy = new JWTStrategy({
     const password = decoded.password;
     const user = await UserDB.findOne({ email });
     if (!user) {
-      return done(null, false, generateUserNotFoundError(email));
+      return done(null, false, response.generateUserNotFoundError(email));
     }
     const validate = await user.isValidPassword(password);
     if (!validate) {
       return done(null, false, { message: 'Wrong Password' });
     }
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
-
+    
     return done(null, user, 
       { message: 'Logged in Successfully', token,
       errorCode: OK_CODE });
@@ -66,19 +70,21 @@ const loginStrategy = new LocalStrategy({
   try {
     const user = await UserDB.findOne({ email });
     if (!user) {
-      return done(null, false, generateUserNotFoundError(email));
+      return done(null, false, response.generateUserNotFoundError(email));
     }
     const validate = await user.isValidPassword(password);
     if (!validate) {
-      return done(null, false, { message: 'Wrong Password' });
+      const message = "Incorrect password"
+      const errorCode = 400;
+      const error = "Error 400 - Bad Request - Wrong password for user";
+      return done(null, false, generateResponseMessage(message, errorCode, error));
     }
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
-
+    const messageBody = {
+      token
+    }
     return done(null, user, 
-      { message: 'Logged in Successfully', 
-        token,
-         errorCode: OK_CODE
-      });
+      response.generateOkResponse("Logged in successfully", messageBody));
   } catch (error) {
     return done(error);
   }
@@ -124,61 +130,76 @@ router.post('/signup', function (req, res) {
       urlRedirect: "dashboard", 
       setCookies: { token: token } 
     };
-    const message = generateResponseMessage("Success", 200, null, additionalParameters = params);
+    const message = response.generateOkResponse("Success", params);
     return res.json(message)
   });
 });
 
 router.post('/login', function (req, res) {
-  passport.authenticate('login', { session: false }, async function (err, user, obj) {
+  passport.authenticate('login', { session: false }, async function (err, user, returnMsg) {
     if (!user) {
-      res.json({ complete: false, message: obj.message, error: obj.error });
+      // concat the return message with the complete: false parameter
+      res.json(Object.assign({}, returnMsg, {complete: false}));
       return;
     }
     const email = req.body.email;
     const password = req.body.password; // Password is scrambled in newUser, must get original
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
-    res.cookie("token", token).json(
-      { 
-        complete: true, 
-        userVerify: true, 
-        urlRedirect: "dashboard", 
-        setCookies: { token }, 
-        errorCode: OK_CODE 
-    });
-  })(req, res)
+    res.cookie("token", token);
+    const messageBody = {
+      complete: true, 
+      userVerify: true, 
+      urlRedirect: "dashboard", 
+      setCookies: { token }, 
+    };
+    res.json(response.generateOkResponse("Login success", messageBody));
+  })(req, res);
 });
 
 router.post('/verify', async function (req, res, next) {
   try {
     const encodedToken = req.cookies.token || req.body.token || 
-    (() => { throw generateTokenError() })();
+    (() => { throw response.generateTokenError() })();
     const decodedToken = await jwt.verify(encodedToken, config.JWT_SECRET);
 
     const email = decodedToken.email;
     const password = decodedToken.password;
 
     const user = await UserDB.findOne({ email }) 
-      || (() => { throw generateUserNotFoundError(email) })();
+      || (() => { throw response.generateUserNotFoundError(email) })();
     const validate = await user.isValidPassword(password);
 
     if (user && validate) {
-      return res.json({ userVerify: true, 
-        user: { _id: user._id, email: user.email } });
+      const params = { 
+        userVerify: true, 
+        user: { 
+          _id: user._id, 
+          email: user.email } 
+      };
+      return res.json(response.generateOkResponse("Verify success", params));
     }
-
-    return res.json({ userVerify: false, urlRedirect: "login" })
+    const message = "Could not validate user";
+    const errorCode = 400
+    const error = "Error 400 - Bad Request - Could not validate user";
+    const params = {
+      userVerify: false, 
+      urlRedirect: "login",
+    };
+    return res.json(generateResponseMessage(message, errorCode, error, params));
   } catch (error) {
-    console.log(error);
-    return res.json({ userVerify: false, urlRedirect: "login", 
-      message: error.message, error: error.error })
+    // errors aligns with message format already
+    const params = {
+      userVerify: false, 
+      urlRedirect: "login",
+    };
+    return res.json(Object.assign({}, error, params)); // concat msg and params
   }
 });
 
 router.use(async function (req, res, next) {
   try {
     const encodedToken = req.cookies.token || req.body.token || 
-      (() => { throw generateTokenError() })();
+      (() => { throw response.generateTokenError() })();
     const decodedToken = await jwt.verify(encodedToken, config.JWT_SECRET);
 
     const email = decodedToken.email;
@@ -186,7 +207,7 @@ router.use(async function (req, res, next) {
 
     console.log(decodedToken.email);
     const user = await UserDB.findOne({ email }) || 
-    (() => { throw generateUserNotFoundError(email)})();
+    (() => { throw response.generateUserNotFoundError(email)})();
     console.log(email);
     const validate = await user.isValidPassword(password);
 
@@ -215,7 +236,7 @@ router.post('/addClient', async (req, res, next) => {
       'Invalid syntax when trying to' + 
       ' create client (see error)', 400, error = err));
     } else {
-      res.json(generateResponseMessage("Client added successfully", 200));
+      res.json(response.generateOkResponse("Client added successfully"));
     }
   });
 });
@@ -229,41 +250,5 @@ router.get('/getAllClients', async (req, res, next) => {
   }
 });
 
-/**
- * Returns message body for when the user cannot be found
- * @param {string} user email 
- */
-function generateUserNotFoundError(email) {
-  return generateResponseMessage('User not found', 404, error = 'Error 404 - ' +
-  'Resource Not Found - A user could not be found with the associated email, ' 
-    + email);
-}
-
-function generateTokenError() {
-  return generateResponseMessage('No token cookie provided', 401, 
-  error = 'Error 401 - Unauthorized - No login token  provided')
-}
-
-/**
- * Generates error message and returns json object in appropriate format
- * @param {string} message 
- * @param {int} errorCode 
- * @param {string} error 
- */
-function generateResponseMessage(message, errorCode, error = null,
-  additionalParameters = null) {
-  let response = {
-    message: message,
-    errorCode: errorCode
-  };
-  response
-  if (errorCode != OK_CODE) {
-    response.error = error;
-  }
-  if (!!additionalParameters) {
-    response = Object.assign(response, additionalParameters)
-  }
-  return response;
-}
 
 module.exports = router;

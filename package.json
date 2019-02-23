@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "noop",
-    "devBackend": "pm2 start ./server.js --name=irc-backend --watch --ignore-watch \"frontend frontend-materials\""
+    "devBackend": "pm2 start ./server.js --name=irc-backend --watch --ignore-watch \"frontend frontend-materials\"",
+    "stopBackend": "pm2 stop irc-backend"
   },
   "repository": {
     "type": "git",
