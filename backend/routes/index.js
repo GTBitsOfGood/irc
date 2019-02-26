@@ -77,7 +77,7 @@ const loginStrategy = new LocalStrategy({
       const message = "Incorrect password"
       const errorCode = 400;
       const error = "Error 400 - Bad Request - Wrong password for user";
-      return done(null, false, generateResponseMessage(message, errorCode, error));
+      return done(null, false, response.generateResponseMessage(message, errorCode, error));
     }
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
     const messageBody = {
@@ -96,8 +96,8 @@ passport.use("jwt", jwtStrategy);
 router.post('/signup', function (req, res) {
   UserDB.create(req.body, async function (err, newUser) {
     if (err) {
-      if (err.code === 11000) 
-        return res.json(generateResponseMessage(
+      if (err.code === 11000) { 
+        return res.json(response.generateResponseMessage(
           "User with that email already exists.",
           409, 
           "Error 409 - Conflict with current resource - A user with" +
@@ -106,9 +106,9 @@ router.post('/signup', function (req, res) {
             complete: false, 
           }
         ));
-        
+      }
       if (err.errors) {
-        const response = generateResponseMessage(
+        const response = response.generateResponseMessage(
           `The following required fields are missing: ${Object.keys(err.errors).join(", ")}`,
           400,
           "Error 400 - Invalid syntax when trying to signup",
@@ -116,8 +116,10 @@ router.post('/signup', function (req, res) {
         )
         return res.json(response)
       }
-      return res.json(generateResponseMessage("Internal server error", 500,
+
+      return res.json(response.generateResponseMessage("Internal server error", 500,
       error = "Error 500 - Internal Server Error - Line 114 in main route."))
+    
     }
 
     // Account created. Redirect to login
@@ -180,12 +182,12 @@ router.post('/verify', async function (req, res, next) {
     }
     const message = "Could not validate user";
     const errorCode = 400
-    const error = "Error 400 - Bad Request - Could not validate user";
+    const error = "Error 400 - Bad Request - Could not validate user. Bad password.";
     const params = {
       userVerify: false, 
       urlRedirect: "login",
     };
-    return res.json(generateResponseMessage(message, errorCode, error, params));
+    return res.json(response.generateResponseMessage(message, errorCode, error, params));
   } catch (error) {
     // errors aligns with message format already
     const params = {
@@ -205,22 +207,22 @@ router.use(async function (req, res, next) {
     const email = decodedToken.email;
     const password = decodedToken.password;
 
-    console.log(decodedToken.email);
     const user = await UserDB.findOne({ email }) || 
     (() => { throw response.generateUserNotFoundError(email)})();
-    console.log(email);
-    const validate = await user.isValidPassword(password);
 
-    if (user && validate) {
-      return next(null, user);
-    }
+    const validate = await user.isValidPassword(password) || (() => {
+      const message = 'The user\'s account has not been verified'
+      const errorCode = 400;
+      const errorMessage = 'Error 400 - Bad Request - The user could not be verified'
+      throw response.generateResponseMessage(message, errorCode, errorMessage);
+    })();
 
-    return res.json({ userVerify: false, urlRedirect: "login" })
+    // if the user, continue with the res
+    return next(null, user);
   } catch (error) {
-    console.log(error);
-    return res.json({ userVerify: false, urlRedirect: "login", 
-      message: error.message,
-      error: error.error })
+    // assume the error conforms to the message requirements
+    const params = {userVerify: false, urlRedirect: "login"}
+    return res.json(Object.assign({}, error, params));
   }
 });
 
@@ -232,7 +234,7 @@ router.post('/addClient', async (req, res, next) => {
   const client = req.body;
   Client.create(client, (err) => {
     if (!!err) {
-      res.json(generateResponseMessage('Error 400 - Bad Request- ' +
+      res.json(response.generateResponseMessage('Error 400 - Bad Request- ' +
       'Invalid syntax when trying to' + 
       ' create client (see error)', 400, error = err));
     } else {
@@ -244,7 +246,7 @@ router.post('/addClient', async (req, res, next) => {
 router.get('/getAllClients', async (req, res, next) => {
   try {
     const allClients = await Client.find();
-    res.json(allClients);
+    res.json(response.generateOkResponse("All is well.", allClients));
   } catch (err) {
     next(err);
   }
