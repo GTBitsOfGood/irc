@@ -16,7 +16,8 @@ class Header extends Component {
       cart: this.props.cartItems,
       mobileSearch: false,
       showConfirm: false,
-      showConfirmReset: false
+      showConfirmReset: false,
+      isVolunteer: this.props.isVolunteer
     };
   }
   handleCart(e) {
@@ -197,14 +198,14 @@ class Header extends Component {
               <table>
                 <tbody>
                   <tr>
-                    <td>No. of items</td>
+                    <td>{this.state.isVolunteer ? "No. of Volunter Hours" : "No. of items"}</td>
                     <td>:</td>
                     <td>
                       <strong>{this.props.totalItems}</strong>
                     </td>
                   </tr>
                   <tr>
-                    <td>Sub Total</td>
+                    <td>{this.state.isVolunteer ? "Total Cost of Volunter Hours" : "Subtotal"}</td>
                     <td>:</td>
                     <td>
                       <strong>{this.props.total}</strong>

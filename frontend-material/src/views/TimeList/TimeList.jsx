@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
-import Header from "components/Volunteer_Header";
+import Header from "components/Shop_Header";
 import Products from "components/Products";
 import "assets/css/style.css";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -187,6 +187,7 @@ class TimeStore extends Component {
           categoryTerm={this.state.category}
           updateQuantity={this.updateQuantity}
           productQuantity={this.state.moq}
+          isVolunteer={true}
         />
         <Products
           editMode={false}

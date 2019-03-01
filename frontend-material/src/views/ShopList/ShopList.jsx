@@ -178,6 +178,7 @@ class ShopStore extends Component {
           categoryTerm={this.state.category}
           updateQuantity={this.updateQuantity}
           productQuantity={this.state.moq}
+          isVolunteer={false}
         />
         <Products
           editMode={false}
