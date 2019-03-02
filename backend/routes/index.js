@@ -18,7 +18,6 @@ const mongoose = require('mongoose');
 // for formatted responses
 const response = require('../utilities/response.js');
 const OK_CODE = response.OK_CODE;
-const generateResponseMessage = response.generateResponseMessage;
 
 mongoose.connect(config.db_url, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
@@ -245,10 +244,10 @@ router.post('/addClient', async (req, res, next) => {
 
 router.get('/getAllClients', async (req, res, next) => {
   try {
-    const allClients = await Client.find();
+    const allClients = await Client.find("AA");
     res.json(response.generateOkResponse("All is well.", allClients));
   } catch (err) {
-    next(err);
+    res.json(response.generateInternalServerError(err));
   }
 });
 
