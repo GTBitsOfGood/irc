@@ -59,6 +59,8 @@ class ShopMod extends Component {
     this.resetUpdate = this.resetUpdate.bind(this);
     this.handleUpdateProduct = this.handleUpdateProduct.bind(this);
     this.handleDeleteProduct = this.handleDeleteProduct.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleReset = this.handleReset.bind(this);
 
   }
   // Fetch Initial Set of Products from external API
@@ -132,6 +134,16 @@ class ShopMod extends Component {
     });
   }
 
+  //This method handles if the admin wants to reset their changes
+  handleReset() {
+      console.log("reset")
+  }
+
+  //This method handles if the admin wants to save their changes to the database
+  handleSave() {
+      console.log("saved");
+  }
+
   render() {
     return (
       <div className="container">
@@ -151,6 +163,8 @@ class ShopMod extends Component {
           productQuantity={this.state.moq}
           saveUpdate={this.saveUpdate}
           resetUpdate={this.resetUpdate}
+          handleSave={this.handleSave}
+          handleReset={this.handleReset}
         />
         <Products
           editMode={true}

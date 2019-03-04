@@ -17,7 +17,11 @@ class Header extends Component {
       mobileSearch: false,
       showConfirm: false,
       showConfirmReset: false,
-      isVolunteer: this.props.isVolunteer
+      isVolunteer: this.props.isVolunteer,
+      handleCheckout: this.props.handleCheckout,
+      handleSave: this.props.handleSave,
+      handleReset: this.props.handleReset
+
     };
   }
   handleCart(e) {
@@ -242,6 +246,7 @@ class Header extends Component {
                 <button
                   type="button"
                   className={this.state.cart.length > 0 ? " " : "disabled"}
+                  onClick = {this.state.handleCheckout}
                 >
                   PROCEED TO CHECKOUT
                 </button>
@@ -264,6 +269,7 @@ class Header extends Component {
                         <button
                           type="button"
                           className={""}
+                          onClick = {this.state.handleSave}
                         >
                           CONFIRM
                         </button>
@@ -285,6 +291,7 @@ class Header extends Component {
                     <button
                       type="button"
                       className={""}
+                      onClick = {this.state.handleReset}
                     >
                       CONFIRM
                     </button>

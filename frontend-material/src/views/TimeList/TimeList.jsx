@@ -60,6 +60,7 @@ class TimeStore extends Component {
     this.checkProduct = this.checkProduct.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
+    this.handleVolunteerCheckout = this.handleVolunteerCheckout.bind(this);
 
   }
   // Fetch Initial Set of Products from external API
@@ -170,6 +171,11 @@ class TimeStore extends Component {
     });
   }
 
+  //this method handles the checkout of hours
+  handleVolunteerCheckout() {
+      console.log(this.state.cart);
+  }
+
   render() {
     return (
       <div className="container">
@@ -188,6 +194,7 @@ class TimeStore extends Component {
           updateQuantity={this.updateQuantity}
           productQuantity={this.state.moq}
           isVolunteer={true}
+          handleCheckout={this.handleVolunteerCheckout}
         />
         <Products
           editMode={false}

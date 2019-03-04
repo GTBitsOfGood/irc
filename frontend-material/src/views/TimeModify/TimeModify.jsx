@@ -207,6 +207,16 @@ class TimeMod extends Component {
     });
   }
 
+  //This method handles if the admin wants to reset their changes
+  handleReset() {
+      console.log("reset");
+  }
+
+  //This method handles if the admin wants to save their changes to the database
+  handleSave() {
+      console.log("saved");
+  }
+
   render() {
     return (
       <div className="container">
@@ -226,6 +236,8 @@ class TimeMod extends Component {
           productQuantity={this.state.moq}
           saveUpdate={this.saveUpdate}
           resetUpdate={this.resetUpdate}
+          handleSave={this.handleSave}
+          handleReset={this.handleReset}
         />
         <Products
           editMode={true}
