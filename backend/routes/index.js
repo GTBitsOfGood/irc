@@ -244,7 +244,7 @@ router.post('/addClient', async (req, res, next) => {
 
 router.get('/getAllClients', async (req, res, next) => {
   try {
-    const allClients = await Client.find("AA");
+    const allClients = await Client.find({});
     res.json(response.generateOkResponse("All is well.", allClients));
   } catch (err) {
     res.json(response.generateInternalServerError(err));
