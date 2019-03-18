@@ -168,7 +168,7 @@ class Product extends Component {
             margin="normal"
             type="text"
             value={this.props.matchAmount}
-            onChange={this.handleAmountChange}
+            onChange={this.handleMatchAmountChange}
           />
           </CardBody>
           <center>

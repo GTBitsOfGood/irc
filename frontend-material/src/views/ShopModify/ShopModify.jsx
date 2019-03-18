@@ -49,14 +49,12 @@ class ShopMod extends Component {
       cartBounce: false,
       quantity: 1,
       modalActive: false,
-      mod_products: []
+      orig_products: []
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
     this.handleCategory = this.handleCategory.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
-    this.saveUpdate = this.saveUpdate.bind(this);
-    this.resetUpdate = this.resetUpdate.bind(this);
     this.handleUpdateProduct = this.handleUpdateProduct.bind(this);
     this.handleDeleteProduct = this.handleDeleteProduct.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -68,9 +66,10 @@ class ShopMod extends Component {
     let url =
       "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/shop_products.json";
     axios.get(url).then(response => {
+
       this.setState({
         products: response.data,
-        mod_products: response.data
+        orig_products: response.data.slice()
       });
     });
   }
@@ -103,12 +102,12 @@ class ShopMod extends Component {
   // Update product list
   handleUpdateProduct(e, product) {
 
-    let up_products = this.state.mod_products;
+    let up_products = this.state.products;
     let index = up_products.findIndex(x => x.id == product.id);
     up_products[index] = product;
 
     this.setState({
-      mod_products: up_products
+      products: up_products
     });
     e.preventDefault();
   }
@@ -123,20 +122,12 @@ class ShopMod extends Component {
     });
   }
 
-  saveUpdate(e) {
-    console.log(this.state.products);
-    console.log(this.state.mod_products);
-  }
-
-  resetUpdate(e) {
-    this.setState({
-      products: this.state.mod_products
-    });
-  }
 
   //This method handles if the admin wants to reset their changes
   handleReset() {
-      console.log("reset")
+      this.setState({
+        products: this.state.orig_products.slice()
+      });
   }
 
   //This method handles if the admin wants to save their changes to the database
@@ -161,14 +152,12 @@ class ShopMod extends Component {
           categoryTerm={this.state.category}
           updateQuantity={this.updateQuantity}
           productQuantity={this.state.moq}
-          saveUpdate={this.saveUpdate}
-          resetUpdate={this.resetUpdate}
           handleSave={this.handleSave}
           handleReset={this.handleReset}
         />
         <Products
           editMode={true}
-          productsList={this.state.mod_products}
+          productsList={this.state.products}
           searchTerm={this.state.term}
           addToCart={this.handleAddToCart}
           productQuantity={this.state.quantity}
