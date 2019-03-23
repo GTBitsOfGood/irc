@@ -32,6 +32,7 @@ import CardFooter from "components/Card/CardFooter.jsx";
 
 //IRC added components
 import Button from "components/CustomButtons/Button.jsx";
+import Input from '@material-ui/core/Input';
 
 import { bugs, website, server } from "variables/general.jsx";
 
@@ -54,6 +55,33 @@ class Dashboard extends React.Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+
+  //This function creates the table
+  generateReport() {
+    this.setState({
+      isShown: true
+    });
+  }
+
+  //This function should return the data for the table
+  generateTableData() {
+    return [
+        [ "Dakota Rice" , "2" , "Computer" , "240" ] ,
+        [ "Minerva Hooper" , "6" , "Driving" , "180" ] ,
+        [ "Sage Rodriguez" , "20" , "IT Support" , "800" ] ,
+    ];
+  }
+
+  //This function should return the headers for the table
+  generateTableHead() {
+    return ['Volunteer',' Hours','Job','Compensation'];
+  }
+
+  //This function should download a csv file to Users
+  downloadCSV() {
+
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -110,79 +138,31 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-        </GridContainer>
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card chart>
-              <CardHeader color="success">
-                <ChartistGraph
-                  className="ct-chart"
-                  data={dailySalesChart.data}
-                  type="Line"
-                  options={dailySalesChart.options}
-                  listener={dailySalesChart.animation}
-                />
-              </CardHeader>
-              <CardBody>
-                <h4 className={classes.cardTitle}>Items Donated</h4>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <DateRange />
-                  Past Year
-                </div>
-              </CardFooter>
-            </Card>
+          <GridItem>
+            <Button type="button" color="primary" onClick = {() => this.generateReport()}>
+              Generate Report
+            </Button>
           </GridItem>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card chart>
-              <CardHeader color="warning">
-                <ChartistGraph
-                  className="ct-chart"
-                  data={emailsSubscriptionChart.data}
-                  type="Bar"
-                  options={emailsSubscriptionChart.options}
-                  responsiveOptions={emailsSubscriptionChart.responsiveOptions}
-                  listener={emailsSubscriptionChart.animation}
-                />
-              </CardHeader>
-              <CardBody>
-                <h4 className={classes.cardTitle}>Volunteer Hours</h4>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <DateRange />
-                  Past Year
-                </div>
-              </CardFooter>
-            </Card>
+          <GridItem>
+            From: <Input type = "date"/>
           </GridItem>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card chart>
-              <CardHeader color="danger">
-                <ChartistGraph
-                  className="ct-chart"
-                  data={completedTasksChart.data}
-                  type="Line"
-                  options={completedTasksChart.options}
-                  listener={completedTasksChart.animation}
-                />
-              </CardHeader>
-              <CardBody>
-                <h4 className={classes.cardTitle}>New Refugees</h4>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <DateRange />
-                  Past Year
-                </div>
-              </CardFooter>
-            </Card>
+          <GridItem>
+            To: <Input type = "date"/>
           </GridItem>
         </GridContainer>
-        <Button>
-          Generate Report
-        </Button>
+
+        {this.state.isShown &&
+          <div>
+            <Button type="button" color="info" onClick = {() => this.downloadCSV()}>
+              Download CSV
+            </Button>
+            <CustomTable
+            tableHeaderColor="primary"
+            tableHead={this.generateTableHead()}
+            tableData={this.generateTableData()}
+            />
+          </div>
+        }
 
       </div>
     );
