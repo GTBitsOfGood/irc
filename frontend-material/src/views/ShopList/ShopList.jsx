@@ -107,7 +107,6 @@ class ShopStore extends Component {
       function() {
         this.setState({
           cartBounce: false,
-          quantity: 1
         });
       }.bind(this),
       500

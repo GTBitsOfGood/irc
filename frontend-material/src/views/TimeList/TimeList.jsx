@@ -115,7 +115,6 @@ class TimeStore extends Component {
       function() {
         this.setState({
           cartBounce: false,
-          quantity: 1
         });
         console.log(this.state.quantity);
         console.log(this.state.cart);
