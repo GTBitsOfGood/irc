@@ -14,7 +14,14 @@ class Header extends Component {
     this.state = {
       showCart: false,
       cart: this.props.cartItems,
-      mobileSearch: false
+      mobileSearch: false,
+      showConfirm: false,
+      showConfirmReset: false,
+      isVolunteer: this.props.isVolunteer,
+      handleCheckout: this.props.handleCheckout,
+      handleSave: this.props.handleSave,
+      handleReset: this.props.handleReset
+
     };
   }
   handleCart(e) {
@@ -23,6 +30,31 @@ class Header extends Component {
       showCart: !this.state.showCart
     });
   }
+
+  handleConfirm(e) {
+    e.preventDefault();
+    if(this.state.showConfirmReset) {
+        this.setState({
+          showConfirmReset: !this.state.showConfirmReset
+        });
+    }
+    this.setState({
+      showConfirm: !this.state.showConfirm
+    });
+  }
+
+  handleConfirmReset(e) {
+    e.preventDefault();
+    if(this.state.showConfirm) {
+        this.setState({
+          showConfirm: !this.state.showConfirm
+        });
+    }
+    this.setState({
+      showConfirmReset: !this.state.showConfirmReset
+    });
+  }
+
   handleSubmit(e) {
     e.preventDefault();
   }
@@ -45,7 +77,7 @@ class Header extends Component {
     );
   }
   handleClickOutside(event) {
-    /** 
+    /**
     const cartNode = findDOMNode(this.refs.cartPreview);
     const buttonNode = findDOMNode(this.refs.cartButton);
     if (cartNode.classList.contains("active")) {
@@ -73,46 +105,48 @@ class Header extends Component {
     );
   }
   render() {
-    let cartItems;
-    cartItems = this.state.cart.map(product => {
-      return (
-        <li className="cart-item" key={product.name}>
-          <img className="product-image" src={product.image} />
-          <div className="product-info">
-            <p className="product-name">{product.name}</p>
-            <p className="product-price">{product.price}</p>
-          </div>
-          <div className="product-total">
-            <p className="quantity">
-              {product.quantity} {product.quantity > 1 ? "items" : "item"}{" "}
-            </p>
-            <p className="amount">{product.quantity * product.price}</p>
-          </div>
-          <a
-            className="product-remove"
-            href="#"
-            onClick={this.props.removeProduct.bind(this, product.id)}
-          >
-            ×
-          </a>
-        </li>
-      );
-    });
     let view;
-    if (cartItems.length <= 0) {
-      view = <EmptyCart />;
-    } else {
-      view = (
-        <CSSTransitionGroup
-          transitionName="fadeIn"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
-          component="ul"
-          className="cart-items"
-        >
-          {cartItems}
-        </CSSTransitionGroup>
-      );
+    if (this.props.cartActive) {
+        let cartItems;
+        cartItems = this.state.cart.map(product => {
+          return (
+            <li className="cart-item" key={product.name}>
+              <img className="product-image" src={product.image} />
+              <div className="product-info">
+                <p className="product-name">{product.name}</p>
+                <p className="product-price">{product.price}</p>
+              </div>
+              <div className="product-total">
+                <p className="quantity">
+                  {product.quantity} {product.quantity > 1 ? "items" : "item"}{" "}
+                </p>
+                <p className="amount">{product.quantity * product.price}</p>
+              </div>
+              <a
+                className="product-remove"
+                href="#"
+                onClick={this.props.removeProduct.bind(this, product.id)}
+              >
+                ×
+              </a>
+            </li>
+          );
+        });
+        if (cartItems.length <= 0) {
+          view = <EmptyCart />;
+        } else {
+          view = (
+            <CSSTransitionGroup
+              transitionName="fadeIn"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={300}
+              component="ul"
+              className="cart-items"
+            >
+              {cartItems}
+            </CSSTransitionGroup>
+          );
+        }
     }
     return (
       <header>
@@ -168,14 +202,14 @@ class Header extends Component {
               <table>
                 <tbody>
                   <tr>
-                    <td>No. of items</td>
+                    <td>{this.state.isVolunteer ? "No. of Volunter Hours" : "No. of items"}</td>
                     <td>:</td>
                     <td>
                       <strong>{this.props.totalItems}</strong>
                     </td>
                   </tr>
                   <tr>
-                    <td>Sub Total</td>
+                    <td>{this.state.isVolunteer ? "Total Cost of Volunter Hours" : "Subtotal"}</td>
                     <td>:</td>
                     <td>
                       <strong>{this.props.total}</strong>
@@ -212,23 +246,58 @@ class Header extends Component {
                 <button
                   type="button"
                   className={this.state.cart.length > 0 ? " " : "disabled"}
+                  onClick = {this.state.handleCheckout}
                 >
                   PROCEED TO CHECKOUT
                 </button>
               </div>
             </div>
-          </div> : <div> <button
-                  type="button"
-                  onClick={this.props.saveUpdate}
+          </div> : <div className ={"confirm"}>
+                    <button
+                      type="button"
+                      onClick={this.handleConfirm.bind(this)}
+                    >
+                        SAVE
+                    </button>
+                    <div
+                      className={
+                        this.state.showConfirm ? "confirm-preview two active" : "confirm-preview"
+                      }
+                      ref="confirm"
+                    >
+                      <div className="action-block">
+                        <button
+                          type="button"
+                          className={""}
+                          onClick = {this.state.handleSave}
+                        >
+                          CONFIRM
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={this.handleConfirmReset.bind(this)}
+                    >
+                        RESET
+                    </button>
+                <div
+                  className={
+                    this.state.showConfirmReset ? "confirm-preview active" : "confirm-preview"
+                  }
+                  ref="confirm"
                 >
-                  SAVE
-                </button>
-                <button
-                  type="button"
-                  onClick={this.props.resetUpdate}
-                >
-                  RESET
-                </button> </div>
+                  <div className="action-block">
+                    <button
+                      type="button"
+                      className={""}
+                      onClick = {this.state.handleReset}
+                    >
+                      CONFIRM
+                    </button>
+                  </div>
+                </div>
+                 </div>
         }
         </div>
       </header>

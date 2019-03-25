@@ -58,6 +58,7 @@ class ShopStore extends Component {
     this.checkProduct = this.checkProduct.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
+    this.handleCheckout = this.handleCheckout.bind(this);
 
   }
   // Fetch Initial Set of Products from external API
@@ -106,7 +107,6 @@ class ShopStore extends Component {
       function() {
         this.setState({
           cartBounce: false,
-          quantity: 1
         });
       }.bind(this),
       500
@@ -136,7 +136,9 @@ class ShopStore extends Component {
   sumTotalItems() {
     let total = 0;
     let cart = this.state.cart;
-    total = cart.length;
+    for (var i = 0; i < cart.length; i++) {
+      total += parseInt(cart[i].quantity);
+    }
     this.setState({
       totalItems: total
     });
@@ -159,6 +161,11 @@ class ShopStore extends Component {
     });
   }
 
+  //Handles the checking out of items
+  handleCheckout() {
+      console.log(this.state.cart);
+  }
+
   render() {
     return (
       <div className="container">
@@ -176,6 +183,8 @@ class ShopStore extends Component {
           categoryTerm={this.state.category}
           updateQuantity={this.updateQuantity}
           productQuantity={this.state.moq}
+          isVolunteer={false}
+          handleCheckout={this.handleCheckout}
         />
         <Products
           editMode={false}
