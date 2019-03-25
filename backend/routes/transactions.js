@@ -2,16 +2,17 @@ const express = require('express');
 const router = express.Router();
 const Transaction = require('../model/transaction.js');
 const { ShopItem, VolunteerItem } = require('../model/transactionItem.js')
-
+const response = require('../utilities/response.js');
 
 router.get('/client', async (req, res, next) => {
     try {
         const allTransactionsByClient = await Transaction.find({
-            clientId: req.query.id
+            clientId: req.query.id,
         });
-        res.json(allTransactionsByClient);
+        const message = response.generateOkResponse("Success", allTransactionsByClient);
+        res.json(message);
     } catch (err) {
-        next(err);
+        res.json(response.generateInternalServerError(err));
     }
 });
 
@@ -20,9 +21,10 @@ router.get('/authorizedUser', async (req, res, next) => {
         const allTransactionsByAuthorizer = await Transaction.find({
             authorizedUser: req.query.id
         });
-        res.json(allTransactionsByAuthorizer);
+        const message = response.generateOkResponse("Success", allTransactionsByAuthorizer);
+        res.json(message);
     } catch (err) {
-        next(err);
+        res.json(response.generateInternalServerError(err));
     }
 });
 
@@ -32,9 +34,10 @@ router.get('/getShopItems', async (req, res, next) => {
             const allItemsByVersion = await ShopItem.find({
                 revisionNumber: req.query.revisionNumber
             });
-            res.json(allItemsByVersion);
+            const message = response.generateOkResponse("Success", allItemsByVersion);
+            res.json(message)
         } catch (err) {
-            next(err);
+            res.json(response.generateInternalServerError(err));
         }
     } else {
         try {
@@ -53,9 +56,10 @@ router.get('/getShopItems', async (req, res, next) => {
                     { $limit: 1 }
                 ]
             );
-            res.json(allItemsByMostRecentVersion[0].items);
+            const message = response.generateOkResponse("Success", allItemsByMostRecentVersion[0]);
+            res.json(message)
         } catch (err) {
-            next(err);
+            res.json(response.generateInternalServerError(err));
         }
     }
 });
@@ -66,9 +70,10 @@ router.get('/getVolunteerItems', async (req, res, next) => {
             const allItemsByVersion = await VolunteerItem.find({
                 revisionNumber: req.query.revisionNumber
             });
-            res.json(allItemsByVersion);
+            const message = response.generateOkResponse("Success", allItemsByVersion);
+            res.json(message)
         } catch (err) {
-            next(err);
+            res.json(response.generateInternalServerError(err));
         }
     } else {
         try {
@@ -87,9 +92,11 @@ router.get('/getVolunteerItems', async (req, res, next) => {
                     { $limit: 1 }
                 ]
             );
-            res.json(allItemsByMostRecentVersion[0].items);
+            const message = response.generateOkResponse("Success", 
+            allItemsByMostRecentVersion[0].items);
+            res.json(message)
         } catch (err) {
-            next(err);
+            res.json(response.generateInternalServerError(err));
         }
     }
 });
@@ -116,9 +123,10 @@ router.get('/getTransaction', async (req, res, next) => {
 
     try {
         const allTransactions = await Transaction.find(query);
-        res.json(allTransactions);
+        const message = response.generateOkResponse("Success", allTransactions);
+        res.json(message);
     } catch (err) {
-        next(err);
+        res.json(response.generateInternalServerError(err));
     }
 });
 
@@ -132,11 +140,11 @@ router.post('/updateItems', async (req, res, next) => {
 
         ShopItem.create(updatedItems, (err) => {
             if (err) {
-                res.status(500).send(err);
+                res.json(response.generateInternalServerError(err));
                 return;
             }
 
-            res.status(200).send("Success");
+            res.json(response.generateOkResponse("Success"));
         });
     } else if (itemType === 'VOLUNTEER') {
         for (let i = 0; i < updatedItems.length; i++) {
@@ -145,14 +153,15 @@ router.post('/updateItems', async (req, res, next) => {
 
         VolunteerItem.create(updatedItems, (err) => {
             if (err) {
-                res.status(500).send(err);
+                res.json(response.generateInternalServerError(err));
                 return;
             }
 
-            res.status(200).send("Success");
+            res.json(response.generateOkResponse("Success"));
         });
     } else {
-        res.status(500).send("Invalid item type: should be either SHOP or VOLUNTEER.");
+        res.json(response.generateInternalServerError("Invalid item type:" +
+        "should be either SHOP or VOLUNTEER."));
     }
 });
 
@@ -160,11 +169,11 @@ router.post("/addTransaction", async (req, res, next) => {
     const { transaction } = req.body;
     Transaction.create(transaction, (err) => {
         if (err) {
-            res.status(500).send(err);
+            res.json(response.generateInternalServerError(err));
             return;
         }
 
-        res.status(200).send("Success");
+        res.json(response.generateOkResponse("Success"));
     });
 });
 
