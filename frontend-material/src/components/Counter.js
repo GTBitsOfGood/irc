@@ -38,14 +38,24 @@ class Counter extends Component {
   }
 
   feed(e) {
-    this.setState(
-      {
-        value: this.refs.feedQty.value
-      },
-      function() {
-        this.props.updateQuantity(this.state.value);
-      }
-    );
+    if (this.refs.feedQty.value <= -1) {
+      this.setState({
+          value: 1
+        },
+        function() {
+          this.props.updateQuantity(1);
+        }
+      )
+    } else {
+      this.setState(
+        {
+          value: this.refs.feedQty.value
+        },
+        function() {
+          this.props.updateQuantity(this.state.value);
+        }
+      );
+    }
   }
 
   resetQuantity() {
