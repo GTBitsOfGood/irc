@@ -20,9 +20,10 @@ mongoose.Promise = global.Promise;
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', api);
 
-app.get('/*', (req, res) => {
-  res.sendFile(__dirname + 'public/index.html');
-});
+//We still need to get front end connected to backend properly
+// app.get('/*', (req, res) => {
+//   res.sendFile(__dirname + '/frontend-material/public/index.html');
+// });
 
 // Hosting
 app.listen(port, err => {

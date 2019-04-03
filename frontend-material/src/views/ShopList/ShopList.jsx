@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+
 import Header from "components/Shop_Header";
 import Products from "components/Products";
-import "assets/css/style.css";
-import withStyles from "@material-ui/core/styles/withStyles";
+import ErrorDialog from "components/ErrorDialog";
 
+import "assets/css/style.css";
+
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = {
   cardCategoryWhite: {
@@ -48,7 +51,8 @@ class ShopStore extends Component {
       term: "",
       cartBounce: false,
       quantity: 1,
-      modalActive: false
+      modalActive: false,
+      open: false
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -58,17 +62,36 @@ class ShopStore extends Component {
     this.checkProduct = this.checkProduct.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
+    this.handleCheckout = this.handleCheckout.bind(this);
+    this.handleClose = this.handleClose.bind(this);
 
   }
+
+  callBackendAPI = async () => {
+      const response = await fetch('/api');
+      const body = await response.json();
+
+      if (body.errorCode != 200) {
+        this.setState({
+          open: true,
+          message: "error"
+        });
+      }
+      console.log(body);
+      return body.message;
+    };
+
   // Fetch Initial Set of Products from external API
   getProducts() {
-    let url =
-      "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/shop_products.json";
-    axios.get(url).then(response => {
-      this.setState({
-        products: response.data
-      });
-    });
+    // let url =
+    //   "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/shop_products.json";
+    // axios.get(url).then(response => {
+    //   this.setState({
+    //     products: response.data
+    //   });
+    // });
+    this.callBackendAPI()
+      .then(res => this.setState({ products: res.data }))
   }
   componentWillMount() {
     this.getProducts();
@@ -106,7 +129,6 @@ class ShopStore extends Component {
       function() {
         this.setState({
           cartBounce: false,
-          quantity: 1
         });
       }.bind(this),
       500
@@ -136,7 +158,9 @@ class ShopStore extends Component {
   sumTotalItems() {
     let total = 0;
     let cart = this.state.cart;
-    total = cart.length;
+    for (var i = 0; i < cart.length; i++) {
+      total += parseInt(cart[i].quantity);
+    }
     this.setState({
       totalItems: total
     });
@@ -159,6 +183,18 @@ class ShopStore extends Component {
     });
   }
 
+  //Handles the checking out of items
+  handleCheckout() {
+      console.log(this.state.cart);
+  }
+
+  handleClose() {
+    this.setState({
+      open: false
+    });
+  }
+
+
   render() {
     return (
       <div className="container">
@@ -176,6 +212,8 @@ class ShopStore extends Component {
           categoryTerm={this.state.category}
           updateQuantity={this.updateQuantity}
           productQuantity={this.state.moq}
+          isVolunteer={false}
+          handleCheckout={this.handleCheckout}
         />
         <Products
           editMode={false}
@@ -185,6 +223,11 @@ class ShopStore extends Component {
           productQuantity={this.state.quantity}
           updateQuantity={this.updateQuantity}
           time={false}
+        />
+        <ErrorDialog
+          open = {this.state.open}
+          handleClose = {this.handleClose}
+          message = {this.state.errorMessage}
         />
       </div>
     );

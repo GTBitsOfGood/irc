@@ -11,15 +11,24 @@ import Store from './components/Store';
 import ShoppingCart from './components/ShoppingCart';
 import VolunteerTime from './components/VolunteerTime';
 
+import Signup from './components/Signup';
 import Login from './components/Login';
 
 const history = createBrowserHistory();
 
+const SignupPage = (props) => (
+    <div id = "content">
+        <Signup store = {props.store.SignupModel} />
+    </div>
+);
+
 const Auth = (props) => (
   <div id="content">
-    <Login store={props.store.AuthModel} />
+    <Login store = {props.store.AuthModel} signup = {props.store.SignupModel} />
   </div>
 );
+
+
 
 const Main = (props) => (
   <div>
@@ -42,7 +51,9 @@ class App extends Component {
   render() {
     if (this.props.store.AuthModel.user) {
       return <Main store={this.props.store} />
-    }
+  } else if (this.props.store.SignupModel.onSignup) {
+      return <SignupPage store = {this.props.store} />
+  }
     return <Auth store={this.props.store} />
   }
 }

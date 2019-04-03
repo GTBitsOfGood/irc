@@ -4,16 +4,15 @@ import { observer } from 'mobx-react';
 
 import '../../assets/css/styles.css';
 
-class Login extends Component {
+class Signup extends Component {
   @observable username = '';
   @observable password = '';
-
 
   render() {
     return (
       <div className="login-clean">
         <div className="form">
-          <h2 className="sr-only">Login</h2>
+          <h2 className="sr-only">Signup</h2>
           <div className="form-group">
             <input className="form-control" type="email" name="email" placeholder="Email" onChange={(e) => this.username = e.target.value }/>
           </div>
@@ -22,16 +21,13 @@ class Login extends Component {
           </div>
           <div className="form-group">
             <button className="btn btn-primary btn-block" onClick={() => {
-              this.props.store.login(this.username, this.password);
-            }}>Log In</button>
+              this.props.store.signup(this.username, this.password);
+          }}>Signup</button>
           </div>
-          <button className="btn btn-primary btn-block" onClick = {() => {
-              this.props.signup.changeToSignup();
-          }}>Signup?</button>
         </div>
       </div>
     );
   }
 }
 
-export default Login;
+export default Signup;

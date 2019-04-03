@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+
 import axios from "axios";
+
 import Header from "components/Shop_Header";
 import Products from "components/Products";
+import ErrorDialog from "components/ErrorDialog";
+
 import "assets/css/style.css";
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -49,7 +53,8 @@ class TimeStore extends Component {
       category: "",
       cartBounce: false,
       quantity: 1,
-      modalActive: false
+      modalActive: false,
+      open: false
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -60,15 +65,17 @@ class TimeStore extends Component {
     this.checkProduct = this.checkProduct.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
+    this.handleVolunteerCheckout = this.handleVolunteerCheckout.bind(this);
+    this.handleClose = this.handleClose.bind(this);
 
   }
   // Fetch Initial Set of Products from external API
   getProducts() {
     let url =
-      "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/shop_products.json";
+      "https://raw.githubusercontent.com/GTBitsOfGood/irc/time_products_patch/frontend-material/time_products.json";
     axios.get(url).then(response => {
       this.setState({
-        products: response.data 
+        products: response.data
       });
 
       console.log(this.state.products);
@@ -97,7 +104,6 @@ class TimeStore extends Component {
     let productID = selectedProducts.id;
     let productQty = selectedProducts.quantity;
     if (this.checkProduct(productID)) {
-      console.log("hi");
       let index = cartItem.findIndex(x => x.id == productID);
       cartItem[index].quantity =
         Number(cartItem[index].quantity) + Number(productQty);
@@ -115,7 +121,6 @@ class TimeStore extends Component {
       function() {
         this.setState({
           cartBounce: false,
-          quantity: 1
         });
         console.log(this.state.quantity);
         console.log(this.state.cart);
@@ -145,7 +150,9 @@ class TimeStore extends Component {
   sumTotalItems() {
     let total = 0;
     let cart = this.state.cart;
-    total = cart.length;
+    for (var i = 0; i < cart.length; i++) {
+      total += parseInt(cart[i].quantity);
+    }
     this.setState({
       totalItems: total
     });
@@ -169,6 +176,20 @@ class TimeStore extends Component {
     });
   }
 
+  //this method handles the checkout of hours
+  handleVolunteerCheckout() {
+      console.log(this.state.cart);
+      this.setState({
+        open: true
+      })
+  }
+
+  handleClose() {
+    this.setState({
+      open: false
+    });
+  }
+
   render() {
     return (
       <div className="container">
@@ -186,6 +207,8 @@ class TimeStore extends Component {
           categoryTerm={this.state.category}
           updateQuantity={this.updateQuantity}
           productQuantity={this.state.moq}
+          isVolunteer={true}
+          handleCheckout={this.handleVolunteerCheckout}
         />
         <Products
           editMode={false}
@@ -195,6 +218,10 @@ class TimeStore extends Component {
           productQuantity={this.state.quantity}
           updateQuantity={this.updateQuantity}
           time={true}
+        />
+        <ErrorDialog
+          open = {this.state.open}
+          handleClose ={this.handleClose}
         />
       </div>
     );
