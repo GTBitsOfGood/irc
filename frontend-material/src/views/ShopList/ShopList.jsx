@@ -63,6 +63,7 @@ class ShopStore extends Component {
     this.updateQuantity = this.updateQuantity.bind(this);
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
     this.handleCheckout = this.handleCheckout.bind(this);
+    this.handleClose = this.handleClose.bind(this);
 
   }
 
