@@ -68,24 +68,30 @@ class ShopStore extends Component {
   }
 
   callBackendAPI = async () => {
-      const response = await fetch('/express_backend');
+      const response = await fetch('/api');
       const body = await response.json();
 
-      if(body.errorCode != 200) {
-
+      if (body.errorCode != 200) {
+        this.setState({
+          open: true,
+          message: "error"
+        });
       }
+      console.log(body);
       return body.message;
     };
 
   // Fetch Initial Set of Products from external API
   getProducts() {
-    let url =
-      "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/shop_products.json";
-    axios.get(url).then(response => {
-      this.setState({
-        products: response.data
-      });
-    });
+    // let url =
+    //   "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/shop_products.json";
+    // axios.get(url).then(response => {
+    //   this.setState({
+    //     products: response.data
+    //   });
+    // });
+    this.callBackendAPI()
+      .then(res => this.setState({ products: res.data }))
   }
   componentWillMount() {
     this.getProducts();
@@ -180,9 +186,6 @@ class ShopStore extends Component {
   //Handles the checking out of items
   handleCheckout() {
       console.log(this.state.cart);
-      this.setState({
-        open: true
-      });
   }
 
   handleClose() {
@@ -223,7 +226,8 @@ class ShopStore extends Component {
         />
         <ErrorDialog
           open = {this.state.open}
-          handleClose ={this.handleClose}
+          handleClose = {this.handleClose}
+          message = {this.state.errorMessage}
         />
       </div>
     );
