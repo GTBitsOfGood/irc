@@ -10,7 +10,8 @@ class ErrorDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: this.props.open
+      open: this.props.open,
+      message: this.props.message
     };
   }
 
@@ -31,19 +32,15 @@ class ErrorDialog extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Error"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
+              {this.props.message}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.props.handleClose} color="primary">
-              Disagree
-            </Button>
             <Button onClick={this.props.handleClose} color="primary" autoFocus>
-              Agree
+              Accept
             </Button>
           </DialogActions>
         </Dialog>

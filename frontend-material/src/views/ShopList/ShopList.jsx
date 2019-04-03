@@ -52,7 +52,8 @@ class ShopStore extends Component {
       cartBounce: false,
       quantity: 1,
       modalActive: false,
-      open: false
+      open: false,
+      message: ""
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -74,24 +75,21 @@ class ShopStore extends Component {
       if (body.errorCode != 200) {
         this.setState({
           open: true,
-          message: "error"
+          message: body.error
         });
+      } else {
+        return body.message;
       }
-      console.log(body);
-      return body.message;
     };
 
   // Fetch Initial Set of Products from external API
   getProducts() {
-    // let url =
-    //   "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/shop_products.json";
-    // axios.get(url).then(response => {
-    //   this.setState({
-    //     products: response.data
-    //   });
-    // });
     this.callBackendAPI()
-      .then(res => this.setState({ products: res.data }))
+      .then(function(message) {
+        if (message) {
+          console.log("success");
+        }
+      });
   }
   componentWillMount() {
     this.getProducts();
@@ -227,7 +225,7 @@ class ShopStore extends Component {
         <ErrorDialog
           open = {this.state.open}
           handleClose = {this.handleClose}
-          message = {this.state.errorMessage}
+          message = {this.state.message}
         />
       </div>
     );
