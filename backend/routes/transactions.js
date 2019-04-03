@@ -78,7 +78,7 @@ router.get('/getVolunteerItems', async (req, res, next) => {
         }
     } else {
         try {
-            const allItemsByMostRecentVersion = await VolunteerItem.aggregate(
+            let allItemsByMostRecentVersion = await VolunteerItem.aggregate(
                 [
                     // Group by revisionNumber, assembling an array of docs with each distinct value.
                     {
@@ -93,8 +93,11 @@ router.get('/getVolunteerItems', async (req, res, next) => {
                     { $limit: 1 }
                 ]
             );
+            allItemsByMostRecentVersion = allItemsByMostRecentVersion[0].items;
+            
             const message = response.generateOkResponse("Success", 
-            allItemsByMostRecentVersion[0].items);
+            allItemsByMostRecentVersion);
+            
             res.json(message)
         } catch (err) {
             res.json(response.generateInternalServerError(err));
