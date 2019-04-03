@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+
 import Header from "components/Shop_Header";
 import Products from "components/Products";
-import "assets/css/style.css";
-import withStyles from "@material-ui/core/styles/withStyles";
+import ErrorDialog from "components/ErrorDialog";
 
+import "assets/css/style.css";
+
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = {
   cardCategoryWhite: {
@@ -48,7 +51,8 @@ class ShopStore extends Component {
       term: "",
       cartBounce: false,
       quantity: 1,
-      modalActive: false
+      modalActive: false,
+      open: false
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -61,6 +65,17 @@ class ShopStore extends Component {
     this.handleCheckout = this.handleCheckout.bind(this);
 
   }
+
+  callBackendAPI = async () => {
+      const response = await fetch('/express_backend');
+      const body = await response.json();
+
+      if(body.errorCode != 200) {
+
+      }
+      return body.message;
+    };
+
   // Fetch Initial Set of Products from external API
   getProducts() {
     let url =
@@ -164,7 +179,17 @@ class ShopStore extends Component {
   //Handles the checking out of items
   handleCheckout() {
       console.log(this.state.cart);
+      this.setState({
+        open: true
+      });
   }
+
+  handleClose() {
+    this.setState({
+      open: false
+    });
+  }
+
 
   render() {
     return (
@@ -194,6 +219,10 @@ class ShopStore extends Component {
           productQuantity={this.state.quantity}
           updateQuantity={this.updateQuantity}
           time={false}
+        />
+        <ErrorDialog
+          open = {this.state.open}
+          handleClose ={this.handleClose}
         />
       </div>
     );
