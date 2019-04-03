@@ -41,7 +41,7 @@ router.get('/getShopItems', async (req, res, next) => {
         }
     } else {
         try {
-            const allItemsByMostRecentVersion = await ShopItem.aggregate(
+            let allItemsByMostRecentVersion = await ShopItem.aggregate(
                 [
                     // Group by revisionNumber, assembling an array of docs with each distinct value.
                     {
@@ -56,7 +56,8 @@ router.get('/getShopItems', async (req, res, next) => {
                     { $limit: 1 }
                 ]
             );
-            const message = response.generateOkResponse("Success", allItemsByMostRecentVersion[0]);
+            allItemsByMostRecentVersion = allItemsByMostRecentVersion[0].items;
+            const message = response.generateOkResponse("Success", allItemsByMostRecentVersion);
             res.json(message)
         } catch (err) {
             res.json(response.generateInternalServerError(err));
