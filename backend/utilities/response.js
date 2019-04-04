@@ -18,7 +18,7 @@ function generateResponseMessage (message, errorCode, error = null,
         response.error = error;
     }
     if (!!additionalParameters) {
-        response = Object.assign(response, additionalParameters)
+        response.body = additionalParameters;
     }
     return response;
 }
