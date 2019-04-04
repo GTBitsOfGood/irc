@@ -69,28 +69,30 @@ class ShopStore extends Component {
   }
 
   callBackendAPI = async () => {
-      const response = await fetch('/api');
-      const body = await response.json();
+      const response = await fetch('/api/transactions/getShopItems');
+      const json = await response.json();
 
-      if (body.errorCode != 200) {
+      if (json.errorCode != 200) {
         this.setState({
           open: true,
-          message: body.error
+          message: json.message
         });
       } else {
-        return body.message;
+        return json.body;
       }
     };
 
   // Fetch Initial Set of Products from external API
   getProducts() {
     this.callBackendAPI()
-      .then(function(message) {
-        if (message) {
-          console.log("success");
-        }
+      .then(response => {
+        this.setState({
+          products: response
+        });
+        console.log(this.state.products);
       });
   }
+
   componentWillMount() {
     this.getProducts();
   }
@@ -166,6 +168,7 @@ class ShopStore extends Component {
   sumTotalAmount() {
     let total = 0;
     let cart = this.state.cart;
+    console.log(cart);
     for (var i = 0; i < cart.length; i++) {
       total += cart[i].price * parseInt(cart[i].quantity);
     }
