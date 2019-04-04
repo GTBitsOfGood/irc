@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+
 import axios from "axios";
+
 import Header from "components/Shop_Header";
 import Products from "components/Products";
+import ErrorDialog from "components/ErrorDialog";
+
 import "assets/css/style.css";
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -49,7 +53,8 @@ class TimeStore extends Component {
       category: "",
       cartBounce: false,
       quantity: 1,
-      modalActive: false
+      modalActive: false,
+      open: false
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -61,6 +66,7 @@ class TimeStore extends Component {
     this.updateQuantity = this.updateQuantity.bind(this);
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
     this.handleVolunteerCheckout = this.handleVolunteerCheckout.bind(this);
+    this.handleClose = this.handleClose.bind(this);
 
   }
   // Fetch Initial Set of Products from external API
@@ -173,6 +179,15 @@ class TimeStore extends Component {
   //this method handles the checkout of hours
   handleVolunteerCheckout() {
       console.log(this.state.cart);
+      this.setState({
+        open: true
+      })
+  }
+
+  handleClose() {
+    this.setState({
+      open: false
+    });
   }
 
   render() {
@@ -203,6 +218,10 @@ class TimeStore extends Component {
           productQuantity={this.state.quantity}
           updateQuantity={this.updateQuantity}
           time={true}
+        />
+        <ErrorDialog
+          open = {this.state.open}
+          handleClose ={this.handleClose}
         />
       </div>
     );
