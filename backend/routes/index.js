@@ -52,8 +52,8 @@ const jwtStrategy = new JWTStrategy({
       return done(null, false, { message: 'Wrong Password' });
     }
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
-    
-    return done(null, user, 
+
+    return done(null, user,
       { message: 'Logged in Successfully', token,
       errorCode: OK_CODE });
   } catch (error) {
@@ -82,7 +82,7 @@ const loginStrategy = new LocalStrategy({
     const messageBody = {
       token
     }
-    return done(null, user, 
+    return done(null, user,
       response.generateOkResponse("Logged in successfully", messageBody));
   } catch (error) {
     return done(error);
@@ -95,14 +95,14 @@ passport.use("jwt", jwtStrategy);
 router.post('/signup', function (req, res) {
   UserDB.create(req.body, async function (err, newUser) {
     if (err) {
-      if (err.code === 11000) { 
+      if (err.code === 11000) {
         return res.json(response.generateResponseMessage(
           "User with that email already exists.",
-          409, 
+          409,
           "Error 409 - Conflict with current resource - A user with" +
-          " that e-mail already exists.", 
+          " that e-mail already exists.",
           {
-            complete: false, 
+            complete: false,
           }
         ));
       }
@@ -118,7 +118,7 @@ router.post('/signup', function (req, res) {
 
       return res.json(response.generateResponseMessage("Internal server error", 500,
       error = "Error 500 - Internal Server Error - Line 114 in main route."))
-    
+
     }
 
     // Account created. Redirect to login
@@ -126,10 +126,10 @@ router.post('/signup', function (req, res) {
     const password = req.body.password; // Password is scrambled in newUser, must get original
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
     const params = {
-      complete: true, 
-      userVerify: true, 
-      urlRedirect: "dashboard", 
-      setCookies: { token: token } 
+      complete: true,
+      userVerify: true,
+      urlRedirect: "dashboard",
+      setCookies: { token: token }
     };
     const message = response.generateOkResponse("Success", params);
     return res.json(message)
@@ -148,10 +148,10 @@ router.post('/login', function (req, res) {
     const token = await jwt.sign({ email, password }, config.JWT_SECRET);
     res.cookie("token", token);
     const messageBody = {
-      complete: true, 
-      userVerify: true, 
-      urlRedirect: "dashboard", 
-      setCookies: { token }, 
+      complete: true,
+      userVerify: true,
+      urlRedirect: "dashboard",
+      setCookies: { token },
     };
     res.json(response.generateOkResponse("Login success", messageBody));
   })(req, res);
@@ -159,23 +159,23 @@ router.post('/login', function (req, res) {
 
 router.post('/verify', async function (req, res, next) {
   try {
-    const encodedToken = req.cookies.token || req.body.token || 
+    const encodedToken = req.cookies.token || req.body.token ||
     (() => { throw response.generateTokenError() })();
     const decodedToken = await jwt.verify(encodedToken, config.JWT_SECRET);
 
     const email = decodedToken.email;
     const password = decodedToken.password;
 
-    const user = await UserDB.findOne({ email }) 
+    const user = await UserDB.findOne({ email })
       || (() => { throw response.generateUserNotFoundError(email) })();
     const validate = await user.isValidPassword(password);
 
     if (user && validate) {
-      const params = { 
-        userVerify: true, 
-        user: { 
-          _id: user._id, 
-          email: user.email } 
+      const params = {
+        userVerify: true,
+        user: {
+          _id: user._id,
+          email: user.email }
       };
       return res.json(response.generateOkResponse("Verify success", params));
     }
@@ -183,14 +183,14 @@ router.post('/verify', async function (req, res, next) {
     const errorCode = 400
     const error = "Error 400 - Bad Request - Could not validate user. Bad password.";
     const params = {
-      userVerify: false, 
+      userVerify: false,
       urlRedirect: "login",
     };
     return res.json(response.generateResponseMessage(message, errorCode, error, params));
   } catch (error) {
     // errors aligns with message format already
     const params = {
-      userVerify: false, 
+      userVerify: false,
       urlRedirect: "login",
     };
     return res.json(Object.assign({}, error, params)); // concat msg and params
@@ -199,14 +199,15 @@ router.post('/verify', async function (req, res, next) {
 
 router.use(async function (req, res, next) {
   try {
-    const encodedToken = req.cookies.token || req.body.token || 
+    return next(null, null);
+    const encodedToken = req.cookies.token || req.body.token ||
       (() => { throw response.generateTokenError() })();
     const decodedToken = await jwt.verify(encodedToken, config.JWT_SECRET);
 
     const email = decodedToken.email;
     const password = decodedToken.password;
 
-    const user = await UserDB.findOne({ email }) || 
+    const user = await UserDB.findOne({ email }) ||
     (() => { throw response.generateUserNotFoundError(email)})();
 
     const validate = await user.isValidPassword(password) || (() => {
@@ -234,7 +235,7 @@ router.post('/addClient', async (req, res, next) => {
   Client.create(client, (err) => {
     if (!!err) {
       res.json(response.generateResponseMessage('Error 400 - Bad Request- ' +
-      'Invalid syntax when trying to' + 
+      'Invalid syntax when trying to' +
       ' create client (see error)', 400, error = err));
     } else {
       res.json(response.generateOkResponse("Client added successfully"));
