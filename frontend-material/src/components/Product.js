@@ -22,15 +22,22 @@ class Product extends Component {
     super(props);
     this.state = {
       selectedProduct: {},
-      isAdded: false
+      isAdded: false,
+      quantity: 1
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleMatchAmountChange = this.handleMatchAmountChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.updateQuantity = this.updateQuantity.bind(this);
   }
 
+  updateQuantity(qty) {
+    this.setState({
+      quantity: qty
+    });
+  }
 
   handleNameChange(event) {
     let newName;
@@ -105,7 +112,7 @@ class Product extends Component {
     let name = this.props.name;
     let price = this.props.price;
     let id = this.props.id;
-    let quantity = this.props.productQuantity;
+    let quantity = this.state.quantity;
     if (!this.props.edit) {
     return (
       <div className="product">
@@ -116,8 +123,8 @@ class Product extends Component {
           {this.props.time? <div></div> : <center><h3 className="product-price">{this.props.price}</h3></center>}
 
           <center><Counter
-            productQuantity={quantity}
-            updateQuantity={this.props.updateQuantity}
+            productQuantity={this.state.quantity}
+            updateQuantity={this.updateQuantity}
             resetQuantity={this.resetQuantity}
             /></center>
 
@@ -125,13 +132,7 @@ class Product extends Component {
                 <button
                 className={!this.state.isAdded ? "" : "added"}
                 type="button"
-                onClick={this.addToCart.bind(
-                this,
-                name,
-                price,
-                id,
-                quantity
-                )}
+                onClick={this.addToCart.bind(this, name, price, id, quantity)}
                 >
                 {this.props.time? (!this.state.isAdded ? "ADD HOURS" : "✔ ADDED") : (!this.state.isAdded ? "ADD TO CART" : "✔ ADDED")}
               </button>

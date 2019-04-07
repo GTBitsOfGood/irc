@@ -168,7 +168,6 @@ class ShopStore extends Component {
   sumTotalAmount() {
     let total = 0;
     let cart = this.state.cart;
-    console.log(cart);
     for (var i = 0; i < cart.length; i++) {
       total += cart[i].price * parseInt(cart[i].quantity);
     }

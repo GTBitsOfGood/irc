@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-
 import axios from "axios";
 
 import Header from "components/Shop_Header";
@@ -8,8 +7,8 @@ import Products from "components/Products";
 import ErrorDialog from "components/ErrorDialog";
 
 import "assets/css/style.css";
-import withStyles from "@material-ui/core/styles/withStyles";
 
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = {
   cardCategoryWhite: {
@@ -41,7 +40,7 @@ const styles = {
   }
 };
 
-class TimeStore extends Component {
+class ShopStore extends Component {
   constructor() {
     super();
     this.state = {
@@ -50,37 +49,50 @@ class TimeStore extends Component {
       totalItems: 0,
       totalAmount: 0,
       term: "",
-      category: "",
       cartBounce: false,
       quantity: 1,
       modalActive: false,
-      open: false
+      open: false,
+      message: ""
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
-    this.handleCategory = this.handleCategory.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.sumTotalItems = this.sumTotalItems.bind(this);
     this.sumTotalAmount = this.sumTotalAmount.bind(this);
     this.checkProduct = this.checkProduct.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
-    this.handleVolunteerCheckout = this.handleVolunteerCheckout.bind(this);
+    this.handleCheckout = this.handleCheckout.bind(this);
     this.handleClose = this.handleClose.bind(this);
 
   }
+
+  callBackendAPI = async () => {
+      const response = await fetch('/api/transactions/getVolunteerItems');
+      const json = await response.json();
+
+      if (json.errorCode != 200) {
+        this.setState({
+          open: true,
+          message: json.message
+        });
+      } else {
+        return json.body;
+      }
+    };
+
   // Fetch Initial Set of Products from external API
   getProducts() {
-    let url =
-      "https://raw.githubusercontent.com/GTBitsOfGood/irc/time_products_patch/frontend-material/time_products.json";
-    axios.get(url).then(response => {
-      this.setState({
-        products: response.data
+    this.callBackendAPI()
+      .then(response => {
+        this.setState({
+          products: response
+        });
+        console.log(this.state.products);
       });
-
-      console.log(this.state.products);
-    });
   }
+
   componentWillMount() {
     this.getProducts();
   }
@@ -93,11 +105,7 @@ class TimeStore extends Component {
   handleMobileSearch() {
     this.setState({ term: "" });
   }
-  // Filter by Category
-  handleCategory(event) {
-    this.setState({ category: event.target.value });
-    console.log(this.state.category);
-  }
+
   // Add to Cart
   handleAddToCart(selectedProducts) {
     let cartItem = this.state.cart;
@@ -122,14 +130,13 @@ class TimeStore extends Component {
         this.setState({
           cartBounce: false,
         });
-        console.log(this.state.quantity);
-        console.log(this.state.cart);
       }.bind(this),
-      1000
+      500
     );
     this.sumTotalItems(this.state.cart);
     this.sumTotalAmount(this.state.cart);
   }
+
   handleRemoveProduct(id, e) {
     let cart = this.state.cart;
     let index = cart.findIndex(x => x.id == id);
@@ -141,6 +148,7 @@ class TimeStore extends Component {
     this.sumTotalAmount(this.state.cart);
     e.preventDefault();
   }
+
   checkProduct(productID) {
     let cart = this.state.cart;
     return cart.some(function(item) {
@@ -170,18 +178,14 @@ class TimeStore extends Component {
 
   //Reset Quantity
   updateQuantity(qty) {
-    console.log("quantity added...");
     this.setState({
       quantity: qty
     });
   }
 
-  //this method handles the checkout of hours
-  handleVolunteerCheckout() {
+  //Handles the checking out of items
+  handleCheckout() {
       console.log(this.state.cart);
-      this.setState({
-        open: true
-      })
   }
 
   handleClose() {
@@ -190,11 +194,12 @@ class TimeStore extends Component {
     });
   }
 
+
   render() {
     return (
       <div className="container">
         <Header
-          placetext="Search for time..."
+          placetext="Search for items..."
           cartActive={true}
           cartBounce={this.state.cartBounce}
           total={this.state.totalAmount}
@@ -207,8 +212,8 @@ class TimeStore extends Component {
           categoryTerm={this.state.category}
           updateQuantity={this.updateQuantity}
           productQuantity={this.state.moq}
-          isVolunteer={true}
-          handleCheckout={this.handleVolunteerCheckout}
+          isVolunteer={false}
+          handleCheckout={this.handleCheckout}
         />
         <Products
           editMode={false}
@@ -221,11 +226,12 @@ class TimeStore extends Component {
         />
         <ErrorDialog
           open = {this.state.open}
-          handleClose ={this.handleClose}
+          handleClose = {this.handleClose}
+          message = {this.state.message}
         />
       </div>
     );
   }
 }
 
-export default withStyles(styles)(TimeStore);
+export default withStyles(styles)(ShopStore);
