@@ -89,6 +89,20 @@ const loginStrategy = new LocalStrategy({
   }
 });
 
+/**
+ * @param res - the response
+ * @param email - the email
+ * @param password - the user's password - unscrambled
+ * @return - the token
+ * 
+ * BE CAREFUL WHEN CALLING THIS METHOD: SIGNS TOKENS AS VALID
+ */
+async function signToken(res, email, password) {
+  const token = await jwt.sign({ email, password }, config.JWT_SECRET);
+  res.cookie("token", token);
+  return token;
+}
+
 passport.use('login', loginStrategy);
 passport.use("jwt", jwtStrategy);
 
@@ -123,8 +137,7 @@ router.post('/signup', function (req, res) {
 
     // Account created. Redirect to login
     const email = newUser.email;
-    const password = req.body.password; // Password is scrambled in newUser, must get original
-    const token = await jwt.sign({ email, password }, config.JWT_SECRET);
+
     const params = {
       complete: true, 
       userVerify: true, 
@@ -143,10 +156,7 @@ router.post('/login', function (req, res) {
       res.json(Object.assign({}, returnMsg, {complete: false}));
       return;
     }
-    const email = req.body.email;
-    const password = req.body.password; // Password is scrambled in newUser, must get original
-    const token = await jwt.sign({ email, password }, config.JWT_SECRET);
-    res.cookie("token", token);
+    const token = await signToken(res, req.body.email, req.body.password);
     const messageBody = {
       complete: true, 
       userVerify: true, 
@@ -217,6 +227,7 @@ router.use(async function (req, res, next) {
     })();
 
     // if the user, continue with the res
+    res.locals.user = user;
     return next(null, user);
   } catch (error) {
     // assume the error conforms to the message requirements
@@ -225,8 +236,31 @@ router.use(async function (req, res, next) {
   }
 });
 
-// ROUTES PROTECTED BELOW THIS LINE
 
+// ROUTES PROTECTED BELOW THIS LINE
+router.post('/changePassword', async function(req, res, next) {
+  const user = res.locals.user;
+  let returnMessage;
+  if (!user) {
+    returnMessage = 
+    response.generateResponseMessage("The user object could not be found in the"
+    + " request", 400);
+  } else {
+    const newPassword = req.body.password;
+    if (!newPassword) {
+      returnMessage = 
+      response.generateResponseMessage("No new password specified under the 'passwprd'"
+      + " field", 400);
+    } else {
+      user.password = newPassword;
+      user.save();
+      returnMessage = response.generateOkResponse("Password updated")
+      await signToken(res, user.email, newPassword);
+
+    } 
+  }
+  res.json(returnMessage);
+});
 router.use('/transactions', transactionsApi);
 
 router.post('/addClient', async (req, res, next) => {
