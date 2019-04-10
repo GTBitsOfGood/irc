@@ -75,6 +75,7 @@ class UserModify extends React.Component {
       6000
     );
   }
+  
   render() {
     const { classes } = this.props;
     return (

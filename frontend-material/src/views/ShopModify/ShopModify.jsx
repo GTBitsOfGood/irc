@@ -63,19 +63,51 @@ class ShopMod extends Component {
   }
   // Fetch Initial Set of Products from external API
   getProducts() {
-    let url =
-      "https://raw.githubusercontent.com/GTBitsOfGood/irc/material-dash/frontend-material/shop_products.json";
-    axios.get(url).then(response => {
-
-      this.setState({
-        products: response.data,
-        orig_products: response.data.slice()
+    this.callBackendAPI('/api/transactions/getShopItems', 'get')
+      .then(response => {
+        this.setState({
+          products: response
+        });
       });
-    });
   }
   componentWillMount() {
     this.getProducts();
   }
+
+  callBackendAPI = async (route, type ,body) => {
+    if (type=='post') {
+      const response = await fetch(route, {
+        method: type,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+      const json = await response.json();
+      if (json.errorCode != 200) {
+        this.setState({
+          open: true,
+          message: json.message
+        });
+      } else {
+        return json.body;
+      }
+    } else {
+      const response = await fetch(route, {
+        method: type,
+      });
+      const json = await response.json();
+      if (json.errorCode != 200) {
+        this.setState({
+          open: true,
+          message: json.message
+        });
+      } else {
+        return json.body;
+      }
+    }
+    };
 
   // Search by Keyword
   handleSearch(event) {
@@ -132,7 +164,7 @@ class ShopMod extends Component {
 
   //This method handles if the admin wants to save their changes to the database
   handleSave() {
-      console.log("saved");
+    // callBackendAPI('/api/transactions/updateItems')
   }
 
   render() {
