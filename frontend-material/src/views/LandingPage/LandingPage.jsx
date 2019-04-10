@@ -1,4 +1,5 @@
 import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
 // @material-ui/core
@@ -42,41 +43,39 @@ class LandingPage extends React.Component {
       username: "test_user1",
       open: false,
       message: "",
-      isNotLoggedIn: false
+      isNotLoggedIn: false,
+      username: "",
+      password: "",
+      redirect: false
     }
     this.handleClose = this.handleClose.bind(this);
-    this.displayLogin = this.displayLogin.bind(this);
   }
 
   componentWillMount() {
-    this.callBackendAPI('/api/verify').then(response => {
-      console.log(response);
+    this.callBackendAPI('/api/verify', {}).then(response => {
       if (response === "Error 401 - Unauthorized - No login token  provided") {
         this.setState({
           isNotLoggedIn: true
         });
+      } else {
+        this.setState({
+          username: response.user.email
+        })
       }
     });
   }
 
-
-
-  handleClose() {
-    this.setState({
-      open: false
-    });
-  }
-
-  handleLogin() {
-    console.log("logging in");
-  }
-
-  callBackendAPI = async (route) => {
+  callBackendAPI = async (route, body) => {
       const response = await fetch(route, {
-        method: 'post'
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
       });
       const json = await response.json();
-      console.log(json);
+      // console.log(json);
       if (json.error === "Error 401 - Unauthorized - No login token  provided") {
         return json.error;
       } else if (json.errorCode != 200) {
@@ -89,6 +88,34 @@ class LandingPage extends React.Component {
       }
     };
 
+  handleClose() {
+    this.setState({
+      open: false
+    });
+  }
+
+  handleLogin() {
+    this.callBackendAPI('/api/login', {
+      email: this.state.username,
+      password: this.state.password
+    }).then(response => {
+      this.setState({
+        redirect: response.urlRedirect
+      })
+    })
+  }
+
+  handleSignup() {
+    this.callBackendAPI('/api/signup', {
+      email: this.state.username,
+      password: this.state.password
+    }).then(response => {
+      this.setState({
+        redirect: response.urlRedirect
+      })
+    })
+  }
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -98,9 +125,13 @@ class LandingPage extends React.Component {
   };
   render() {
     const { classes } = this.props;
+    if (this.state.redirect != false) {
+      return <Redirect to={this.state.redirect} />
+    }
+
     return (
     <div>
-      <GridItem xs={12} sm={12} md={12}>
+    {!this.state.isNotLoggedIn &&
       <center>
         <Card style={{ width: "60%" }}>
           <CardHeader color="primary">
@@ -111,6 +142,7 @@ class LandingPage extends React.Component {
           </CardBody>
         </Card>
       </center>
+    }
       <div>
         {this.state.isNotLoggedIn &&
           <center>
@@ -122,12 +154,13 @@ class LandingPage extends React.Component {
               <TextField
                 label="Username"
                 margin="normal"
-                // variant="filled"
+                onChange={e => this.setState({ username: e.target.value })}
               />
               <TextField
                 margin="normal"
                 label="Password"
-                // variant="filled"
+                inputProps={{type: "password"}}
+                onChange={e => this.setState({ password: e.target.value })}
               />
             </CardBody>
               <CardBody>
@@ -136,16 +169,23 @@ class LandingPage extends React.Component {
                 color="success"
                 onClick = {() => this.handleLogin()}
                 round = {true}
-
               >
                 Login
               </Button>
-              <Button style={{ width:"5rem", left:"1rem" }} color="success" round="true">Sign Up</Button>
+              <Button
+                style={{ width:"5rem", left:"1rem" }}
+                color="success"
+                round="true"
+                onClick = {() => this.handleSignup()}
+              >
+                Sign Up
+              </Button>
               </CardBody>
           </Card>
           </center>
         }
       </div>
+      {!this.state.isNotLoggedIn &&
         <center>
         <Card style={{ width: "20rem" }}>
           <CardBody>
@@ -155,7 +195,7 @@ class LandingPage extends React.Component {
           </CardBody>
         </Card>
         </center>
-      </GridItem>
+      }
       <ErrorDialog
         open = {this.state.open}
         handleClose = {this.handleClose}

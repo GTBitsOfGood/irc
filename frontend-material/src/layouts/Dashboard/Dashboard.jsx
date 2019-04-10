@@ -26,7 +26,7 @@ const switchRoutes = (
         return <Redirect from={prop.path} to={prop.to} key={key} />;
       return <Route path={prop.path} component={prop.component} key={key} />;
     })}
-  </Switch> 
+  </Switch>
 );
 
 class App extends React.Component {
@@ -94,7 +94,7 @@ class App extends React.Component {
           ) : (
             <div className={classes.map}>{switchRoutes}</div>
           )}
-          
+
         </div>
       </div>
     );
