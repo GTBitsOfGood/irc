@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Transaction = require('../model/transaction.js');
+const UserModel = require('../model/user');
+const UserDB = mongoose.model('User', UserModel.__Schema);
 const { ShopItem, VolunteerItem } = require('../model/transactionItem.js')
 const response = require('../utilities/response.js');
 
@@ -179,6 +182,18 @@ router.post("/addTransaction", async (req, res, next) => {
 
         res.json(response.generateOkResponse("Success"));
     });
+});
+
+router.get("/getStats", async (req, res, next) => {
+    const userCount = await UserDB.getCount();
+    const shopCount = (await Transaction.getShopItems()).length;
+    const volunteerCount = (await Transaction.getVolunteerItems()).length;
+    const output = {
+        userCount,
+        shopCount,
+        volunteerCount
+    }
+    res.json(response.generateOkResponse("Statistics all good", output));
 });
 
 module.exports = router;

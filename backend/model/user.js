@@ -36,6 +36,10 @@ UserSchema.methods.isValidPassword = async function (password) {
   return compare;
 }
 
+UserSchema.statics.getCount = async function() {
+  return this.countDocuments({});
+}
+
 const UserModel = mongoose.model('User', UserSchema);
 
 module.exports = UserModel;
