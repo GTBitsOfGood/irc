@@ -65,6 +65,7 @@ function UserProfile(props) {
               </GridContainer>
             </CardBody>
             <CardFooter>
+              <Button color="primary">Reset Password</Button>
               <Button color="primary">Update Profile</Button>
             </CardFooter>
           </Card>

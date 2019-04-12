@@ -90,5 +90,5 @@
     "webpack-dev-server": "^3.1.4",
     "webpack-merge": "^4.1.2"
   },
-  "proxy" : "http://localhost:5000/"
+  "proxy": "http://localhost:5000/"
 }
