@@ -36,6 +36,21 @@ const TransactionSchema = new Schema({
     }
 });
 
+/**
+ * @param itemType EITHER 'VOLUNTEER' or 'SHOP'
+ */
+TransactionSchema.statics.getItemsByType = async function(itemType) {
+    return this.find({type: itemType})
+}
+
+TransactionSchema.statics.getShopItems = async function() {
+    return this.getItemsByType("SHOP");
+}
+
+TransactionSchema.statics.getVolunteerItems = async function() {
+    return this.getItemsByType("VOLUNTEER");
+}
+
 const Transaction = mongoose.model('Transaction', TransactionSchema);
 module.exports = Transaction;
 
