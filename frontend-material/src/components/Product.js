@@ -42,24 +42,14 @@ class Product extends Component {
   handleNameChange(event) {
     let newName;
     newName = event.target.value;
-    this.props.updateProduct(event, {
-          name: newName,
-          price: this.props.price,
-          id: this.props.id,
-          quantity: this.props.quantity
-        });
+    this.props.updateProduct(event, "name", this.props.id, newName);
   }
 
   handlePriceChange(event) {
     let newPrice;
     newPrice = event.target.value;
     if (!isNaN(newPrice)) {
-      this.props.updateProduct(event, {
-            name: this.props.name,
-            price: newPrice,
-            id: this.props.id,
-            quantity: this.props.quantity
-          });
+      this.props.updateProduct(event, "price", this.props.id, newPrice);
     }
   }
 
@@ -67,12 +57,7 @@ class Product extends Component {
     let newAmount;
     newAmount = event.target.value;
     if (!isNaN(newAmount)) {
-      this.props.updateProduct(event, {
-            name: this.props.name,
-            price: this.props.price,
-            id: this.props.id,
-            quantity: newAmount
-          });
+      this.props.updateProduct(event, "matched", this.props.id, newAmount);
     }
   }
 

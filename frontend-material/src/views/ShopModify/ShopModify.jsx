@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import Header from "components/Shop_Header";
 import Products from "components/Products";
@@ -51,7 +52,8 @@ class ShopMod extends Component {
       cartBounce: false,
       quantity: 1,
       modalActive: false,
-      orig_products: []
+      orig_products: [],
+      redirect: false
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -74,9 +76,13 @@ class ShopMod extends Component {
             message: response.message
           });
         } else {
+          for (var i = 0; i < response.length; i++) {
+            delete response[i]._id;
+          }
           this.setState({
             products: response
           });
+          console.log(response);
         }
       });
   }
@@ -107,12 +113,16 @@ class ShopMod extends Component {
   }
 
   // Update product list
-  handleUpdateProduct(e, product) {
-
+  handleUpdateProduct(e, type, id, value) {
     let up_products = this.state.products;
-    let index = up_products.findIndex(x => x.id == product.id);
-    up_products[index] = product;
-
+    let index = up_products.findIndex(x => x.id == id);
+    if (type === "name") {
+      up_products[index].name = value;
+    } else if (type === "price") {
+      up_products[index].price = parseInt(value, 10);
+    } else if (type === "matched"){
+      up_products[index].percentageMatched = value;
+    }
     this.setState({
       products: up_products
     });
@@ -139,7 +149,14 @@ class ShopMod extends Component {
 
   //This method handles if the admin wants to save their changes to the database
   handleSave() {
-    // callBackendAPI('/api/transactions/updateItems')
+    callBackendAPI('/api/transactions/updateItems', 'post', {
+      itemType: "SHOP",
+      updatedItems: this.state.products
+    }).then(response => {
+      this.setState({
+        redirect: "/shop"
+      });
+    })
   }
 
   handleClose() {
@@ -150,6 +167,10 @@ class ShopMod extends Component {
 
 
   render() {
+    if (this.state.redirect != false) {
+      return <Redirect to={this.state.redirect} />
+    }
+
     return (
       <div className="container">
         <Header

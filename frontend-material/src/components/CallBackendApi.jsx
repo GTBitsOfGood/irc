@@ -2,7 +2,7 @@ import React from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 
 export async function callBackendAPI(route, type, body) {
-  if (type=='post') {
+  if (type ==='post') {
     const response = await fetch(route, {
       method: type,
       headers: {
@@ -12,7 +12,7 @@ export async function callBackendAPI(route, type, body) {
       body: JSON.stringify(body)
     });
     const json = await response.json();
-    if (json.errorCode != 200) {
+    if (json.errorCode !== 200) {
       return json;
     } else {
       return json.body;
@@ -22,7 +22,7 @@ export async function callBackendAPI(route, type, body) {
       method: type,
     });
     const json = await response.json();
-    if (json.errorCode != 200) {
+    if (json.errorCode !== 200) {
       return json;
     } else {
       return json.body;
