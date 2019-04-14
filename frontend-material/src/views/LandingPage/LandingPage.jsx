@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
+import {callBackendAPI} from "components/CallBackendApi";
 
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -52,8 +53,8 @@ class LandingPage extends React.Component {
   }
 
   componentWillMount() {
-    this.callBackendAPI('/api/verify', {}).then(response => {
-      if (response === "Error 401 - Unauthorized - No login token  provided") {
+    callBackendAPI('/api/verify', 'post', {}).then(response => {
+      if (response.error === "Error 401 - Unauthorized - No login token  provided") {
         this.setState({
           isNotLoggedIn: true
         });
@@ -65,29 +66,6 @@ class LandingPage extends React.Component {
     });
   }
 
-  callBackendAPI = async (route, body) => {
-      const response = await fetch(route, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      });
-      const json = await response.json();
-      // console.log(json);
-      if (json.error === "Error 401 - Unauthorized - No login token  provided") {
-        return json.error;
-      } else if (json.errorCode != 200) {
-        this.setState({
-          open: true,
-          message: json.message
-        });
-      } else {
-        return json.body;
-      }
-    };
-
   handleClose() {
     this.setState({
       open: false
@@ -95,24 +73,38 @@ class LandingPage extends React.Component {
   }
 
   handleLogin() {
-    this.callBackendAPI('/api/login', {
+    callBackendAPI('/api/login','post', {
       email: this.state.username,
       password: this.state.password
     }).then(response => {
-      this.setState({
-        redirect: response.urlRedirect
-      })
+      if (response.error != null) {
+        this.setState({
+          open: true,
+          message: response.message
+        });
+      } else {
+        this.setState({
+          redirect: response.urlRedirect
+        })
+      }
     })
   }
 
   handleSignup() {
-    this.callBackendAPI('/api/signup', {
+    callBackendAPI('/api/signup', 'post', {
       email: this.state.username,
       password: this.state.password
     }).then(response => {
-      this.setState({
-        redirect: response.urlRedirect
-      })
+      if (response.error != null) {
+        this.setState({
+          open: true,
+          message: response.message
+        });
+      } else {
+        this.setState({
+          redirect: response.urlRedirect
+        })
+      }
     })
   }
 
