@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import Header from "components/Shop_Header";
 import Products from "components/Products";
 import "assets/css/style.css";
 import withStyles from "@material-ui/core/styles/withStyles";
+import {callBackendAPI} from "components/CallBackendApi";
+import ErrorDialog from "components/ErrorDialog";
 
 
 const styles = {
@@ -49,7 +52,8 @@ class ShopMod extends Component {
       cartBounce: false,
       quantity: 1,
       modalActive: false,
-      orig_products: []
+      orig_products: [],
+      redirect: false
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -59,55 +63,32 @@ class ShopMod extends Component {
     this.handleDeleteProduct = this.handleDeleteProduct.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.handleClose = this.handleClose.bind(this);
 
   }
   // Fetch Initial Set of Products from external API
   getProducts() {
-    this.callBackendAPI('/api/transactions/getShopItems', 'get')
+    callBackendAPI("/api/transactions/getShopItems", "get")
       .then(response => {
-        this.setState({
-          products: response
-        });
+        if (response.error != null) {
+          this.setState({
+            open: true,
+            message: response.message
+          });
+        } else {
+          for (var i = 0; i < response.length; i++) {
+            delete response[i]._id;
+          }
+          this.setState({
+            products: response
+          });
+          console.log(response);
+        }
       });
   }
   componentWillMount() {
     this.getProducts();
   }
-
-  callBackendAPI = async (route, type ,body) => {
-    if (type=='post') {
-      const response = await fetch(route, {
-        method: type,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      });
-      const json = await response.json();
-      if (json.errorCode != 200) {
-        this.setState({
-          open: true,
-          message: json.message
-        });
-      } else {
-        return json.body;
-      }
-    } else {
-      const response = await fetch(route, {
-        method: type,
-      });
-      const json = await response.json();
-      if (json.errorCode != 200) {
-        this.setState({
-          open: true,
-          message: json.message
-        });
-      } else {
-        return json.body;
-      }
-    }
-    };
 
   // Search by Keyword
   handleSearch(event) {
@@ -132,12 +113,16 @@ class ShopMod extends Component {
   }
 
   // Update product list
-  handleUpdateProduct(e, product) {
-
+  handleUpdateProduct(e, type, id, value) {
     let up_products = this.state.products;
-    let index = up_products.findIndex(x => x.id == product.id);
-    up_products[index] = product;
-
+    let index = up_products.findIndex(x => x.id == id);
+    if (type === "name") {
+      up_products[index].name = value;
+    } else if (type === "price") {
+      up_products[index].price = parseInt(value, 10);
+    } else if (type === "matched"){
+      up_products[index].percentageMatched = value;
+    }
     this.setState({
       products: up_products
     });
@@ -164,10 +149,28 @@ class ShopMod extends Component {
 
   //This method handles if the admin wants to save their changes to the database
   handleSave() {
-    // callBackendAPI('/api/transactions/updateItems')
+    callBackendAPI('/api/transactions/updateItems', 'post', {
+      itemType: "SHOP",
+      updatedItems: this.state.products
+    }).then(response => {
+      this.setState({
+        redirect: "/shop"
+      });
+    })
   }
 
+  handleClose() {
+    this.setState({
+      open: false
+    });
+  }
+
+
   render() {
+    if (this.state.redirect != false) {
+      return <Redirect to={this.state.redirect} />
+    }
+
     return (
       <div className="container">
         <Header
@@ -197,6 +200,11 @@ class ShopMod extends Component {
           updateProduct={this.handleUpdateProduct}
           deleteProduct={this.handleDeleteProduct}
           time={false}
+        />
+        <ErrorDialog
+          open = {this.state.open}
+          handleClose = {this.handleClose}
+          message = {this.state.message}
         />
       </div>
     );

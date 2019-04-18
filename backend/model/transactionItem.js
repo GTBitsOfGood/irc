@@ -21,6 +21,10 @@ const TransactionItemSchema = new Schema({
     revisionNumber: {
         type: Number,
         required: true,
+    },
+    id: {
+        type: Number,
+        required: true
     }
 });
 

@@ -94,7 +94,7 @@ const loginStrategy = new LocalStrategy({
  * @param email - the email
  * @param password - the user's password - unscrambled
  * @return - the token
- * 
+ *
  * BE CAREFUL WHEN CALLING THIS METHOD: SIGNS TOKENS AS VALID
  */
 async function signToken(res, email, password) {
@@ -209,7 +209,6 @@ router.post('/verify', async function (req, res, next) {
 
 router.use(async function (req, res, next) {
   try {
-    return next(null, null);
     const encodedToken = req.cookies.token || req.body.token ||
       (() => { throw response.generateTokenError() })();
     const decodedToken = await jwt.verify(encodedToken, config.JWT_SECRET);
@@ -243,13 +242,13 @@ router.post('/changePassword', async function(req, res, next) {
   const user = res.locals.user;
   let returnMessage;
   if (!user) {
-    returnMessage = 
+    returnMessage =
     response.generateResponseMessage("The user object could not be found in the"
     + " request", 400);
   } else {
     const newPassword = req.body.password;
     if (!newPassword) {
-      returnMessage = 
+      returnMessage =
       response.generateResponseMessage("No new password specified under the 'passwprd'"
       + " field", 400);
     } else {
@@ -258,7 +257,7 @@ router.post('/changePassword', async function(req, res, next) {
       returnMessage = response.generateOkResponse("Password updated")
       await signToken(res, user.email, newPassword);
 
-    } 
+    }
   }
   res.json(returnMessage);
 });

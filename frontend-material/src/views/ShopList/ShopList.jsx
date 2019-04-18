@@ -5,6 +5,7 @@ import axios from "axios";
 import Header from "components/Shop_Header";
 import Products from "components/Products";
 import ErrorDialog from "components/ErrorDialog";
+import {callBackendAPI} from "components/CallBackendApi";
 
 import "assets/css/style.css";
 
@@ -68,28 +69,20 @@ class ShopStore extends Component {
 
   }
 
-  callBackendAPI = async () => {
-      const response = await fetch('/api/transactions/getShopItems');
-      const json = await response.json();
-
-      if (json.errorCode != 200) {
-        this.setState({
-          open: true,
-          message: json.message
-        });
-      } else {
-        return json.body;
-      }
-    };
-
   // Fetch Initial Set of Products from external API
   getProducts() {
-    this.callBackendAPI()
+    callBackendAPI("/api/transactions/getShopItems", "get")
       .then(response => {
-        this.setState({
-          products: response
-        });
-        console.log(this.state.products);
+        if (response.error != null) {
+          this.setState({
+            open: true,
+            message: response.message
+          });
+        } else {
+          this.setState({
+            products: response
+          });
+        }
       });
   }
 
