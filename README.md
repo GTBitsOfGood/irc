@@ -16,3 +16,5 @@ The entrypoint for the application is `server.js`
 - backend
 - frontend
 
+# API Docs
+Message [Bryce](https://github.com/Navbryce) if you have questions [about the docs](https://app.swaggerhub.com/apis-docs/navbryce/irc/1.0.0)
