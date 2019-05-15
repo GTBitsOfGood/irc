@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import TextField from "@material-ui/core/Input";
 
 export default class CustomField extends React.Component {

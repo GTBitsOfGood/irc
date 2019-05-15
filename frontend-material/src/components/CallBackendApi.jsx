@@ -1,6 +1,3 @@
-import React from 'react';
-import withStyles from "@material-ui/core/styles/withStyles";
-
 export async function callBackendAPI(route, type, body) {
   if (type ==='post') {
     const response = await fetch(route, {

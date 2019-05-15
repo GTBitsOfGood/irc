@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import axios from "axios";
 
 import Header from "components/Shop_Header";
 import Products from "components/Products";
@@ -105,7 +103,7 @@ class ShopStore extends Component {
     let productID = selectedProducts.id;
     let productQty = selectedProducts.quantity;
     if (this.checkProduct(productID)) {
-      let index = cartItem.findIndex(x => x.id == productID);
+      let index = cartItem.findIndex(x => x.id === productID);
       cartItem[index].quantity =
         Number(cartItem[index].quantity) + Number(productQty);
       this.setState({
@@ -132,7 +130,7 @@ class ShopStore extends Component {
 
   handleRemoveProduct(id, e) {
     let cart = this.state.cart;
-    let index = cart.findIndex(x => x.id == id);
+    let index = cart.findIndex(x => x.id === id);
     cart.splice(index, 1);
     this.setState({
       cart: cart
@@ -152,7 +150,7 @@ class ShopStore extends Component {
     let total = 0;
     let cart = this.state.cart;
     for (var i = 0; i < cart.length; i++) {
-      total += parseInt(cart[i].quantity);
+      total += parseInt(cart[i].quantity, 10);
     }
     this.setState({
       totalItems: total
@@ -162,7 +160,7 @@ class ShopStore extends Component {
     let total = 0;
     let cart = this.state.cart;
     for (var i = 0; i < cart.length; i++) {
-      total += cart[i].price * parseInt(cart[i].quantity);
+      total += cart[i].price * parseInt(cart[i].quantity, 10);
     }
     this.setState({
       totalAmount: total

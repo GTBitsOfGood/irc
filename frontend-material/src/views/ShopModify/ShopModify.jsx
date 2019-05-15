@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import { Redirect } from "react-router-dom";
-import axios from "axios";
 import Header from "components/Shop_Header";
 import Products from "components/Products";
 import "assets/css/style.css";
@@ -115,7 +113,7 @@ class ShopMod extends Component {
   // Update product list
   handleUpdateProduct(e, type, id, value) {
     let up_products = this.state.products;
-    let index = up_products.findIndex(x => x.id == id);
+    let index = up_products.findIndex(x => x.id === id);
     if (type === "name") {
       up_products[index].name = value;
     } else if (type === "price") {
@@ -132,7 +130,7 @@ class ShopMod extends Component {
   // Update product list
   handleDeleteProduct(e, id) {
     let products = this.state.products;
-    let index = products.findIndex(x => x.id == id);
+    let index = products.findIndex(x => x.id === id);
     products.splice(index, 1);
     this.setState({
       products: products
@@ -167,7 +165,7 @@ class ShopMod extends Component {
 
 
   render() {
-    if (this.state.redirect != false) {
+    if (this.state.redirect !== false) {
       return <Redirect to={this.state.redirect} />
     }
 

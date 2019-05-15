@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import CartScrollBar from "./CartScrollBar";
-import Counter from "./Counter";
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import { findDOMNode } from "react-dom";
 import Search from "@material-ui/icons/Search";
 import Icon from "@material-ui/core/Icon";
 import bag from "assets/img/bag.png";
@@ -111,7 +109,7 @@ class Header extends Component {
         cartItems = this.state.cart.map(product => {
           return (
             <li className="cart-item" key={product.name}>
-              <img className="product-image" src={product.image} />
+              <img className="product-image" alt="" src={product.image} />
               <div className="product-info">
                 <p className="product-name">{product.name}</p>
                 <p className="product-price">{product.price}</p>
@@ -124,7 +122,7 @@ class Header extends Component {
               </div>
               <a
                 className="product-remove"
-                href="#"
+                href="?"
                 onClick={this.props.removeProduct.bind(this, product.id)}
               >
                 ×
@@ -162,7 +160,7 @@ class Header extends Component {
           <div className="search">
             <a
               className="mobile-search"
-              href="#"
+              href="?"
               onClick={this.handleMobileSearch.bind(this)}
             >
               <img
@@ -179,7 +177,7 @@ class Header extends Component {
             >
               <a
                 className="back-button"
-                href="#"
+                href="?"
                 onClick={this.handleSearchNav.bind(this)}
               >
                 <img
@@ -220,7 +218,7 @@ class Header extends Component {
             </div>
             <a
               className="cart-icon"
-              href="#"
+              href="?"
               onClick={this.handleCart.bind(this)}
               ref="cartButton"
             >

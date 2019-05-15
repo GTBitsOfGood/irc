@@ -6,33 +6,16 @@ import {callBackendAPI} from "components/CallBackendApi";
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
 
-
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
-import Tasks from "components/Tasks/Tasks.jsx";
-import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
-import Danger from "components/Typography/Danger.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
+
 import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 import TextField from '@material-ui/core/TextField';
 
 import ErrorDialog from "components/ErrorDialog";
 
-
-import { bugs, website, server } from "variables/general.jsx";
-
-import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart
-} from "variables/charts.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
@@ -41,7 +24,6 @@ class LandingPage extends React.Component {
     super()
     this.state = {
       value: 0,
-      username: "test_user1",
       open: false,
       message: "",
       isNotLoggedIn: false,
@@ -117,7 +99,7 @@ class LandingPage extends React.Component {
   };
   render() {
     const { classes } = this.props;
-    if (this.state.redirect != false) {
+    if (this.state.redirect !== false) {
       return <Redirect to={this.state.redirect} />
     }
 

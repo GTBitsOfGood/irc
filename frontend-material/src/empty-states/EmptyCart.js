@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import empty_cart from "assets/img/empty-cart.png"
 
 const EmptyCart = props => {
