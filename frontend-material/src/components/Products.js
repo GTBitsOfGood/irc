@@ -27,6 +27,8 @@ class Products extends Component {
             price={product.price}
             name={product.name}
             id={product.id}
+            percentageMatched={product.percentageMatched}
+            revisionNumber={product.revisionNumber}
             addToCart={this.props.addToCart}
             productQuantity={this.props.productQuantity}
             updateQuantity={this.props.updateQuantity}

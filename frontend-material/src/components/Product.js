@@ -55,18 +55,19 @@ class Product extends Component {
     this.props.deleteProduct(event, this.props.id);
   }
 
-  addToCart(name, price, id, quantity) {
+  addToCart(name, price, id, quantity, percentageMatched, revisionNumber) {
     this.setState(
       {
         selectedProduct: {
           name: name,
           price: price,
           id: id,
-          quantity: quantity
+          percentageMatched: percentageMatched,
+          revisionNumber: revisionNumber
         }
       },
       function() {
-        this.props.addToCart(this.state.selectedProduct);
+        this.props.addToCart(this.state.selectedProduct, quantity);
       }
     );
     this.setState(
@@ -87,6 +88,8 @@ class Product extends Component {
     let name = this.props.name;
     let price = this.props.price;
     let id = this.props.id;
+    let percentageMatched = this.props.percentageMatched;
+    let revisionNumber = this.props.revisionNumber;
     let quantity = this.state.quantity;
     if (!this.props.edit) {
     return (
@@ -107,7 +110,7 @@ class Product extends Component {
                 <button
                 className={!this.state.isAdded ? "" : "added"}
                 type="button"
-                onClick={this.addToCart.bind(this, name, price, id, quantity)}
+                onClick={this.addToCart.bind(this, name, price, id, quantity, percentageMatched, revisionNumber)}
                 >
                 {this.props.time? (!this.state.isAdded ? "ADD HOURS" : "✔ ADDED") : (!this.state.isAdded ? "ADD TO CART" : "✔ ADDED")}
               </button>

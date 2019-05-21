@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import {findDOMNode} from "react-dom"
 import CartScrollBar from "./CartScrollBar";
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Search from "@material-ui/icons/Search";
+import Input from '@material-ui/core/Input';
 import Icon from "@material-ui/core/Icon";
 import bag from "assets/img/bag.png";
+
 
 class Header extends Component {
   constructor(props) {
@@ -12,6 +15,7 @@ class Header extends Component {
     this.state = {
       showCart: false,
       cart: this.props.cartItems,
+      clientId: 0,
       mobileSearch: false,
       showConfirm: false,
       showConfirmReset: false,
@@ -22,6 +26,7 @@ class Header extends Component {
 
     };
   }
+
   handleCart(e) {
     e.preventDefault();
     this.setState({
@@ -56,12 +61,14 @@ class Header extends Component {
   handleSubmit(e) {
     e.preventDefault();
   }
+
   handleMobileSearch(e) {
     e.preventDefault();
     this.setState({
       mobileSearch: true
     });
   }
+
   handleSearchNav(e) {
     e.preventDefault();
     this.setState(
@@ -74,11 +81,10 @@ class Header extends Component {
       }
     );
   }
+
   handleClickOutside(event) {
-    /**
     const cartNode = findDOMNode(this.refs.cartPreview);
-    const buttonNode = findDOMNode(this.refs.cartButton);
-    if (cartNode.classList.contains("active")) {
+    if (cartNode && cartNode.classList.contains("active")) {
       if (!cartNode || !cartNode.contains(event.target)) {
         this.setState({
           showCart: false
@@ -86,8 +92,8 @@ class Header extends Component {
         event.stopPropagation();
       }
     }
-    */
   }
+
   componentDidMount() {
     document.addEventListener(
       "click",
@@ -95,6 +101,7 @@ class Header extends Component {
       true
     );
   }
+
   componentWillUnmount() {
     document.removeEventListener(
       "click",
@@ -102,6 +109,11 @@ class Header extends Component {
       true
     );
   }
+
+  handleClientIdChange = event => {
+    this.setState({ clientId: event.target.value });
+  }
+
   render() {
     let view;
     if (this.props.cartActive) {
@@ -160,7 +172,7 @@ class Header extends Component {
           <div className="search">
             <a
               className="mobile-search"
-              href="?"
+              href="#"
               onClick={this.handleMobileSearch.bind(this)}
             >
               <img
@@ -177,7 +189,7 @@ class Header extends Component {
             >
               <a
                 className="back-button"
-                href="?"
+                href="#"
                 onClick={this.handleSearchNav.bind(this)}
               >
                 <img
@@ -218,7 +230,7 @@ class Header extends Component {
             </div>
             <a
               className="cart-icon"
-              href="?"
+              href="#"
               onClick={this.handleCart.bind(this)}
               ref="cartButton"
             >
@@ -241,6 +253,9 @@ class Header extends Component {
             >
               <CartScrollBar>{view}</CartScrollBar>
               <div className="action-block">
+                <center>
+                  Client Id: <Input onChange = {(e) => this.handleClientIdChange} />
+                </center>
                 <button
                   type="button"
                   className={this.state.cart.length > 0 ? " " : "disabled"}

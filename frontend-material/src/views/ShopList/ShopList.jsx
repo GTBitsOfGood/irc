@@ -80,6 +80,7 @@ class ShopStore extends Component {
           this.setState({
             products: response
           });
+          console.log(response);
         }
       });
   }
@@ -98,7 +99,8 @@ class ShopStore extends Component {
   }
 
   // Add to Cart
-  handleAddToCart(selectedProducts) {
+  //Have to handle add to cart still
+  handleAddToCart(selectedProducts, quantity) {
     let cartItem = this.state.cart;
     let productID = selectedProducts.id;
     let productQty = selectedProducts.quantity;
@@ -110,7 +112,7 @@ class ShopStore extends Component {
         cart: cartItem
       });
     } else {
-      cartItem.push(selectedProducts);
+      cartItem.push({item: selectedProducts, count: quantity});
     }
     this.setState({
       cart: cartItem,
@@ -177,6 +179,12 @@ class ShopStore extends Component {
   //Handles the checking out of items
   handleCheckout() {
       console.log(this.state.cart);
+      // callBackendAPI("/api/transactions/addTransactions", "post", {
+      //   transaction: {
+      //     volunteeritems:[],
+      //     shopitems:
+      //   }
+      // })
   }
 
   handleClose() {
