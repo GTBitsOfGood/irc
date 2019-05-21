@@ -15,16 +15,22 @@ class Header extends Component {
     this.state = {
       showCart: false,
       cart: this.props.cartItems,
-      clientId: 0,
       mobileSearch: false,
       showConfirm: false,
       showConfirmReset: false,
       isVolunteer: this.props.isVolunteer,
-      handleCheckout: this.props.handleCheckout,
+      handleCheckout: this.handleCheckout.bind(this),
       handleSave: this.props.handleSave,
       handleReset: this.props.handleReset
-
     };
+    
+  }
+
+  handleCheckout() {
+    this.setState({
+      showCart: false
+    });
+    this.props.handleCheckout();
   }
 
   handleCart(e) {
@@ -108,10 +114,6 @@ class Header extends Component {
       this.handleClickOutside.bind(this),
       true
     );
-  }
-
-  handleClientIdChange = event => {
-    this.setState({ clientId: event.target.value });
   }
 
   render() {
@@ -254,7 +256,7 @@ class Header extends Component {
               <CartScrollBar>{view}</CartScrollBar>
               <div className="action-block">
                 <center>
-                  Client Id: <Input onChange = {(e) => this.handleClientIdChange} />
+                  Client Id: <Input onChange = {(e) => this.props.handleClientIdChange(e)} />
                 </center>
                 <button
                   type="button"

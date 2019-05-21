@@ -52,7 +52,8 @@ class ShopStore extends Component {
       quantity: 1,
       modalActive: false,
       open: false,
-      message: ""
+      message: "",
+      clientId: 0
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -64,6 +65,7 @@ class ShopStore extends Component {
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
     this.handleCheckout = this.handleCheckout.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleClientIdChange = this.handleClientIdChange.bind(this);
 
   }
 
@@ -175,8 +177,46 @@ class ShopStore extends Component {
   }
 
   //Handles the checking out of items
+  //Currently searches by aliennumber
   handleCheckout() {
-      console.log(this.state.cart);
+    let postedCart = [];
+    let userID;
+    for (var i = 0; i < this.state.cart.length; i++) {
+      postedCart.push({
+        item: this.state.cart[i],
+        count: this.state.cart[i].quantity
+      });
+    }
+    callBackendAPI('/api/verify', 'post', {}).then(response => {
+      userID = response.user._id;
+      callBackendAPI('/api/getAllClients', 'get').then(response => {
+        let i = 0;
+        let searching = true;
+        while(i < response.length && searching) {
+          if (response[i].alienNumber === Number(this.state.clientId)) {
+            callBackendAPI('/api/transactions/addTransaction', 'post', {
+              transaction: {
+                volunteerItems:postedCart,
+                shopItems: [],
+                authorizedUser: userID,
+                clientId: response[i]._id,
+                type: "VOLUNTEER"
+              }
+            }).then(response => {
+              if (response) {console.log(response);}
+            })
+            searching = false;
+          }
+          i++;
+        }
+        if (searching) {
+          this.setState({
+            open: true,
+            message: "Invalid Client Id!"
+          });
+        }
+      });
+    });
   }
 
   handleClose() {
@@ -185,6 +225,9 @@ class ShopStore extends Component {
     });
   }
 
+  handleClientIdChange = event => {
+    this.setState({ clientId: event.target.value });
+  }
 
   render() {
     return (
@@ -205,6 +248,7 @@ class ShopStore extends Component {
           productQuantity={this.state.moq}
           isVolunteer={false}
           handleCheckout={this.handleCheckout}
+          handleClientIdChange={(e) => this.handleClientIdChange(e)}
         />
         <Products
           editMode={false}

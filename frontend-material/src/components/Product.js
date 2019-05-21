@@ -62,12 +62,13 @@ class Product extends Component {
           name: name,
           price: price,
           id: id,
+          quantity: quantity,
           percentageMatched: percentageMatched,
           revisionNumber: revisionNumber
         }
       },
       function() {
-        this.props.addToCart(this.state.selectedProduct, quantity);
+        this.props.addToCart(this.state.selectedProduct);
       }
     );
     this.setState(
