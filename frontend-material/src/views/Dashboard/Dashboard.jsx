@@ -21,13 +21,17 @@ import CardFooter from "components/Card/CardFooter.jsx";
 //IRC added components
 import Button from "components/CustomButtons/Button.jsx";
 import Input from '@material-ui/core/Input';
+import {callBackendAPI} from "components/CallBackendApi";
 
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 class Dashboard extends React.Component {
   state = {
-    value: 0
+    value: 0,
+    shopCount: 0,
+    userCount: 0,
+    volCount: 0
   };
   handleChange = (event, value) => {
     this.setState({ value });
@@ -36,6 +40,16 @@ class Dashboard extends React.Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+
+  componentWillMount() {
+    callBackendAPI('/api/transactions/getStats', 'get').then(response => {
+      this.setState({
+        shopCount: response.shopCount,
+        userCount: response.userCount,
+        volCount: response.volunteerCount
+      })
+    })
+  }
 
   //This function creates the table
   generateReport() {
@@ -74,13 +88,13 @@ class Dashboard extends React.Component {
                 <CardIcon color="success">
                   <Store />
                 </CardIcon>
-                <p className={classes.cardCategory}>Items Donated</p>
-                <h3 className={classes.cardTitle}>200</h3>
+                <p className={classes.cardCategory}>Total Shop Transactions</p>
+                <h3 className={classes.cardTitle}>{this.state.shopCount}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <DateRange />
-                  Past Year
+                  All Time
                 </div>
               </CardFooter>
             </Card>
@@ -92,12 +106,12 @@ class Dashboard extends React.Component {
                   <Icon>info_outline</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>Users</p>
-                <h3 className={classes.cardTitle}>75</h3>
+                <h3 className={classes.cardTitle}>{this.state.userCount}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <DateRange />
-                  Past Year
+                  All Time
                 </div>
               </CardFooter>
             </Card>
@@ -108,13 +122,13 @@ class Dashboard extends React.Component {
                 <CardIcon color="info">
                   <Accessibility />
                 </CardIcon>
-                <p className={classes.cardCategory}>Total Volunteer Hours</p>
-                <h3 className={classes.cardTitle}>655</h3>
+                <p className={classes.cardCategory}>Total Volunteer Transactions</p>
+                <h3 className={classes.cardTitle}>{this.state.volCount}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <DateRange />
-                  Past Year
+                  All Time
                 </div>
               </CardFooter>
             </Card>
