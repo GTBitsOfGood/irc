@@ -31,7 +31,10 @@ class Dashboard extends React.Component {
     value: 0,
     shopCount: 0,
     userCount: 0,
-    volCount: 0
+    volCount: 0,
+    from: "",
+    to: "",
+    table: []
   };
   handleChange = (event, value) => {
     this.setState({ value });
@@ -53,28 +56,49 @@ class Dashboard extends React.Component {
 
   //This function creates the table
   generateReport() {
-    this.setState({
-      isShown: true
+    callBackendAPI('/api/transactions/getTransaction?transactionType=VOLUNTEER&startDate='+this.state.from+'&endDate='+this.state.to, 'get').then(response => {
+      for (var i = 0; i < response.length; i++) {
+        for (var j = 0; j < response[i].volunteerItems.length; j++) {
+          let table = this.state.table.slice();
+          table.push([response[i].volunteerItems[j].item.name, response[i].volunteerItems[j].count, response[i].clientId, response[i].volunteerItems[j].item.price*response[i].volunteerItems[j].count]);
+          this.setState({
+            table: table
+          })
+        }
+      }
+      console.log(this.state.table);
+      this.setState({
+        isShown: true
+      })
     });
   }
 
   //This function should return the data for the table
   generateTableData() {
-    return [
-        [ "Dakota Rice" , "2" , "Computer" , "240" ] ,
-        [ "Minerva Hooper" , "6" , "Driving" , "180" ] ,
-        [ "Sage Rodriguez" , "20" , "IT Support" , "800" ] ,
-    ];
+    console.log(this.state.table);
+    return this.state.table;
   }
 
   //This function should return the headers for the table
   generateTableHead() {
-    return ['Volunteer',' Hours','Job','Compensation'];
+    return ['Item', 'Count', 'ClientId', 'Total Price'];
   }
 
   //This function should download a csv file to Users
   downloadCSV() {
 
+  }
+
+  handleFromChange(event) {
+    this.setState({
+      from: event.target.value
+    })
+  }
+
+  handleToChange(event) {
+    this.setState({
+      to: event.target.value
+    })
   }
 
   render() {
@@ -139,7 +163,7 @@ class Dashboard extends React.Component {
             </Button>
           </GridItem>
           <GridItem>
-            From: <Input type = "date"/>
+            From: <Input onChange = {(e) => this.handleFromChange(e)} type = "date"/>
           </GridItem>
           <GridItem>
             To: <Input type = "date"/>
