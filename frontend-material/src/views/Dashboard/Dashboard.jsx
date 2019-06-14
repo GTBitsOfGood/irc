@@ -23,6 +23,12 @@ import Button from "components/CustomButtons/Button.jsx";
 import Input from '@material-ui/core/Input';
 import {callBackendAPI} from "components/CallBackendApi";
 
+import RadioGroup from '@material-ui/core/RadioGroup'
+import Radio from '@material-ui/core/Radio'
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox';
+
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
@@ -34,7 +40,9 @@ class Dashboard extends React.Component {
     volCount: 0,
     from: "",
     to: "",
-    table: []
+    table: [],
+    type: "SHOP",
+    clients: []
   };
   handleChange = (event, value) => {
     this.setState({ value });
@@ -42,6 +50,10 @@ class Dashboard extends React.Component {
 
   handleChangeIndex = index => {
     this.setState({ value: index });
+  };
+
+  handleTypeChange = event => {
+    this.setState({ type: event.target.value });
   };
 
   componentWillMount() {
@@ -52,21 +64,58 @@ class Dashboard extends React.Component {
         volCount: response.volunteerCount
       })
     })
+    callBackendAPI('/api/getAllClients', 'get').then(response => {
+      this.setState({
+        clients: response
+      })
+      console.log(this.state.clients);
+    });
   }
 
   //This function creates the table
   generateReport() {
-    callBackendAPI('/api/transactions/getTransaction?transactionType=VOLUNTEER&startDate='+this.state.from+'&endDate='+this.state.to, 'get').then(response => {
-      for (var i = 0; i < response.length; i++) {
-        for (var j = 0; j < response[i].volunteerItems.length; j++) {
-          let table = this.state.table.slice();
-          table.push([response[i].volunteerItems[j].item.name, response[i].volunteerItems[j].count, response[i].clientId, response[i].volunteerItems[j].item.price*response[i].volunteerItems[j].count]);
-          this.setState({
-            table: table
-          })
+    callBackendAPI('/api/transactions/getTransaction?transactionType='+this.state.type+'&startDate='+this.state.from+'&endDate='+this.state.to, 'get').then(response => {
+      if (this.state.type === "VOLUNTEER") {
+        for (var i = 0; i < response.length; i++) {
+          for (var j = 0; j < response[i].volunteerItems.length; j++) {
+            let table = this.state.table.slice();
+            let k = 0;
+            let searching = true;
+            let alienNumber = 0;
+            while (k < this.state.clients.length && searching) {
+              if (this.state.clients[k]._id === response[i].clientId) {
+                alienNumber = this.state.clients[k].alienNumber;
+                searching = false;
+              }
+              k++;
+            }
+            table.push([response[i].volunteerItems[j].item.name, response[i].volunteerItems[j].count, alienNumber, response[i].volunteerItems[j].item.price*response[i].volunteerItems[j].count]);
+            this.setState({
+              table: table
+            })
+          }
+        }
+      } else {
+        for (var i = 0; i < response.length; i++) {
+          for (var j = 0; j < response[i].shopItems.length; j++) {
+            let table = this.state.table.slice();
+            let k = 0;
+            let searching = true;
+            let alienNumber = 0;
+            while (k < this.state.clients.length && searching) {
+              if (this.state.clients[k]._id === response[i].clientId) {
+                alienNumber = this.state.clients[k].alienNumber;
+                searching = false;
+              }
+              k++;
+            }
+            table.push([response[i].shopItems[j].item.name, response[i].shopItems[j].count, alienNumber, response[i].shopItems[j].item.price*response[i].shopItems[j].count]);
+            this.setState({
+              table: table
+            })
+          }
         }
       }
-      console.log(this.state.table);
       this.setState({
         isShown: true
       })
@@ -85,8 +134,14 @@ class Dashboard extends React.Component {
   }
 
   //This function should download a csv file to Users
-  downloadCSV() {
-
+  print() {
+    var divToPrint = document.getElementsByClassName('outer')[0];
+    console.log(divToPrint);
+    divToPrint.childNodes[0].removeChild(divToPrint.childNodes[0].childNodes[0]);
+    let newWin = window.open("");
+    newWin.document.write(divToPrint.outerHTML);
+    newWin.print();
+    newWin.close();
   }
 
   handleFromChange(event) {
@@ -169,19 +224,36 @@ class Dashboard extends React.Component {
             To: <Input type = "date"/>
           </GridItem>
         </GridContainer>
+        <div>
+            <FormControl component="fieldset">
+                <RadioGroup
+                    aria-label="Type"
+                    name="type"
+                    value={this.state.type}
+                    onChange={this.handleTypeChange}
+                >
+                    <FormControlLabel value="SHOP" control={<Checkbox />} label="Shop" />
+                    <FormControlLabel value="VOLUNTEER" control={<Checkbox />} label="Volunteer" />
 
+                </RadioGroup>
+            </FormControl>
+        </div>
+
+        <div className="outer">
         {this.state.isShown &&
-          <div>
-            <Button type="button" color="info" onClick = {() => this.downloadCSV()}>
-              Download CSV
+          <div className="outerTable">
+            <Button type="button" color="info" onClick = {() => this.print()}>
+              Print
             </Button>
             <CustomTable
+            className = "printableTable"
             tableHeaderColor="primary"
             tableHead={this.generateTableHead()}
             tableData={this.generateTableData()}
             />
           </div>
         }
+        </div>
 
       </div>
     );
