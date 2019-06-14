@@ -1,19 +1,9 @@
 import React, { Component } from "react";
 import Counter from "./Counter";
 
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
-import CustomTable from "components/Table/Table.jsx";
-import Tasks from "components/Tasks/Tasks.jsx";
-import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
-import Danger from "components/Typography/Danger.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
-
-import CustomField from "components/CustomField.jsx";
 
 import TextField from "@material-ui/core/TextField"
 
@@ -65,14 +55,16 @@ class Product extends Component {
     this.props.deleteProduct(event, this.props.id);
   }
 
-  addToCart(name, price, id, quantity) {
+  addToCart(name, price, id, quantity, percentageMatched, revisionNumber) {
     this.setState(
       {
         selectedProduct: {
           name: name,
           price: price,
           id: id,
-          quantity: quantity
+          quantity: quantity,
+          percentageMatched: percentageMatched,
+          revisionNumber: revisionNumber
         }
       },
       function() {
@@ -97,6 +89,8 @@ class Product extends Component {
     let name = this.props.name;
     let price = this.props.price;
     let id = this.props.id;
+    let percentageMatched = this.props.percentageMatched;
+    let revisionNumber = this.props.revisionNumber;
     let quantity = this.state.quantity;
     if (!this.props.edit) {
     return (
@@ -117,7 +111,7 @@ class Product extends Component {
                 <button
                 className={!this.state.isAdded ? "" : "added"}
                 type="button"
-                onClick={this.addToCart.bind(this, name, price, id, quantity)}
+                onClick={this.addToCart.bind(this, name, price, id, quantity, percentageMatched, revisionNumber)}
                 >
                 {this.props.time? (!this.state.isAdded ? "ADD HOURS" : "✔ ADDED") : (!this.state.isAdded ? "ADD TO CART" : "✔ ADDED")}
               </button>

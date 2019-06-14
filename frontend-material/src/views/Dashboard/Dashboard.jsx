@@ -1,52 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
-// react plugin for creating charts
-import ChartistGraph from "react-chartist";
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Store from "@material-ui/icons/Store";
-import Warning from "@material-ui/icons/Warning";
 import DateRange from "@material-ui/icons/DateRange";
-import LocalOffer from "@material-ui/icons/LocalOffer";
-import Update from "@material-ui/icons/Update";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import AccessTime from "@material-ui/icons/AccessTime";
 import Accessibility from "@material-ui/icons/Accessibility";
-import BugReport from "@material-ui/icons/BugReport";
-import Code from "@material-ui/icons/Code";
-import Cloud from "@material-ui/icons/Cloud";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import CustomTable from "components/Table/Table.jsx";
-import Tasks from "components/Tasks/Tasks.jsx";
-import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
-import Danger from "components/Typography/Danger.jsx";
+
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
-import CardBody from "components/Card/CardBody.jsx";
+// import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
 //IRC added components
 import Button from "components/CustomButtons/Button.jsx";
 import Input from '@material-ui/core/Input';
+import {callBackendAPI} from "components/CallBackendApi";
 
-import { bugs, website, server } from "variables/general.jsx";
+import RadioGroup from '@material-ui/core/RadioGroup'
+import Radio from '@material-ui/core/Radio'
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox';
 
-import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart
-} from "variables/charts.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 class Dashboard extends React.Component {
   state = {
-    value: 0
+    value: 0,
+    shopCount: 0,
+    userCount: 0,
+    volCount: 0,
+    from: "",
+    to: "",
+    table: [],
+    type: "SHOP",
+    clients: []
   };
   handleChange = (event, value) => {
     this.setState({ value });
@@ -56,30 +52,108 @@ class Dashboard extends React.Component {
     this.setState({ value: index });
   };
 
+  handleTypeChange = event => {
+    this.setState({ type: event.target.value });
+  };
+
+  componentWillMount() {
+    callBackendAPI('/api/transactions/getStats', 'get').then(response => {
+      this.setState({
+        shopCount: response.shopCount,
+        userCount: response.userCount,
+        volCount: response.volunteerCount
+      })
+    })
+    callBackendAPI('/api/getAllClients', 'get').then(response => {
+      this.setState({
+        clients: response
+      })
+      console.log(this.state.clients);
+    });
+  }
+
   //This function creates the table
   generateReport() {
-    this.setState({
-      isShown: true
+    callBackendAPI('/api/transactions/getTransaction?transactionType='+this.state.type+'&startDate='+this.state.from+'&endDate='+this.state.to, 'get').then(response => {
+      if (this.state.type === "VOLUNTEER") {
+        for (var i = 0; i < response.length; i++) {
+          for (var j = 0; j < response[i].volunteerItems.length; j++) {
+            let table = this.state.table.slice();
+            let k = 0;
+            let searching = true;
+            let alienNumber = 0;
+            while (k < this.state.clients.length && searching) {
+              if (this.state.clients[k]._id === response[i].clientId) {
+                alienNumber = this.state.clients[k].alienNumber;
+                searching = false;
+              }
+              k++;
+            }
+            table.push([response[i].volunteerItems[j].item.name, response[i].volunteerItems[j].count, alienNumber, response[i].volunteerItems[j].item.price*response[i].volunteerItems[j].count]);
+            this.setState({
+              table: table
+            })
+          }
+        }
+      } else {
+        for (var i = 0; i < response.length; i++) {
+          for (var j = 0; j < response[i].shopItems.length; j++) {
+            let table = this.state.table.slice();
+            let k = 0;
+            let searching = true;
+            let alienNumber = 0;
+            while (k < this.state.clients.length && searching) {
+              if (this.state.clients[k]._id === response[i].clientId) {
+                alienNumber = this.state.clients[k].alienNumber;
+                searching = false;
+              }
+              k++;
+            }
+            table.push([response[i].shopItems[j].item.name, response[i].shopItems[j].count, alienNumber, response[i].shopItems[j].item.price*response[i].shopItems[j].count]);
+            this.setState({
+              table: table
+            })
+          }
+        }
+      }
+      this.setState({
+        isShown: true
+      })
     });
   }
 
   //This function should return the data for the table
   generateTableData() {
-    return [
-        [ "Dakota Rice" , "2" , "Computer" , "240" ] ,
-        [ "Minerva Hooper" , "6" , "Driving" , "180" ] ,
-        [ "Sage Rodriguez" , "20" , "IT Support" , "800" ] ,
-    ];
+    console.log(this.state.table);
+    return this.state.table;
   }
 
   //This function should return the headers for the table
   generateTableHead() {
-    return ['Volunteer',' Hours','Job','Compensation'];
+    return ['Item', 'Count', 'ClientId', 'Total Price'];
   }
 
   //This function should download a csv file to Users
-  downloadCSV() {
+  print() {
+    var divToPrint = document.getElementsByClassName('outer')[0];
+    console.log(divToPrint);
+    divToPrint.childNodes[0].removeChild(divToPrint.childNodes[0].childNodes[0]);
+    let newWin = window.open("");
+    newWin.document.write(divToPrint.outerHTML);
+    newWin.print();
+    newWin.close();
+  }
 
+  handleFromChange(event) {
+    this.setState({
+      from: event.target.value
+    })
+  }
+
+  handleToChange(event) {
+    this.setState({
+      to: event.target.value
+    })
   }
 
   render() {
@@ -93,13 +167,13 @@ class Dashboard extends React.Component {
                 <CardIcon color="success">
                   <Store />
                 </CardIcon>
-                <p className={classes.cardCategory}>Items Donated</p>
-                <h3 className={classes.cardTitle}>200</h3>
+                <p className={classes.cardCategory}>Total Shop Transactions</p>
+                <h3 className={classes.cardTitle}>{this.state.shopCount}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <DateRange />
-                  Past Year
+                  All Time
                 </div>
               </CardFooter>
             </Card>
@@ -111,12 +185,12 @@ class Dashboard extends React.Component {
                   <Icon>info_outline</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>Users</p>
-                <h3 className={classes.cardTitle}>75</h3>
+                <h3 className={classes.cardTitle}>{this.state.userCount}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <DateRange />
-                  Past Year
+                  All Time
                 </div>
               </CardFooter>
             </Card>
@@ -127,13 +201,13 @@ class Dashboard extends React.Component {
                 <CardIcon color="info">
                   <Accessibility />
                 </CardIcon>
-                <p className={classes.cardCategory}>Total Volunteer Hours</p>
-                <h3 className={classes.cardTitle}>655</h3>
+                <p className={classes.cardCategory}>Total Volunteer Transactions</p>
+                <h3 className={classes.cardTitle}>{this.state.volCount}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <DateRange />
-                  Past Year
+                  All Time
                 </div>
               </CardFooter>
             </Card>
@@ -144,25 +218,42 @@ class Dashboard extends React.Component {
             </Button>
           </GridItem>
           <GridItem>
-            From: <Input type = "date"/>
+            From: <Input onChange = {(e) => this.handleFromChange(e)} type = "date"/>
           </GridItem>
           <GridItem>
             To: <Input type = "date"/>
           </GridItem>
         </GridContainer>
+        <div>
+            <FormControl component="fieldset">
+                <RadioGroup
+                    aria-label="Type"
+                    name="type"
+                    value={this.state.type}
+                    onChange={this.handleTypeChange}
+                >
+                    <FormControlLabel value="SHOP" control={<Checkbox />} label="Shop" />
+                    <FormControlLabel value="VOLUNTEER" control={<Checkbox />} label="Volunteer" />
 
+                </RadioGroup>
+            </FormControl>
+        </div>
+
+        <div className="outer">
         {this.state.isShown &&
-          <div>
-            <Button type="button" color="info" onClick = {() => this.downloadCSV()}>
-              Download CSV
+          <div className="outerTable">
+            <Button type="button" color="info" onClick = {() => this.print()}>
+              Print
             </Button>
             <CustomTable
+            className = "printableTable"
             tableHeaderColor="primary"
             tableHead={this.generateTableHead()}
             tableData={this.generateTableData()}
             />
           </div>
         }
+        </div>
 
       </div>
     );

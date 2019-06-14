@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import {findDOMNode} from "react-dom"
 import CartScrollBar from "./CartScrollBar";
-import Counter from "./Counter";
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import { findDOMNode } from "react-dom";
 import Search from "@material-ui/icons/Search";
+import Input from '@material-ui/core/Input';
 import Icon from "@material-ui/core/Icon";
 import bag from "assets/img/bag.png";
+
 
 class Header extends Component {
   constructor(props) {
@@ -18,12 +19,20 @@ class Header extends Component {
       showConfirm: false,
       showConfirmReset: false,
       isVolunteer: this.props.isVolunteer,
-      handleCheckout: this.props.handleCheckout,
+      handleCheckout: this.handleCheckout.bind(this),
       handleSave: this.props.handleSave,
       handleReset: this.props.handleReset
-
     };
+    
   }
+
+  handleCheckout() {
+    this.setState({
+      showCart: false
+    });
+    this.props.handleCheckout();
+  }
+
   handleCart(e) {
     e.preventDefault();
     this.setState({
@@ -58,12 +67,14 @@ class Header extends Component {
   handleSubmit(e) {
     e.preventDefault();
   }
+
   handleMobileSearch(e) {
     e.preventDefault();
     this.setState({
       mobileSearch: true
     });
   }
+
   handleSearchNav(e) {
     e.preventDefault();
     this.setState(
@@ -76,11 +87,10 @@ class Header extends Component {
       }
     );
   }
+
   handleClickOutside(event) {
-    /**
     const cartNode = findDOMNode(this.refs.cartPreview);
-    const buttonNode = findDOMNode(this.refs.cartButton);
-    if (cartNode.classList.contains("active")) {
+    if (cartNode && cartNode.classList.contains("active")) {
       if (!cartNode || !cartNode.contains(event.target)) {
         this.setState({
           showCart: false
@@ -88,8 +98,8 @@ class Header extends Component {
         event.stopPropagation();
       }
     }
-    */
   }
+
   componentDidMount() {
     document.addEventListener(
       "click",
@@ -97,6 +107,7 @@ class Header extends Component {
       true
     );
   }
+
   componentWillUnmount() {
     document.removeEventListener(
       "click",
@@ -104,6 +115,7 @@ class Header extends Component {
       true
     );
   }
+
   render() {
     let view;
     if (this.props.cartActive) {
@@ -111,7 +123,7 @@ class Header extends Component {
         cartItems = this.state.cart.map(product => {
           return (
             <li className="cart-item" key={product.name}>
-              <img className="product-image" src={product.image} />
+              <img className="product-image" alt="" src={product.image} />
               <div className="product-info">
                 <p className="product-name">{product.name}</p>
                 <p className="product-price">{product.price}</p>
@@ -124,7 +136,7 @@ class Header extends Component {
               </div>
               <a
                 className="product-remove"
-                href="#"
+                href="?"
                 onClick={this.props.removeProduct.bind(this, product.id)}
               >
                 ×
@@ -243,6 +255,9 @@ class Header extends Component {
             >
               <CartScrollBar>{view}</CartScrollBar>
               <div className="action-block">
+                <center>
+                  Client Id: <Input onChange = {(e) => this.props.handleClientIdChange(e)} />
+                </center>
                 <button
                   type="button"
                   className={this.state.cart.length > 0 ? " " : "disabled"}

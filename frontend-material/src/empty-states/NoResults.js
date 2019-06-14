@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import tree from "assets/img/bare-tree.png"
 
 

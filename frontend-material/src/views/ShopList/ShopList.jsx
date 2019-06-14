@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import axios from "axios";
 
 import Header from "components/Shop_Header";
 import Products from "components/Products";
@@ -54,7 +52,8 @@ class ShopStore extends Component {
       quantity: 1,
       modalActive: false,
       open: false,
-      message: ""
+      message: "",
+      clientId: 0
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -66,6 +65,7 @@ class ShopStore extends Component {
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
     this.handleCheckout = this.handleCheckout.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleClientIdChange = this.handleClientIdChange.bind(this);
 
   }
 
@@ -105,7 +105,7 @@ class ShopStore extends Component {
     let productID = selectedProducts.id;
     let productQty = selectedProducts.quantity;
     if (this.checkProduct(productID)) {
-      let index = cartItem.findIndex(x => x.id == productID);
+      let index = cartItem.findIndex(x => x.id === productID);
       cartItem[index].quantity =
         Number(cartItem[index].quantity) + Number(productQty);
       this.setState({
@@ -132,7 +132,7 @@ class ShopStore extends Component {
 
   handleRemoveProduct(id, e) {
     let cart = this.state.cart;
-    let index = cart.findIndex(x => x.id == id);
+    let index = cart.findIndex(x => x.id === id);
     cart.splice(index, 1);
     this.setState({
       cart: cart
@@ -152,7 +152,7 @@ class ShopStore extends Component {
     let total = 0;
     let cart = this.state.cart;
     for (var i = 0; i < cart.length; i++) {
-      total += parseInt(cart[i].quantity);
+      total += parseInt(cart[i].quantity, 10);
     }
     this.setState({
       totalItems: total
@@ -162,7 +162,7 @@ class ShopStore extends Component {
     let total = 0;
     let cart = this.state.cart;
     for (var i = 0; i < cart.length; i++) {
-      total += cart[i].price * parseInt(cart[i].quantity);
+      total += cart[i].price * parseInt(cart[i].quantity, 10);
     }
     this.setState({
       totalAmount: total
@@ -177,8 +177,46 @@ class ShopStore extends Component {
   }
 
   //Handles the checking out of items
+  //Currently searches by aliennumber
   handleCheckout() {
-      console.log(this.state.cart);
+    let postedCart = [];
+    let userID;
+    for (var i = 0; i < this.state.cart.length; i++) {
+      postedCart.push({
+        item: this.state.cart[i],
+        count: this.state.cart[i].quantity
+      });
+    }
+    callBackendAPI('/api/verify', 'post', {}).then(response => {
+      userID = response.user._id;
+      callBackendAPI('/api/getAllClients', 'get').then(response => {
+        let i = 0;
+        let searching = true;
+        while(i < response.length && searching) {
+          if (response[i].alienNumber === Number(this.state.clientId)) {
+            callBackendAPI('/api/transactions/addTransaction', 'post', {
+              transaction: {
+                volunteerItems:[],
+                shopItems: postedCart,
+                authorizedUser: userID,
+                clientId: response[i]._id,
+                type: "SHOP"
+              }
+            }).then(response => {
+              if (response) {console.log(response);}
+            })
+            searching = false;
+          }
+          i++;
+        }
+        if (searching) {
+          this.setState({
+            open: true,
+            message: "Invalid Client Id!"
+          });
+        }
+      });
+    });
   }
 
   handleClose() {
@@ -187,6 +225,9 @@ class ShopStore extends Component {
     });
   }
 
+  handleClientIdChange = event => {
+    this.setState({ clientId: event.target.value });
+  }
 
   render() {
     return (
@@ -207,6 +248,7 @@ class ShopStore extends Component {
           productQuantity={this.state.moq}
           isVolunteer={false}
           handleCheckout={this.handleCheckout}
+          handleClientIdChange={(e) => this.handleClientIdChange(e)}
         />
         <Products
           editMode={false}
