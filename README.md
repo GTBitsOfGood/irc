@@ -25,7 +25,7 @@ Requirements: Have node.js and npm installed.
 
 The program is divided into two folders.
 
- - Frontend-Material: Controls the ui and sends requests to the backend.
+ - [Frontend-Material](https://github.com/GTBitsOfGood/irc/blob/master/frontend-material/README.md): Controls the ui and sends requests to the backend.
  - backend: Interacts with the database, provides data to the frontend
 
 The backend starts by running server.js.
