@@ -8,6 +8,7 @@ The storefront is built off of Creative Tim's [Material Dashboard](https://demos
 When adding or modifying components, look at their import statement and view its documentation.
 
 Examples:
+
 `import Card from "components/Card/Card.jsx";`
 This code comes from the Material Dashboard.
 
