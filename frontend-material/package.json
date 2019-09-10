@@ -10,7 +10,7 @@
     "@types/googlemaps": "3.30.13",
     "@types/markerclustererplus": "2.1.33",
     "ajv": "^5.0.0",
-    "axios": "^0.16.1",
+    "axios": "^0.18.1",
     "chartist": "0.10.1",
     "classnames": "2.2.6",
     "cross-env": "^5.2.0",
