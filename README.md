@@ -5,7 +5,7 @@
 This inventory system is being developed as a pilot system for the Atlanta office of IRC. It is meant to track inventory usage at their shopfront, and log volunteer hours. Further, it can create reports regarding contributions, month over month.
 
 ## Setup
-Requirements: Have node.js and npm installed.
+Requirements: Have node.js (11.10.0; **Node 12 will not work**) and npm installed.
 
  1. Clone the git repository.
  2. `npm install node-pre-gyp -g` (fixed bcrypt install error)
