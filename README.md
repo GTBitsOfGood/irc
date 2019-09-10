@@ -8,11 +8,12 @@ This inventory system is being developed as a pilot system for the Atlanta offic
 Requirements: Have node.js and npm installed.
 
  1. Clone the git repository.
- 2. In the \irc folder (main folder) run `npm install`
- 3. In \frontend-material run `npm install`
- 4. In \backend folder run `npm install` (might just perform an audit)
- 5. In \irc create a file called .env
- 6. Set DB_USER and DB_PASS in the .env file (message [Sukhmai](https://github.com/Sukhmai) for credentials)
+ 2. `npm install node-pre-gyp -g` (fixed bcrypt install error)
+ 3. In the \irc folder (main folder) run `npm install`
+ 4. In \frontend-material run `npm install`
+ 5. In \backend folder run `npm install` (might just perform an audit)
+ 6. In \irc create a file called .env
+ 7. Set DB_USER and DB_PASS in the .env file (message [Sukhmai](https://github.com/Sukhmai) for credentials)
 
 ## Running the Program
 1. In the \irc folder run `npm start`
