@@ -5,15 +5,15 @@
 This inventory system is being developed as a pilot system for the Atlanta office of IRC. It is meant to track inventory usage at their shopfront, and log volunteer hours. Further, it can create reports regarding contributions, month over month.
 
 ## Setup
-Requirements: Have node.js (11.10.0; **Node 12 will not work**) and npm installed.
+Requirements: Have [Node.js 10](https://nodejs.org/en/) and npm installed. npm is automatically installed when you install Node.js. We need Node 10 because node-sass doesn't work with Node 12 (and Node 11 is no longer supported). If you're on Windows, also install [Python 2.7](https://www.python.org/downloads/).
 
  1. Clone the git repository.
- 2. `npm install node-pre-gyp -g` (fixed bcrypt install error)
- 3. In the \irc folder (main folder) run `npm install`
- 4. In \frontend-material run `npm install`
- 5. In \backend folder run `npm install` (might just perform an audit)
+ 2. Run `npm install node-pre-gyp -g`.
+ 3. In the \irc folder (main folder) run `npm install`.
+ 4. In \frontend-material run `npm install`.
+ 5. In \backend folder run `npm install` (might just perform an audit).
  6. In \irc create a file called .env
- 7. Set DB_USER and DB_PASS in the .env file (message [Sukhmai](https://github.com/Sukhmai) for credentials)
+ 7. Set DB_USER and DB_PASS in the .env file (message [Sukhmai](https://github.com/Sukhmai) for credentials).
 
 ## Running the Program
 1. In the \irc folder run `npm start`
