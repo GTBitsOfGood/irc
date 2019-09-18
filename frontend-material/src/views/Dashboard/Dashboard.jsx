@@ -122,18 +122,18 @@ class Dashboard extends React.Component {
     });
   }
 
-  //This function should return the data for the table
+  //Return the data for the table
   generateTableData() {
     console.log(this.state.table);
     return this.state.table;
   }
 
-  //This function should return the headers for the table
+  //Return the headers for the table
   generateTableHead() {
     return ['Item', 'Count', 'ClientId', 'Total Price'];
   }
 
-  //This function should download a csv file to Users
+  //Download a csv file to Users
   print() {
     let divToPrint = document.getElementsByClassName('outer')[0];
     console.log(divToPrint);
@@ -232,8 +232,8 @@ class Dashboard extends React.Component {
                     value={this.state.type}
                     onChange={this.handleTypeChange}
                 >
-                    <FormControlLabel value="SHOP" control={<Checkbox />} label="Shop" />
-                    <FormControlLabel value="VOLUNTEER" control={<Checkbox />} label="Volunteer" />
+                    <FormControlLabel value="SHOP" control={<Radio />} label="Shop" />
+                    <FormControlLabel value="VOLUNTEER" control={<Radio />} label="Volunteer" />
 
                 </RadioGroup>
             </FormControl>
