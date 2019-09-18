@@ -36,7 +36,7 @@ class LandingPage extends React.Component {
 
   componentWillMount() {
     callBackendAPI('/api/verify', 'post', {}).then(response => {
-      if (response.error === "Error 401 - Unauthorized - No login token  provided") {
+      if (response.error === "Error 401 - Unauthorized - No login token provided") {
         this.setState({
           isNotLoggedIn: true
         });
@@ -112,7 +112,7 @@ class LandingPage extends React.Component {
             <h4 className={classes.cardTitleWhite}> <center> Welcome, {this.state.username} </center></h4>
           </CardHeader>
           <CardBody>
-            <p> You are successfully authorized to use the VADR System. Please select an action on the left or logout below. </p>
+            <p> Please select an action on the left or log out below. </p>
           </CardBody>
         </Card>
       </center>
@@ -141,8 +141,9 @@ class LandingPage extends React.Component {
               <Button
                 style={{ width: "5rem", right:"1rem" }}
                 color="success"
-                onClick = {() => this.handleLogin()}
-                round = {true}
+                onClick={() => this.handleLogin()}
+                round={true}
+                type="submit"
               >
                 Login
               </Button>
@@ -150,7 +151,7 @@ class LandingPage extends React.Component {
                 style={{ width:"5rem", left:"1rem" }}
                 color="success"
                 round="true"
-                onClick = {() => this.handleSignup()}
+                onClick={() => this.handleSignup()}
               >
                 Sign Up
               </Button>

@@ -151,7 +151,7 @@ class ShopStore extends Component {
   sumTotalItems() {
     let total = 0;
     let cart = this.state.cart;
-    for (var i = 0; i < cart.length; i++) {
+    for (let i = 0; i < cart.length; i++) {
       total += parseInt(cart[i].quantity, 10);
     }
     this.setState({
@@ -161,7 +161,7 @@ class ShopStore extends Component {
   sumTotalAmount() {
     let total = 0;
     let cart = this.state.cart;
-    for (var i = 0; i < cart.length; i++) {
+    for (let i = 0; i < cart.length; i++) {
       total += cart[i].price * parseInt(cart[i].quantity, 10);
     }
     this.setState({
@@ -181,7 +181,7 @@ class ShopStore extends Component {
   handleCheckout() {
     let postedCart = [];
     let userID;
-    for (var i = 0; i < this.state.cart.length; i++) {
+    for (let i = 0; i < this.state.cart.length; i++) {
       postedCart.push({
         item: this.state.cart[i],
         count: this.state.cart[i].quantity

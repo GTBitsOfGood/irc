@@ -76,8 +76,8 @@ class Dashboard extends React.Component {
   generateReport() {
     callBackendAPI('/api/transactions/getTransaction?transactionType='+this.state.type+'&startDate='+this.state.from+'&endDate='+this.state.to, 'get').then(response => {
       if (this.state.type === "VOLUNTEER") {
-        for (var i = 0; i < response.length; i++) {
-          for (var j = 0; j < response[i].volunteerItems.length; j++) {
+        for (let i = 0; i < response.length; i++) {
+          for (let j = 0; j < response[i].volunteerItems.length; j++) {
             let table = this.state.table.slice();
             let k = 0;
             let searching = true;
@@ -96,8 +96,8 @@ class Dashboard extends React.Component {
           }
         }
       } else {
-        for (var i = 0; i < response.length; i++) {
-          for (var j = 0; j < response[i].shopItems.length; j++) {
+        for (let i = 0; i < response.length; i++) {
+          for (let j = 0; j < response[i].shopItems.length; j++) {
             let table = this.state.table.slice();
             let k = 0;
             let searching = true;
@@ -135,7 +135,7 @@ class Dashboard extends React.Component {
 
   //This function should download a csv file to Users
   print() {
-    var divToPrint = document.getElementsByClassName('outer')[0];
+    let divToPrint = document.getElementsByClassName('outer')[0];
     console.log(divToPrint);
     divToPrint.childNodes[0].removeChild(divToPrint.childNodes[0].childNodes[0]);
     let newWin = window.open("");

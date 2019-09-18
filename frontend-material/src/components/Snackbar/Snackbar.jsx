@@ -12,7 +12,7 @@ import snackbarContentStyle from "assets/jss/material-dashboard-react/components
 
 function Snackbar({ ...props }) {
   const { classes, message, color, close, icon, place, open } = props;
-  var action = [];
+  let action = [];
   const messageClasses = classNames({
     [classes.iconMessage]: icon !== undefined
   });
