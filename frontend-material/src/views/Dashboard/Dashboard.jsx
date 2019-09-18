@@ -75,6 +75,9 @@ class Dashboard extends React.Component {
   //This function creates the table
   generateReport() {
     callBackendAPI('/api/transactions/getTransaction?transactionType='+this.state.type+'&startDate='+this.state.from+'&endDate='+this.state.to, 'get').then(response => {
+      this.setState({
+        table: []
+      })
       if (this.state.type === "VOLUNTEER") {
         for (let i = 0; i < response.length; i++) {
           for (let j = 0; j < response[i].volunteerItems.length; j++) {
