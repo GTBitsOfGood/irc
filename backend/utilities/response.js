@@ -63,6 +63,23 @@ function generateTokenError () {
 }
 
 /**
+ * Generates permission error message
+ */
+function generatePermissionsError (userGroup, permissionsNeeded) {
+    return generateResponseMessage(`User of ${userGroup} does not have the required permissions.`, 401,
+        error = 'Error 401 - Unauthorized permissions', {permissionsNeeded});
+}
+
+/**
+ *
+ * @param invalidParametersMap - map of the parameter that is invalid and the reason/justification
+ */
+function generateParameterError (invalidParametersMap) {
+    return generateResponseMessage('The route was called with invalid parameters', 400,
+        error = `Error 400 - Invalid/Bad request because of bad parameters`, {invalidParameters: invalidParametersMap});
+}
+
+/**
  * Generates internal server error
  * @param {Object} error - null by default. Object
  */
@@ -81,5 +98,7 @@ module.exports = {
     generateResponseMessage,
     generateUserNotFoundError,
     generateTokenError,
+    generatePermissionsError,
+    generateParameterError,
     responseString
 }
