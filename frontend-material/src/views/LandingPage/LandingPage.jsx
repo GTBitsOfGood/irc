@@ -121,42 +121,44 @@ class LandingPage extends React.Component {
         <div>
           {this.state.isNotLoggedIn &&
             <center>
-            <Card style={{ width: "20rem" }}>
-              <CardBody>
-                <CardHeader style={{ width: "10rem", bottom:"1rem" }} color="info">
-                  <h4><center> Login/Signup </center></h4>
-                </CardHeader>
-                <TextField
-                  label="Username"
-                  margin="normal"
-                  onChange={e => this.setState({ username: e.target.value })}
-                />
-                <TextField
-                  margin="normal"
-                  label="Password"
-                  inputProps={{type: "password"}}
-                  onChange={e => this.setState({ password: e.target.value })}
-                />
-              </CardBody>
-              <CardBody>
-                <Button
-                  style={{ width: "5rem", right:"1rem" }}
-                  color="success"
-                  round={true}
-                  onClick={() => this.handleLogin()}
-                >
-                  Login
-                </Button>
-                <Button
-                  style={{ width:"5rem", left:"1rem" }}
-                  color="success"
-                  round={true}
-                  onClick={() => this.handleSignup()}
-                >
-                  Sign Up
-                </Button>
-              </CardBody>
-            </Card>
+              <form onSubmit={e => { e.preventDefault(); this.handleLogin(); }}>
+                <Card style={{ width: "20rem" }}>
+                  <CardBody>
+                    <CardHeader style={{ width: "10rem", bottom:"1rem" }} color="info">
+                      <h4><center> Login/Signup </center></h4>
+                    </CardHeader>
+                    <TextField
+                      label="Username"
+                      margin="normal"
+                      onChange={e => this.setState({ username: e.target.value })}
+                    />
+                    <TextField
+                      margin="normal"
+                      label="Password"
+                      inputProps={{type: "password"}}
+                      onChange={e => this.setState({ password: e.target.value })}
+                    />
+                  </CardBody>
+                  <CardBody>
+                    <Button
+                      style={{ width: "5rem", right:"1rem" }}
+                      color="success"
+                      round={true}
+                      type="submit"
+                    >
+                      Login
+                    </Button>
+                    <Button
+                      style={{ width:"5rem", left:"1rem" }}
+                      color="success"
+                      round={true}
+                      onClick={() => this.handleSignup()}
+                    >
+                      Sign Up
+                    </Button>
+                  </CardBody>
+                </Card>
+              </form>
             </center>
           }
         </div>
