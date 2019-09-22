@@ -17,8 +17,16 @@ import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import ShopModify from "views/ShopModify/ShopModify.jsx";
 import TimeModify from "views/TimeModify/TimeModify.jsx";
 import UserModify from "views/UserModify/UserModify.jsx";
+import Login from "views/Login/Login.jsx";
 
 const dashboardRoutes = [
+  {
+    path: "/login",
+    sidebarName: "Login",
+    navbarName: "Login",
+    icon: BubbleChart,
+    component: Login
+  },
   {
     path: "/landing",
     sidebarName: "Landing",

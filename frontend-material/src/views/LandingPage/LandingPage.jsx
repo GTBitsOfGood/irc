@@ -97,6 +97,7 @@ class LandingPage extends React.Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+
   render() {
     const { classes } = this.props;
     if (this.state.redirect !== false) {
