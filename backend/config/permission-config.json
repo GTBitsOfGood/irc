@@ -4,6 +4,6 @@
   },
   "admin": {
     "inherit": ["user"],
-    "permissions": ["promote"]
+    "permissions": ["promote", "user-access"]
   }
 }

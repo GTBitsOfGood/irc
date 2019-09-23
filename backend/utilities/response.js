@@ -62,11 +62,29 @@ function generateTokenError () {
     error = 'Error 401 - Unauthorized - No login token  provided')
 }
 
+function generatePermissionsRoute (requiredPermissions) {
+    return function (req, res, next) {
+        const userMakingCall = res.locals.user;
+        const missingPermissions = [];
+        requiredPermissions.forEach((permission) => {
+           if (!userMakingCall.hasPermission(permission)) {
+               missingPermissions.push(permission);
+           }
+        });
+
+        if (missingPermissions.length > 0) {
+            res.json(generatePermissionsError(userMakingCall.permissionGroup, missingPermissions));
+        } else {
+            next();
+        }
+    }
+}
+
 /**
  * Generates permission error message
  */
 function generatePermissionsError (userGroup, permissionsNeeded) {
-    return generateResponseMessage(`User of ${userGroup} does not have the required permissions.`, 401,
+    return generateResponseMessage(`User of group ${userGroup} does not have the required permissions.`, 401,
         error = 'Error 401 - Unauthorized permissions', {permissionsNeeded});
 }
 
@@ -98,6 +116,7 @@ module.exports = {
     generateResponseMessage,
     generateUserNotFoundError,
     generateTokenError,
+    generatePermissionsRoute,
     generatePermissionsError,
     generateParameterError,
     responseString

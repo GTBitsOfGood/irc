@@ -69,7 +69,9 @@ UserSchema.methods.getPermissionsMap =  function () {
 UserSchema.methods.hasPermission = function (permission) {
   return this.getPermissionsMap()[permission] != null;
 };
-
+UserSchema.methods.getPermissions = function() {
+  return Object.keys(this.getPermissionsMap());
+};
 
 UserSchema.statics.getCount = async function() {
   return this.countDocuments({});
