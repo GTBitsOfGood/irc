@@ -101,82 +101,84 @@ class LandingPage extends React.Component {
   render() {
     const { classes } = this.props;
     if (this.state.redirect !== false) {
-      return <Redirect to={this.state.redirect} />
+      return <Redirect to={this.state.redirect} />;
     }
 
     return (
-    <div>
-    {!this.state.isNotLoggedIn &&
-      <center>
-        <Card style={{ width: "60%" }}>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}> <center> Welcome, {this.state.username} </center></h4>
-          </CardHeader>
-          <CardBody>
-            <p> You are successfully authorized to use the VADR System. Please select an action on the left or logout below. </p>
-          </CardBody>
-        </Card>
-      </center>
-    }
       <div>
-        {this.state.isNotLoggedIn &&
+        {!this.state.isNotLoggedIn &&
+          <center>
+            <Card style={{ width: "60%" }}>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}><center> Welcome, {this.state.username} </center></h4>
+              </CardHeader>
+              <CardBody>
+                <p> Please select an action on the left or log out below. </p>
+              </CardBody>
+            </Card>
+          </center>
+        }
+        <div>
+          {this.state.isNotLoggedIn &&
+            <center>
+              <form onSubmit={e => { e.preventDefault(); this.handleLogin(); }}>
+                <Card style={{ width: "20rem" }}>
+                  <CardBody>
+                    <CardHeader style={{ width: "10rem", bottom:"1rem" }} color="info">
+                      <h4><center> Login/Signup </center></h4>
+                    </CardHeader>
+                    <TextField
+                      label="Username"
+                      margin="normal"
+                      onChange={e => this.setState({ username: e.target.value })}
+                    />
+                    <TextField
+                      margin="normal"
+                      label="Password"
+                      inputProps={{type: "password"}}
+                      onChange={e => this.setState({ password: e.target.value })}
+                    />
+                  </CardBody>
+                  <CardBody>
+                    <Button
+                      style={{ width: "5rem", right:"1rem" }}
+                      color="success"
+                      round={true}
+                      type="submit"
+                    >
+                      Login
+                    </Button>
+                    <Button
+                      style={{ width:"5rem", left:"1rem" }}
+                      color="success"
+                      round={true}
+                      onClick={() => this.handleSignup()}
+                    >
+                      Sign Up
+                    </Button>
+                  </CardBody>
+                </Card>
+              </form>
+            </center>
+          }
+        </div>
+        {!this.state.isNotLoggedIn &&
           <center>
           <Card style={{ width: "20rem" }}>
-            <CardBody >
-              <CardHeader style={{ width: "10rem", bottom:"1rem" }} color="info">
-                <h4> <center> Login/Signup </center></h4>
-              </CardHeader>
-              <TextField
-                label="Username"
-                margin="normal"
-                onChange={e => this.setState({ username: e.target.value })}
-              />
-              <TextField
-                margin="normal"
-                label="Password"
-                inputProps={{type: "password"}}
-                onChange={e => this.setState({ password: e.target.value })}
-              />
+            <CardBody>
+              <center>
+                <Button color="danger"> Log out </Button>
+              </center>
             </CardBody>
-              <CardBody>
-              <Button
-                style={{ width: "5rem", right:"1rem" }}
-                color="success"
-                onClick = {() => this.handleLogin()}
-                round = {true}
-              >
-                Login
-              </Button>
-              <Button
-                style={{ width:"5rem", left:"1rem" }}
-                color="success"
-                round="true"
-                onClick = {() => this.handleSignup()}
-              >
-                Sign Up
-              </Button>
-              </CardBody>
           </Card>
           </center>
         }
+        <ErrorDialog
+          open = {this.state.open}
+          handleClose = {this.handleClose}
+          message = {this.state.message}
+        />
       </div>
-      {!this.state.isNotLoggedIn &&
-        <center>
-        <Card style={{ width: "20rem" }}>
-          <CardBody>
-            <center>
-              <Button color="danger">Log out</Button>
-            </center>
-          </CardBody>
-        </Card>
-        </center>
-      }
-      <ErrorDialog
-        open = {this.state.open}
-        handleClose = {this.handleClose}
-        message = {this.state.message}
-      />
-    </div>
     );
   }
 }

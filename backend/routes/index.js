@@ -23,7 +23,7 @@ mongoose.connect(config.db_url, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 mongoose.set('useCreateIndex', true);
 
-var cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
 const UserModel = require('../model/user');
