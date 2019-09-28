@@ -37,7 +37,7 @@ router.post('/setPermissionGroup',
 });
 /**
  * Gets the user permissions for the inputted user @userEmail. Assumes current user if no inputted user email.
- * Requires 'user-access' permission
+ * Requires 'user-access' permission if trying to access permissions other than the caller's own
  */
 router.post('/getUserPermissions',
     (req, res, next) => {
