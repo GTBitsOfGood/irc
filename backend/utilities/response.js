@@ -94,7 +94,7 @@ function generatePermissionsRoute (requiredPermissions) {
  */
 function generatePermissionsError (userGroup, permissionsNeeded) {
     return generateResponseMessage(`User of group ${userGroup} does not have the required permissions.`, 401,
-        error = 'Error 401 - Unauthorized permissions', {permissionsNeeded});
+        error = 'Error 401 -  Does not have required permissions', {permissionsNeeded});
 }
 
 /**
