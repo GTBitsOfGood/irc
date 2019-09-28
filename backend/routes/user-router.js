@@ -5,18 +5,28 @@ const express = require('express');
 const router = express.Router();
 const userModel = require('../model/user');
 
-
+/**
+ * Gets the current user's permission group. The permissionGroup of the user calling the end point
+ */
 router.get('/permissionGroup', async (req, res) => {
     const user = res.locals.user;
     const permissionGroup = user.permissionGroup;
     res.json(RESPONSE.generateOkResponse(permissionGroup, {permissionGroup: permissionGroup}));
 });
+/**
+ * Gets the user's permissions. The permissions of the user calling the end point
+ */
 router.get('/permissions', async (req, res) => {
     const user = res.locals.user;
-    const permissionGroup = user.permissionGroup;
-    res.json(RESPONSE.generateOkResponse(permissionGroup, {permissionGroup: permissionGroup}));
+    const permissions = user.getPermissions();
+    res.json(RESPONSE.generateOkResponse(`Current user has permissions: [${permissions}]`, {permissions: user.getPermissions()}));
 });
-router.post('/promoteUser',
+
+/**
+ * Promotes/demotes the user inputted in @userEmail to @newGroup
+ * Requires 'promote' permission
+ */
+router.post('/setPermissionGroup',
     RESPONSE.generatePermissionsRoute(['promote']),
     async (req, res) => {
         const { userEmail, newGroup } = req.body;
@@ -42,9 +52,13 @@ router.post('/promoteUser',
 
         res.json(output);
 });
-router.post('/userPermissions',
+/**
+ * Gets the user permissions for the inputted user @userEmail.
+ * Requires 'user-access' permission
+ */
+router.post('/getUserPermissions',
     RESPONSE.generatePermissionsRoute(['user-access']),
-    async (req, res, next) => {
+    async (req, res) => {
         const { userEmail } = req.body;
         let output;
         const targetUser = await userModel.findOne({email: userEmail});

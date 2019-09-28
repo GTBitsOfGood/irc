@@ -62,6 +62,13 @@ function generateTokenError () {
     error = 'Error 401 - Unauthorized - No login token  provided')
 }
 
+/**
+ * Add as a 'middleware function' to require permissions for any endpoint. See user-route.js to see an example
+ * of the implementation.
+ * @param requiredPermissions - An array of strings that represent permissions. The permissions required for the route
+ * @returns {Function} If the user calling the endpoint does not have the permissions, it will throw a permissions
+ * error with the missing permissions. Otherwise, it will call next() (and move on to the next function in the endpoint)
+ */
 function generatePermissionsRoute (requiredPermissions) {
     return function (req, res, next) {
         const userMakingCall = res.locals.user;
@@ -82,6 +89,8 @@ function generatePermissionsRoute (requiredPermissions) {
 
 /**
  * Generates permission error message
+ * @param userGroup - the user's group with the missing permissions
+ * @param permissionsNeeded - an array of the missing permissionsf
  */
 function generatePermissionsError (userGroup, permissionsNeeded) {
     return generateResponseMessage(`User of group ${userGroup} does not have the required permissions.`, 401,

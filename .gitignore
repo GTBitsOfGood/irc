@@ -61,5 +61,5 @@ typings/
 .env
 
 # next.js build output
-.next
+.nextn
 **/.idea
