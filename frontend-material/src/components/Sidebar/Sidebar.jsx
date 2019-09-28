@@ -22,13 +22,13 @@ const Sidebar = ({ ...props }) => {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
   const { classes, color, logo, image, logoText, routes } = props;
-  var links = (
+  let links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
         if (prop.notAuthorized) return null;
         if (prop.redirect) return null;
-        var activePro = " ";
-        var listItemClasses;
+        let activePro = " ";
+        let listItemClasses;
 
         listItemClasses = classNames({
           [" " + classes[color]]: activeRoute(prop.path)
@@ -63,7 +63,7 @@ const Sidebar = ({ ...props }) => {
       })}
     </List>
   );
-  var brand = (
+  let brand = (
     <div className={classes.logo}>
       <a href="https://www.rescue.org" className={classes.logoLink}>
         <div className={classes.logoImage}>
