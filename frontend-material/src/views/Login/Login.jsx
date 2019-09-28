@@ -14,6 +14,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import TextField from '@material-ui/core/TextField';
 
+
 class Login extends React.Component {
 
   constructor() {
@@ -44,11 +45,37 @@ class Login extends React.Component {
     });
   }
 
+  handleLogin() {
+    callBackendAPI('/api/login','post', {
+      email: this.state.username,
+      password: this.state.password
+    }).then(response => {
+      if (response.error != null) {
+        this.setState({
+          open: true,
+          message: response.message
+        });
+      } else {
+        this.setState({
+          redirect: response.urlRedirect
+        })
+      }
+    })
+  }
+
   handleClose() {
     this.setState({
       open: false
     });
   }
+
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
+  handleChangeIndex = index => {
+    this.setState({ value: index });
+  };
 
   render() {
     const { classes } = this.props;
@@ -58,42 +85,45 @@ class Login extends React.Component {
 
     return(
       <center>
-      <Card style={{ width: "30%"}}>
-        <CardBody >
-          <h1>
-            IRC System
-            <img src="/static/media/ircsquare.c537e70b.png" alt="logo" style={{height: 35, width: 35, marginLeft:5}}/>
-          </h1>
-          <TextField
-            label="Username"
-            style={{marginTop: "20px", width: "40%"}}
-            onChange={e => this.setState({ username: e.target.value })}
-          />
-          <br/>
-          <TextField
-            label="Password"
-            inputProps={{type: "password"}}
-            style={{marginTop: "20px", width: "40%"}}
-            onChange={e => this.setState({ password: e.target.value })}
-          />
-        </CardBody>
-        <CardBody>
-          <Button
-            style={{ width: "20%"}}
-            color="success"
-          >
-            Sign In
-          </Button>
-          <br/>
-          <br/>
-          <p style={{marginBottom: 10}}>
-            No account? <a> Make an account </a>
-          </p>
-          <a>
-            Forgot password
-          </a>
-        </CardBody>
-      </Card>
+        <form onSubmit={e => { e.preventDefault(); this.handleLogin(); }}>
+          <Card style={{ width: "30%"}}>
+            <CardBody >
+              <h1>
+                IRC System
+                <img src="/static/media/ircsquare.c537e70b.png" alt="logo" style={{height: 35, width: 35, marginLeft:5}}/>
+              </h1>
+              <TextField
+                label="Username"
+                style={{marginTop: "20px", width: "40%"}}
+                onChange={e => this.setState({ username: e.target.value })}
+              />
+              <br/>
+              <TextField
+                label="Password"
+                inputProps={{type: "password"}}
+                style={{marginTop: "20px", width: "40%"}}
+                onChange={e => this.setState({ password: e.target.value })}
+              />
+            </CardBody>
+            <CardBody>
+              <Button
+                style={{ width: "20%"}}
+                color="success"
+                type="submit"
+              >
+                Sign In
+              </Button>
+              <br/>
+              <br/>
+              <p style={{marginBottom: 10}}>
+                No account? <a> Make an account </a>
+              </p>
+              <a>
+                Forgot password
+              </a>
+            </CardBody>
+          </Card>
+          </form>
       </center>
     )
 
