@@ -6,23 +6,6 @@ const router = express.Router();
 const userModel = require('../model/user');
 
 /**
- * Gets the current user's permission group. The permissionGroup of the user calling the end point
- */
-router.get('/permissionGroup', async (req, res) => {
-    const user = res.locals.user;
-    const permissionGroup = user.permissionGroup;
-    res.json(RESPONSE.generateOkResponse(permissionGroup, {permissionGroup: permissionGroup}));
-});
-/**
- * Gets the user's permissions. The permissions of the user calling the end point
- */
-router.get('/permissions', async (req, res) => {
-    const user = res.locals.user;
-    const permissions = user.getPermissions();
-    res.json(RESPONSE.generateOkResponse(`Current user has permissions: [${permissions}]`, {permissions: user.getPermissions()}));
-});
-
-/**
  * Promotes/demotes the user inputted in @userEmail to @newGroup
  * Requires 'promote' permission
  */
@@ -53,10 +36,19 @@ router.post('/setPermissionGroup',
         res.json(output);
 });
 /**
- * Gets the user permissions for the inputted user @userEmail.
+ * Gets the user permissions for the inputted user @userEmail. Assumes current user if no inputted user email.
  * Requires 'user-access' permission
  */
 router.post('/getUserPermissions',
+    (req, res, next) => {
+        const { userEmail } = req.body;
+        const currentUserEmail = res.locals.user.email;
+        if (userEmail == null || userEmail === currentUserEmail) {
+            getCurrentUserInfoAndSend(res, req, next);
+        } else {
+            next();
+        }
+    },
     RESPONSE.generatePermissionsRoute(['user-access']),
     async (req, res) => {
         const { userEmail } = req.body;
@@ -67,9 +59,23 @@ router.post('/getUserPermissions',
                     + `does not exist in the database`});
         } else {
             output = RESPONSE.generateOkResponse(`${userEmail} permissions exist.`,
-                {permissionGroup: targetUser.permissionGroup, permissions: targetUser.getPermissions()});
+                {permissionGroup: targetUser.permissionGroup, permissions: targetUser.getPermissions(),
+                userEmail});
         }
 
         res.json(output);
 });
+
+
+/**
+ * Gets the current user's permission group and the user's permissions. The permissionGroup of the user calling the end point
+ * Sends a response with that info
+ */
+function getCurrentUserInfoAndSend (res, req, next) {
+    const user = res.locals.user;
+    const permissionGroup = user.permissionGroup;
+    const permissions = user.getPermissions();
+    res.json(RESPONSE.generateOkResponse('Current user\'s permissions', {permissionGroup, permissions, userEmail: user.email}));
+}
+
 module.exports = router;
