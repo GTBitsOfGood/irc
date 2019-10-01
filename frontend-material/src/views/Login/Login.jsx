@@ -22,7 +22,7 @@ class Login extends React.Component {
     this.state = {
       value: 0,
       open: false,
-      message: "",
+      message: "​",
       isNotLoggedIn: false,
       username: "",
       password: "",
@@ -31,26 +31,14 @@ class Login extends React.Component {
     this.handleClose = this.handleClose.bind(this);
   }
 
-  componentWillMount() {
-    callBackendAPI('/api/verify', 'post', {}).then(response => {
-      if (response.error === "Error 401 - Unauthorized - No login token  provided") {
-        this.setState({
-          isNotLoggedIn: true
-        });
-      } else {
-        this.setState({
-          username: response.user.email
-        })
-      }
-    });
-  }
 
   handleLogin() {
     callBackendAPI('/api/login','post', {
       email: this.state.username,
       password: this.state.password
     }).then(response => {
-      if (response.error != null) {
+      console.log(response);
+      if (response.error != null || response.message == "Missing credentials") {
         this.setState({
           open: true,
           message: response.message
@@ -80,6 +68,7 @@ class Login extends React.Component {
   render() {
     const { classes } = this.props;
     if (this.state.redirect !== false) {
+      console.log("ji");
       return <Redirect to={this.state.redirect} />
     }
 
@@ -104,8 +93,9 @@ class Login extends React.Component {
                 style={{marginTop: "20px", width: "40%"}}
                 onChange={e => this.setState({ password: e.target.value })}
               />
-            </CardBody>
-            <CardBody>
+              <p style={{color: 'red'}}>
+                {this.state.message}
+              </p>
               <Button
                 style={{ width: "20%"}}
                 color="success"
