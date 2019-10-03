@@ -10,20 +10,20 @@ import {
 const typographyStyle = {
   defaultFontStyle: {
     ...defaultFont,
-    fontSize: "14px"
+    fontSize: "0.875rem"
   },
   defaultHeaderMargins: {
-    marginTop: "20px",
-    marginBottom: "10px"
+    marginTop: "1.25rem",
+    marginBottom: "0.625rem"
   },
   quote: {
-    padding: "10px 20px",
-    margin: "0 0 20px",
-    fontSize: "17.5px",
-    borderLeft: "5px solid #eee"
+    padding: "0.625rem 1.25rem",
+    margin: "0 0 1.25rem",
+    fontSize: "1.0938rem",
+    borderLeft: "0.3125rem solid #eee"
   },
   quoteText: {
-    margin: "0 0 10px",
+    margin: "0 0 0.625rem",
     fontStyle: "italic"
   },
   quoteAuthor: {

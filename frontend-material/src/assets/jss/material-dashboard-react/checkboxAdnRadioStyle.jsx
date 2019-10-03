@@ -2,38 +2,38 @@ import { primaryColor } from "assets/jss/material-dashboard-react.jsx";
 
 const checkboxAdnRadioStyle = {
   root: {
-    padding: "13px"
+    padding: "0.8125rem"
   },
   checked: {
     color: primaryColor + "!important"
   },
   checkedIcon: {
-    width: "20px",
-    height: "20px",
-    border: "1px solid rgba(0, 0, 0, .54)",
-    borderRadius: "3px"
+    width: "1.25rem",
+    height: "1.25rem",
+    border: "0.0625rem solid rgba(0, 0, 0, .54)",
+    borderRadius: "0.1875rem"
   },
   uncheckedIcon: {
-    width: "0px",
-    height: "0px",
-    padding: "10px",
-    border: "1px solid rgba(0, 0, 0, .54)",
-    borderRadius: "3px"
+    width: "0rem",
+    height: "0rem",
+    padding: "0.625rem",
+    border: "0.0625rem solid rgba(0, 0, 0, .54)",
+    borderRadius: "0.1875rem"
   },
   radio: {
     color: primaryColor + "!important"
   },
   radioChecked: {
-    width: "20px",
-    height: "20px",
-    border: "1px solid " + primaryColor,
+    width: "1.25rem",
+    height: "1.25rem",
+    border: "0.0625rem solid " + primaryColor,
     borderRadius: "50%"
   },
   radioUnchecked: {
-    width: "0px",
-    height: "0px",
-    padding: "10px",
-    border: "1px solid rgba(0, 0, 0, .54)",
+    width: "0rem",
+    height: "0rem",
+    padding: "0.625rem",
+    border: "0.0625rem solid rgba(0, 0, 0, .54)",
     borderRadius: "50%"
   }
 };

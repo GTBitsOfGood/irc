@@ -1,16 +1,16 @@
 footer {
   color: $gray-light;
-  font-size: 14px;
+  font-size: 0.875rem;
   text-align: center;
-  padding: 32px;
+  padding: 2rem;
   background: $gray-dark-bg;
   strong {
     color: $gray-medium;
   }
   .footer-links {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
     a {
-      margin: 0 8px;
+      margin: 0 0.5rem;
       color: $gray-medium;
     }
   }

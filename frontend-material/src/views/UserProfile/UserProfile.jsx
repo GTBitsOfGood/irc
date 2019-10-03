@@ -18,17 +18,17 @@ const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
     margin: "0",
-    fontSize: "14px",
+    fontSize: "0.875rem",
     marginTop: "0",
     marginBottom: "0"
   },
   cardTitleWhite: {
     color: "#FFFFFF",
-    marginTop: "0px",
+    marginTop: "0rem",
     minHeight: "auto",
     fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
+    marginBottom: "0.1875rem",
     textDecoration: "none"
   }
 };

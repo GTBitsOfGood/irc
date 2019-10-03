@@ -8,26 +8,26 @@ const dropdownStyle = theme => ({
   buttonLink: {
     [theme.breakpoints.down("md")]: {
       display: "flex",
-      marginLeft: "30px",
+      marginLeft: "1.875rem",
       width: "auto"
     }
   },
   links: {
-    width: "20px",
-    height: "20px",
+    width: "1.25rem",
+    height: "1.25rem",
     zIndex: "4",
     [theme.breakpoints.down("md")]: {
       display: "block",
-      width: "30px",
-      height: "30px",
+      width: "1.875rem",
+      height: "1.875rem",
       color: "#a9afbb",
-      marginRight: "15px"
+      marginRight: "0.9375rem"
     }
   },
   linkText: {
     zIndex: "4",
     ...defaultFont,
-    fontSize: "14px"
+    fontSize: "0.875rem"
   },
   popperClose: {
     pointerEvents: "none"
@@ -58,14 +58,14 @@ const dropdownStyle = theme => ({
         marginLeft: "0rem",
         marginRight: "0rem",
         transition: "none !important",
-        marginTop: "0px !important",
-        marginBottom: "0px !important",
-        padding: "0px !important",
+        marginTop: "0rem !important",
+        marginBottom: "0rem !important",
+        padding: "0rem !important",
         backgroundColor: "transparent !important",
         "& ul li": {
           color: "#FFF !important",
-          margin: "10px 15px 0!important",
-          padding: "10px 15px !important",
+          margin: "0.625rem 0.9375rem 0!important",
+          padding: "0.625rem 0.9375rem !important",
           "&:hover": {
             backgroundColor: "hsla(0,0%,78%,.2)",
             boxShadow: "none"
@@ -75,15 +75,15 @@ const dropdownStyle = theme => ({
     }
   },
   dropdown: {
-    borderRadius: "3px",
+    borderRadius: "0.1875rem",
     border: "0",
-    boxShadow: "0 2px 5px 0 rgba(0, 0, 0, 0.26)",
+    boxShadow: "0 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.26)",
     top: "100%",
     zIndex: "1000",
-    minWidth: "160px",
-    padding: "5px 0",
-    margin: "2px 0 0",
-    fontSize: "14px",
+    minWidth: "10rem",
+    padding: "0.3125rem 0",
+    margin: "0.125rem 0 0",
+    fontSize: "0.875rem",
     textAlign: "left",
     listStyle: "none",
     backgroundColor: "#fff",
@@ -92,10 +92,10 @@ const dropdownStyle = theme => ({
   },
   dropdownItem: {
     ...defaultFont,
-    fontSize: "13px",
-    padding: "10px 20px",
-    margin: "0 5px",
-    borderRadius: "2px",
+    fontSize: "0.8125rem",
+    padding: "0.625rem 1.25rem",
+    margin: "0 0.3125rem",
+    borderRadius: "0.125rem",
     WebkitTransition: "all 150ms linear",
     MozTransition: "all 150ms linear",
     OTransition: "all 150ms linear",

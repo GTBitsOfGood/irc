@@ -14,45 +14,45 @@ const cardHeaderStyle = {
     background: "transparent",
     zIndex: "3 !important",
     "&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
-      margin: "0 15px",
+      margin: "0 0.9375rem",
       padding: "0",
       position: "relative",
       color: "#FFFFFF"
     },
     "&:first-child": {
-      borderRadius: "calc(.25rem - 1px) calc(.25rem - 1px) 0 0"
+      borderRadius: "calc(.25rem - 0.0625rem) calc(.25rem - 0.0625rem) 0 0"
     },
     "&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
       "&:not($cardHeaderIcon)": {
-        borderRadius: "3px",
-        marginTop: "-20px",
-        padding: "15px"
+        borderRadius: "0.1875rem",
+        marginTop: "-1.25rem",
+        padding: "0.9375rem"
       }
     },
     "&$cardHeaderStats svg": {
-      fontSize: "36px",
-      lineHeight: "56px",
+      fontSize: "2.25rem",
+      lineHeight: "3.5rem",
       textAlign: "center",
-      width: "36px",
-      height: "36px",
-      margin: "10px 10px 4px"
+      width: "2.25rem",
+      height: "2.25rem",
+      margin: "0.625rem 0.625rem 0.25rem"
     },
     "&$cardHeaderStats i,&$cardHeaderStats .material-icons": {
-      fontSize: "36px",
-      lineHeight: "56px",
-      width: "56px",
-      height: "56px",
+      fontSize: "2.25rem",
+      lineHeight: "3.5rem",
+      width: "3.5rem",
+      height: "3.5rem",
       textAlign: "center",
       overflow: "unset",
-      marginBottom: "1px"
+      marginBottom: "0.0625rem"
     },
     "&$cardHeaderStats$cardHeaderIcon": {
       textAlign: "right"
     }
   },
   cardHeaderPlain: {
-    marginLeft: "0px !important",
-    marginRight: "0px !important"
+    marginLeft: "0rem !important",
+    marginRight: "0rem !important"
   },
   cardHeaderStats: {
     "& $cardHeaderIcon": {
@@ -68,17 +68,17 @@ const cardHeaderStyle = {
       boxShadow: "none"
     },
     "& i,& .material-icons": {
-      width: "33px",
-      height: "33px",
+      width: "2.0625rem",
+      height: "2.0625rem",
       textAlign: "center",
-      lineHeight: "33px"
+      lineHeight: "2.0625rem"
     },
     "& svg": {
-      width: "24px",
-      height: "24px",
+      width: "1.5rem",
+      height: "1.5rem",
       textAlign: "center",
-      lineHeight: "33px",
-      margin: "5px 4px 0px"
+      lineHeight: "2.0625rem",
+      margin: "0.3125rem 0.25rem 0rem"
     }
   },
   warningCardHeader: {

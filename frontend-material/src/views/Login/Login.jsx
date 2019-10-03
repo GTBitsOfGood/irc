@@ -94,14 +94,14 @@ class Login extends React.Component {
               </h1>
               <TextField
                 label="Username"
-                style={{marginTop: "20px", width: "40%"}}
+                style={{marginTop: "1.25rem", width: "40%"}}
                 onChange={e => this.setState({ username: e.target.value })}
               />
               <br/>
               <TextField
                 label="Password"
                 inputProps={{type: "password"}}
-                style={{marginTop: "20px", width: "40%"}}
+                style={{marginTop: "1.25rem", width: "40%"}}
                 onChange={e => this.setState({ password: e.target.value })}
               />
             </CardBody>

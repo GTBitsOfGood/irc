@@ -1,18 +1,18 @@
 #main-container {
   width: 60%;
-  min-width: 725px;
-  max-width: 725px;
+  min-width: 45.3125rem;
+  max-width: 45.3125rem;
 }
 
 #item-container {
   width: 65%;
-  min-width: 200px;
+  min-width: 12.5rem;
 }
 
 #maskedInput {
   -webkit-text-security: disc;
-  letter-spacing: 0.5px;
-  font: 15px Verdana;
+  letter-spacing: 0.0313rem;
+  font: 0.9375rem Verdana;
 }
 
 #name-container {
@@ -25,9 +25,9 @@
   transform: scaleX(0);
   position: absolute;
   transition: 0.5s;
-  bottom: -3px;
+  bottom: -0.1875rem;
   width: 100%;
-  height: 2px;
+  height: 0.125rem;
   content: "";
 }
 
@@ -51,7 +51,7 @@
 
 #usedEmail {
   font-weight: 400;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: #DD6247;
   float: left;
   padding: 0;
@@ -59,11 +59,11 @@
 }
 
 .large-space-top {
-  margin-top: 40px;
+  margin-top: 2.5rem;
 }
 
 .small-space-top {
-  margin-top: 15px;
+  margin-top: 0.9375rem;
 }
 
 .right {

@@ -12,13 +12,13 @@ const headerLinksStyle = theme => ({
       marginTop: "0"
     },
     [theme.breakpoints.down("sm")]: {
-      margin: "10px 15px !important",
+      margin: "0.625rem 0.9375rem !important",
       float: "none !important",
-      paddingTop: "1px",
-      paddingBottom: "1px",
+      paddingTop: "0.0625rem",
+      paddingBottom: "0.0625rem",
       padding: "0!important",
       width: "60%",
-      marginTop: "40px",
+      marginTop: "2.5rem",
       "& input": {
         color: "#FFFFFF"
       }
@@ -27,27 +27,27 @@ const headerLinksStyle = theme => ({
   linkText: {
     zIndex: "4",
     ...defaultFont,
-    fontSize: "14px",
-    margin: "0px"
+    fontSize: "0.875rem",
+    margin: "0rem"
   },
   buttonLink: {
     [theme.breakpoints.down("sm")]: {
       display: "flex",
-      margin: "10px 15px 0",
+      margin: "0.625rem 0.9375rem 0",
       width: "-webkit-fill-available",
       "& svg": {
-        width: "24px",
-        height: "30px",
-        marginRight: "15px",
-        marginLeft: "-15px"
+        width: "1.5rem",
+        height: "1.875rem",
+        marginRight: "0.9375rem",
+        marginLeft: "-0.9375rem"
       },
       "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-        fontSize: "24px",
-        lineHeight: "30px",
-        width: "24px",
-        height: "30px",
-        marginRight: "15px",
-        marginLeft: "-15px"
+        fontSize: "1.5rem",
+        lineHeight: "1.875rem",
+        width: "1.5rem",
+        height: "1.875rem",
+        marginRight: "0.9375rem",
+        marginLeft: "-0.9375rem"
       },
       "& > span": {
         justifyContent: "flex-start",
@@ -57,8 +57,8 @@ const headerLinksStyle = theme => ({
   },
   searchButton: {
     [theme.breakpoints.down("sm")]: {
-      top: "-50px !important",
-      marginRight: "22px",
+      top: "-3.125rem !important",
+      marginRight: "1.375rem",
       float: "right"
     }
   },
@@ -67,31 +67,31 @@ const headerLinksStyle = theme => ({
     margin: "0"
   },
   searchIcon: {
-    width: "17px",
+    width: "1.0625rem",
     zIndex: "4"
   },
   notifications: {
     zIndex: "4",
     [theme.breakpoints.up("md")]: {
       position: "absolute",
-      top: "2px",
-      border: "1px solid #FFF",
-      right: "4px",
-      fontSize: "9px",
+      top: "0.125rem",
+      border: "0.0625rem solid #FFF",
+      right: "0.25rem",
+      fontSize: "0.5625rem",
       background: dangerColor,
       color: "#FFFFFF",
-      minWidth: "16px",
-      height: "16px",
-      borderRadius: "10px",
+      minWidth: "1rem",
+      height: "1rem",
+      borderRadius: "0.625rem",
       textAlign: "center",
-      lineHeight: "16px",
+      lineHeight: "1rem",
       verticalAlign: "middle",
       display: "block"
     },
     [theme.breakpoints.down("sm")]: {
       ...defaultFont,
-      fontSize: "14px",
-      marginRight: "8px"
+      fontSize: "0.875rem",
+      marginRight: "0.5rem"
     }
   },
   manager: {
@@ -103,7 +103,7 @@ const headerLinksStyle = theme => ({
   searchWrapper: {
     [theme.breakpoints.down("sm")]: {
       width: "-webkit-fill-available",
-      margin: "10px 15px 0"
+      margin: "0.625rem 0.9375rem 0"
     },
     display: "inline-block"
   }

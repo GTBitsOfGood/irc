@@ -5,52 +5,52 @@ const dashboardStyle = {
     color: successColor
   },
   upArrowCardCategory: {
-    width: "16px",
-    height: "16px"
+    width: "1rem",
+    height: "1rem"
   },
   stats: {
     color: "#999999",
     display: "inline-flex",
-    fontSize: "12px",
-    lineHeight: "22px",
+    fontSize: "0.75rem",
+    lineHeight: "1.375rem",
     "& svg": {
-      top: "4px",
-      width: "16px",
-      height: "16px",
+      top: "0.25rem",
+      width: "1rem",
+      height: "1rem",
       position: "relative",
-      marginRight: "3px",
-      marginLeft: "3px"
+      marginRight: "0.1875rem",
+      marginLeft: "0.1875rem"
     },
     "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      top: "4px",
-      fontSize: "16px",
+      top: "0.25rem",
+      fontSize: "1rem",
       position: "relative",
-      marginRight: "3px",
-      marginLeft: "3px"
+      marginRight: "0.1875rem",
+      marginLeft: "0.1875rem"
     }
   },
   cardCategory: {
     color: "#999999",
     margin: "0",
-    fontSize: "14px",
+    fontSize: "0.875rem",
     marginTop: "0",
-    paddingTop: "10px",
+    paddingTop: "0.625rem",
     marginBottom: "0"
   },
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
     margin: "0",
-    fontSize: "14px",
+    fontSize: "0.875rem",
     marginTop: "0",
     marginBottom: "0"
   },
   cardTitle: {
     color: "#3C4858",
-    marginTop: "0px",
+    marginTop: "0rem",
     minHeight: "auto",
     fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
+    marginBottom: "0.1875rem",
     textDecoration: "none",
     "& small": {
       color: "#777",
@@ -60,11 +60,11 @@ const dashboardStyle = {
   },
   cardTitleWhite: {
     color: "#FFFFFF",
-    marginTop: "0px",
+    marginTop: "0rem",
     minHeight: "auto",
     fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
+    marginBottom: "0.1875rem",
     textDecoration: "none",
     "& small": {
       color: "#777",

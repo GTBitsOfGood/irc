@@ -1,13 +1,13 @@
 const cardImagesStyles = {
   cardImgTop: {
     width: "100%",
-    borderTopLeftRadius: "calc(.25rem - 1px)",
-    borderTopRightRadius: "calc(.25rem - 1px)"
+    borderTopLeftRadius: "calc(0.25rem - 0.0625rem)",
+    borderTopRightRadius: "calc(0.25rem - 0.0625rem)"
   },
   cardImgBottom: {
     width: "100%",
-    borderBottomRightRadius: "calc(.25rem - 1px)",
-    borderBottomLeftRadius: "calc(.25rem - 1px)"
+    borderBottomRightRadius: "calc(0.25rem - 0.0625rem)",
+    borderBottomLeftRadius: "calc(0.25rem - 0.0625rem)"
   },
   cardImgOverlay: {
     position: "absolute",
@@ -19,7 +19,7 @@ const cardImagesStyles = {
   },
   cardImg: {
     width: "100%",
-    borderRadius: "calc(.25rem - 1px)"
+    borderRadius: "calc(0.25rem - 0.0625rem)"
   }
 };
 

@@ -25,24 +25,24 @@ const transition = {
 };
 
 const container = {
-  paddingRight: "15px",
-  paddingLeft: "15px",
+  paddingRight: "0.9375rem",
+  paddingLeft: "0.9375rem",
   marginRight: "auto",
   marginLeft: "auto"
 };
 
 const boxShadow = {
   boxShadow:
-    "0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)"
+    "0 0.625rem 1.875rem -0.75rem rgba(0, 0, 0, 0.42), 0 0.25rem 1.5625rem 0rem rgba(0, 0, 0, 0.12), 0 0.5rem 0.625rem -0.3125rem rgba(0, 0, 0, 0.2)"
 };
 
 const card = {
   display: "inline-block",
   position: "relative",
   width: "100%",
-  margin: "25px 0",
-  boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.14)",
-  borderRadius: "3px",
+  margin: "1.5625rem 0",
+  boxShadow: "0 0.0625rem 0.25rem 0 rgba(0, 0, 0, 0.14)",
+  borderRadius: "0.1875rem",
   color: "rgba(0, 0, 0, 0.87)",
   background: "#fff"
 };
@@ -63,27 +63,27 @@ const grayColor = "#999999";
 
 const primaryBoxShadow = {
   boxShadow:
-    "0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2)"
+    "0 0.75rem 1.25rem -0.625rem rgba(156, 39, 176, 0.28), 0 0.25rem 1.25rem 0rem rgba(0, 0, 0, 0.12), 0 0.4375rem 0.5rem -0.3125rem rgba(156, 39, 176, 0.2)"
 };
 const infoBoxShadow = {
   boxShadow:
-    "0 12px 20px -10px rgba(0, 188, 212, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(0, 188, 212, 0.2)"
+    "0 0.75rem 1.25rem -0.625rem rgba(0, 188, 212, 0.28), 0 0.25rem 1.25rem 0rem rgba(0, 0, 0, 0.12), 0 0.4375rem 0.5rem -0.3125rem rgba(0, 188, 212, 0.2)"
 };
 const successBoxShadow = {
   boxShadow:
-    "0 12px 20px -10px rgba(76, 175, 80, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(76, 175, 80, 0.2)"
+    "0 0.75rem 1.25rem -0.625rem rgba(76, 175, 80, 0.28), 0 0.25rem 1.25rem 0rem rgba(0, 0, 0, 0.12), 0 0.4375rem 0.5rem -0.3125rem rgba(76, 175, 80, 0.2)"
 };
 const warningBoxShadow = {
   boxShadow:
-    "0 12px 20px -10px rgba(255, 152, 0, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(255, 152, 0, 0.2)"
+    "0 0.75rem 1.25rem -0.625rem rgba(255, 152, 0, 0.28), 0 0.25rem 1.25rem 0rem rgba(0, 0, 0, 0.12), 0 0.4375rem 0.5rem -0.3125rem rgba(255, 152, 0, 0.2)"
 };
 const dangerBoxShadow = {
   boxShadow:
-    "0 12px 20px -10px rgba(244, 67, 54, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(244, 67, 54, 0.2)"
+    "0 0.75rem 1.25rem -0.625rem rgba(244, 67, 54, 0.28), 0 0.25rem 1.25rem 0rem rgba(0, 0, 0, 0.12), 0 0.4375rem 0.5rem -0.3125rem rgba(244, 67, 54, 0.2)"
 };
 const roseBoxShadow = {
   boxShadow:
-    "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4)"
+    "0 0.25rem 1.25rem 0rem rgba(0, 0, 0, 0.14), 0 0.4375rem 0.625rem -0.3125rem rgba(233, 30, 99, 0.4)"
 };
 
 const warningCardHeader = {
@@ -112,25 +112,25 @@ const roseCardHeader = {
 };
 
 const cardActions = {
-  margin: "0 20px 10px",
-  paddingTop: "10px",
-  borderTop: "1px solid #eeeeee",
+  margin: "0 1.25rem 0.625rem",
+  paddingTop: "0.625rem",
+  borderTop: "0.0625rem solid #eeeeee",
   height: "auto",
   ...defaultFont
 };
 
 const cardHeader = {
-  margin: "-20px 15px 0",
-  borderRadius: "3px",
-  padding: "15px"
+  margin: "-1.25rem 0.9375rem 0",
+  borderRadius: "0.1875rem",
+  padding: "0.9375rem"
 };
 
 const defaultBoxShadow = {
   border: "0",
-  borderRadius: "3px",
+  borderRadius: "0.1875rem",
   boxShadow:
-    "0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)",
-  padding: "10px 0",
+    "0 0.625rem 1.25rem -0.75rem rgba(0, 0, 0, 0.42), 0 0.1875rem 1.25rem 0rem rgba(0, 0, 0, 0.12), 0 0.5rem 0.625rem -0.3125rem rgba(0, 0, 0, 0.2)",
+  padding: "0.625rem 0",
   transition: "all 150ms ease 0s"
 };
 
@@ -138,9 +138,9 @@ const title = {
   color: "#3C4858",
   textDecoration: "none",
   fontWeight: "300",
-  marginTop: "30px",
-  marginBottom: "25px",
-  minHeight: "32px",
+  marginTop: "1.875rem",
+  marginBottom: "1.5625rem",
+  minHeight: "2rem",
   fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
   "& small": {
     color: "#777",
@@ -152,18 +152,18 @@ const title = {
 const cardTitle = {
   ...title,
   marginTop: "0",
-  marginBottom: "3px",
+  marginBottom: "0.1875rem",
   minHeight: "auto",
   "& a": {
     ...title,
-    marginTop: ".625rem",
+    marginTop: "0.625rem",
     marginBottom: "0.75rem",
     minHeight: "auto"
   }
 };
 
 const cardSubtitle = {
-  marginTop: "-.375rem"
+  marginTop: "-0.375rem"
 };
 
 const cardLink = {

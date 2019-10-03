@@ -88,7 +88,7 @@ class SignUp extends React.Component {
               </CardHeader>
             </center>
 
-            <CardBody style={{ padding: "25px 45px 45px 45px" }}>
+            <CardBody style={{ padding: "1.5625rem 2.8125rem 2.8125rem 2.8125rem" }}>
               <div id="item-container">
                 <div id="name-container" className="left">
                   <CustomInput

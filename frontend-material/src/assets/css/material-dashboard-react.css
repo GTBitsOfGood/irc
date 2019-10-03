@@ -15,8 +15,8 @@
  */
 .ct-grid {
     stroke: rgba(255, 255, 255, 0.2);
-    stroke-width: 1px;
-    stroke-dasharray: 2px;
+    stroke-width: 0.0625rem;
+    stroke-dasharray: 0.125rem;
 }
 
 .ct-series-a .ct-point, .ct-series-a .ct-line, .ct-series-a .ct-bar, .ct-series-a .ct-slice-donut {
@@ -86,7 +86,7 @@ h2 {
 h3 {
     font-size: 1.825em;
     line-height: 1.4em;
-    margin: 20px 0 10px;
+    margin: 1.25rem 0 0.625rem;
 }
 
 h4 {
@@ -97,7 +97,7 @@ h4 {
 h5 {
     font-size: 1.25em;
     line-height: 1.4em;
-    margin-bottom: 15px;
+    margin-bottom: 0.9375rem;
 }
 
 h6 {
@@ -156,25 +156,25 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 
 legend {
-    margin-bottom: 20px;
-    font-size: 21px;
+    margin-bottom: 1.25rem;
+    font-size: 1.3125rem;
 }
 
 output {
-    padding-top: 8px;
-    font-size: 14px;
+    padding-top: 0.5rem;
+    font-size: 0.875rem;
     line-height: 1.42857;
 }
 
 label {
-    font-size: 14px;
+    font-size: 0.875rem;
     line-height: 1.42857;
     color: #AAAAAA;
     font-weight: 400;
 }
 
 footer {
-    padding: 15px 0;
+    padding: 0.9375rem 0;
 }
 
 footer ul {
@@ -189,11 +189,11 @@ footer ul li {
 
 footer ul li a {
     color: inherit;
-    padding: 15px;
+    padding: 0.9375rem;
     font-weight: 500;
-    font-size: 12px;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    border-radius: 3px;
+    border-radius: 0.1875rem;
     text-decoration: none;
     position: relative;
     display: block;
@@ -203,7 +203,7 @@ footer ul li a:hover {
     text-decoration: none;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 61.9375rem) {
     body,
     html {
         position: relative;
@@ -217,7 +217,7 @@ footer ul li a:hover {
         opacity: 0;
         top: 0;
         left: auto;
-        right: 260px;
+        right: 16.25rem;
         content: "";
         z-index: 9999;
         overflow-x: hidden;

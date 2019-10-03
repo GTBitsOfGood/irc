@@ -14,30 +14,30 @@ const tasksStyle = {
   },
   tableRow: {
     position: "relative",
-    borderBottom: "1px solid #dddddd"
+    borderBottom: "0.0625rem solid #dddddd"
   },
   tableActions: {
     display: "flex",
     border: "none",
-    padding: "12px 8px !important",
+    padding: "0.75rem 0.5rem !important",
     verticalAlign: "middle"
   },
   tableCell: {
     ...defaultFont,
-    padding: "8px",
+    padding: "0.5rem",
     verticalAlign: "middle",
     border: "none",
     lineHeight: "1.42857143",
-    fontSize: "14px"
+    fontSize: "0.875rem"
   },
   tableActionButton: {
-    width: "27px",
-    height: "27px",
+    width: "1.6875rem",
+    height: "1.6875rem",
     padding: "0"
   },
   tableActionButtonIcon: {
-    width: "17px",
-    height: "17px"
+    width: "1.0625rem",
+    height: "1.0625rem"
   },
   edit: {
     backgroundColor: "transparent",
