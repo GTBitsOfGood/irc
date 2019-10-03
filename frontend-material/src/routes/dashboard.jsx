@@ -93,7 +93,7 @@ const dashboardRoutes = [
     icon: AccountBox,
     component: UserModify
   },
-  { redirect: true, path: "/", to: "/landing", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: "/login", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;
