@@ -12,6 +12,8 @@ import LandingPage from "views/LandingPage/LandingPage.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 import ShopList from "views/ShopList/ShopList.jsx";
 import TimeList from "views/TimeList/TimeList.jsx";
+import SignUp from "views/SignUp/SignUp.jsx";
+
 // admin views
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import ShopModify from "views/ShopModify/ShopModify.jsx";
@@ -35,6 +37,13 @@ const dashboardRoutes = [
     component: LandingPage
   },
   {
+    path: "/signup",
+    sidebarName: "Sign Up",
+    navbarName: "Sign Up",
+    icon: Person,
+    component: SignUp
+  },
+  {
     path: "/user",
     sidebarName: "User Profile",
     navbarName: "Profile",
@@ -56,7 +65,7 @@ const dashboardRoutes = [
     component: TimeList
   },
   // Admin Features
-    {
+  {
     path: "/dashboard",
     sidebarName: "Reporting",
     navbarName: "Reports Dashboard",
