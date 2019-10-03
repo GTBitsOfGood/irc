@@ -33,6 +33,7 @@ router.get('/authorizedUser', async (req, res, next) => {
 
 router.get('/getShopItems', async (req, res, next) => {
     if (req.query.revisionNumber) {
+        console.log(req.query.revisionNumber);
         try {
             const allItemsByVersion = await ShopItem.find({
                 revisionNumber: req.query.revisionNumber
@@ -54,7 +55,7 @@ router.get('/getShopItems', async (req, res, next) => {
                         }
                     },
                     // Sort the groups by _id descending to put the max revisionNumber group first.
-                    { $sort: { revisionNumber: -1 } },
+                    { $sort: { _id: -1 } },
                     // Return just the first (max revisionNumber) group of docs.
                     { $limit: 1 }
                 ]
@@ -139,12 +140,15 @@ router.get('/getTransaction', async (req, res, next) => {
 
 router.post('/updateItems', async (req, res, next) => {
     const { updatedItems, itemType } = req.body;
+    for (let i = 0; i < updatedItems.length; i++) {
+        const item = updatedItems[i];
+        item.revisionNumber++;
+        if (item.dateUpdated != null) {
+            delete item.dateUpdated;
+        }
+    }
 
     if (itemType === 'SHOP') {
-        for (let i = 0; i < updatedItems.length; i++) {
-            updatedItems[i].revisionNumber++;
-        }
-
         ShopItem.create(updatedItems, (err) => {
             if (err) {
                 res.json(response.generateInternalServerError(err));
@@ -154,10 +158,6 @@ router.post('/updateItems', async (req, res, next) => {
             res.json(response.generateOkResponse("Success"));
         });
     } else if (itemType === 'VOLUNTEER') {
-        for (let i = 0; i < updatedItems.length; i++) {
-            updatedItems[i].revisionNumber++;
-        }
-
         VolunteerItem.create(updatedItems, (err) => {
             if (err) {
                 res.json(response.generateInternalServerError(err));
