@@ -19,7 +19,7 @@
   display: inline-block;
 }
 
-.login:before {
+.login:before, .makeAccount:before {
   background-color: #7BB771;
   -webkit-transition: 0.5s;
   transform: scaleX(0);
@@ -31,7 +31,7 @@
   content: "";
 }
 
-.login {
+.login, .makeAccount {
   -webkit-transition: 0.5s;
   text-decoration: none;
   position: relative;
@@ -39,13 +39,13 @@
   color: #7BB771;
 }
 
-.login:hover:before {
+.login:hover:before, .makeAccount:hover:before {
   background-color: #4B7F3F;
   transform: scaleX(1);
   visibility: visible;
 }
 
-.login:hover {
+.login:hover, .makeAccount:hover {
   color: #4B7F3F;
 }
 
