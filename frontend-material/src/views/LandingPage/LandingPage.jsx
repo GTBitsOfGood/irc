@@ -26,6 +26,8 @@ class LandingPage extends React.Component {
       value: 0,
       open: false,
       message: "",
+      fname: "",
+      lname: "",
       isNotLoggedIn: false,
       username: "",
       password: "",
@@ -42,7 +44,9 @@ class LandingPage extends React.Component {
         });
       } else {
         this.setState({
-          username: response.user.email
+          username: response.user.email,
+          fname: response.user.firstName,
+          lname: response.user.lastName
         })
       }
     });
@@ -110,7 +114,7 @@ class LandingPage extends React.Component {
           <center>
             <Card style={{ width: "60%" }}>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}><center> Welcome, {this.state.username} </center></h4>
+                <h4 className={classes.cardTitleWhite}><center> Welcome, {this.state.fname}. </center></h4>
               </CardHeader>
               <CardBody>
                 <p> Please select an action on the left or log out below. </p>

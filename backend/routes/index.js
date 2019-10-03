@@ -187,7 +187,10 @@ router.post('/verify', async function (req, res, next) {
         userVerify: true,
         user: {
           _id: user._id,
-          email: user.email }
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+         }
       };
       return res.json(response.generateOkResponse("Verify success", params));
     }

@@ -159,6 +159,8 @@ class SignUp extends React.Component {
   signup() {
     if (this.state.validity.every(index => {return index})) {
       callBackendAPI('/api/signup', 'post', {
+        firstName: this.state.fname,
+        lastName: this.state.lname,
         email: this.state.email,
         password: this.state.password
       }).then(response => {
