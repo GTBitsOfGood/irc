@@ -3,7 +3,9 @@
 //
 const express = require('express');
 const router = express.Router({});
-const transactionsApi = require('./transactions')
+const transactionsApi = require('./transactions-router')
+const userApi = require('./user-router');
+
 const Client = require('../model/client');
 
 const passport = require('passport');
@@ -238,6 +240,10 @@ router.use(async function (req, res, next) {
 
 
 // ROUTES PROTECTED BELOW THIS LINE
+router.use('/user', userApi);
+router.use('/transactions', transactionsApi);
+
+// TODO: MOVE THIS ROUTE TO THE USER-ROUTER AND/OR A ROUTER DEDICATED TO LOGGIN IN
 router.post('/changePassword', async function(req, res, next) {
   const user = res.locals.user;
   let returnMessage;
@@ -261,7 +267,6 @@ router.post('/changePassword', async function(req, res, next) {
   }
   res.json(returnMessage);
 });
-router.use('/transactions', transactionsApi);
 
 router.post('/addClient', async (req, res, next) => {
   const client = req.body;
