@@ -27,6 +27,16 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     default: 'user',
+  },
+  firstName: {
+    type: String,
+    required: false,
+    default: 'NA'
+  },
+  lastName: {
+    type: String,
+    required: false,
+    default: 'NA'
   }
 });
 
