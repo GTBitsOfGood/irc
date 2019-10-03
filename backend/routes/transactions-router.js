@@ -45,22 +45,7 @@ router.get('/getShopItems', async (req, res, next) => {
         }
     } else {
         try {
-            let allItemsByMostRecentVersion = await ShopItem.aggregate(
-                [
-                    // Group by revisionNumber, assembling an array of docs with each distinct value.
-                    {
-                        $group: {
-                            _id: '$revisionNumber',
-                            items: { $push: '$$ROOT' }
-                        }
-                    },
-                    // Sort the groups by _id descending to put the max revisionNumber group first.
-                    { $sort: { _id: -1 } },
-                    // Return just the first (max revisionNumber) group of docs.
-                    { $limit: 1 }
-                ]
-            );
-            allItemsByMostRecentVersion = allItemsByMostRecentVersion[0].items;
+            let allItemsByMostRecentVersion = await ShopItem.getMostRecentRevision();
             const message = response.generateOkResponse("Success", allItemsByMostRecentVersion);
             res.json(message)
         } catch (err) {
@@ -82,26 +67,9 @@ router.get('/getVolunteerItems', async (req, res, next) => {
         }
     } else {
         try {
-            let allItemsByMostRecentVersion = await VolunteerItem.aggregate(
-                [
-                    // Group by revisionNumber, assembling an array of docs with each distinct value.
-                    {
-                        $group: {
-                            _id: '$revisionNumber',
-                            items: { $push: '$$ROOT' }
-                        }
-                    },
-                    // Sort the groups by _id descending to put the max revisionNumber group first.
-                    { $sort: { _id: -1 } },
-                    // Return just the first (max revisionNumber) group of docs.
-                    { $limit: 1 }
-                ]
-            );
-            allItemsByMostRecentVersion = allItemsByMostRecentVersion[0].items;
-            
+            let allItemsByMostRecentVersion = await VolunteerItem.getMostRecentRevision();
             const message = response.generateOkResponse("Success", 
             allItemsByMostRecentVersion);
-            
             res.json(message)
         } catch (err) {
             res.json(response.generateInternalServerError(err));
