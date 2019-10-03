@@ -9,10 +9,14 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 
+import {Link} from "react-router-dom";
 import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import TextField from '@material-ui/core/TextField';
+
+import "assets/css/style.css";
 
 
 class Login extends React.Component {
@@ -75,12 +79,13 @@ class Login extends React.Component {
     return(
       <center>
         <form onSubmit={e => { e.preventDefault(); this.handleLogin(); }}>
-          <Card style={{ width: "30%"}}>
+          <Card style={{ width: "500px"}}>
+          <center>
+            <CardHeader style={{ width: "70%" }} color="success">
+              <h4><center>IRC Inventory System</center></h4>
+            </CardHeader>
+          </center>
             <CardBody >
-              <h1>
-                IRC System
-                <img src="/static/media/ircsquare.c537e70b.png" alt="logo" style={{height: 35, width: 35, marginLeft:5}}/>
-              </h1>
               <TextField
                 label="Username"
                 style={{marginTop: "20px", width: "40%"}}
@@ -96,21 +101,23 @@ class Login extends React.Component {
               <p style={{color: 'red'}}>
                 {this.state.message}
               </p>
-              <Button
-                style={{ width: "20%"}}
-                color="success"
-                type="submit"
-              >
-                Sign In
-              </Button>
-              <br/>
-              <br/>
-              <p style={{marginBottom: 10}}>
-                No account? <a> Make an account </a>
-              </p>
-              <a>
-                Forgot password
-              </a>
+              <div className="small-space-top">
+                <Button
+                  style={{ width: "20%"}}
+                  color="success"
+                  type="submit"
+                >
+                  Sign In
+                </Button>
+              </div>
+              <div className="small-space-top">
+                <p style={{marginBottom: 10}}>
+                  No account? <Link to="/signup" className="makeAccount">  Make an account </Link>
+                </p>
+                <a className="makeAccount">
+                  Forgot password
+                </a>
+              </div>
             </CardBody>
           </Card>
           </form>
