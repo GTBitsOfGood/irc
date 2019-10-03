@@ -74,7 +74,7 @@ class ShopMod extends Component {
             message: response.message
           });
         } else {
-          for (var i = 0; i < response.length; i++) {
+          for (let i = 0; i < response.length; i++) {
             delete response[i]._id;
           }
           this.setState({

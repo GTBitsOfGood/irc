@@ -16,7 +16,7 @@ import headerStyle from "assets/jss/material-dashboard-react/components/headerSt
 
 function Header({ ...props }) {
   function makeBrand() {
-    var name;
+    let name;
     props.routes.map((prop, key) => {
       if (prop.path === props.location.pathname) {
         name = prop.navbarName;

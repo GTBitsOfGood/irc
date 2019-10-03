@@ -75,9 +75,12 @@ class Dashboard extends React.Component {
   //This function creates the table
   generateReport() {
     callBackendAPI('/api/transactions/getTransaction?transactionType='+this.state.type+'&startDate='+this.state.from+'&endDate='+this.state.to, 'get').then(response => {
+      this.setState({
+        table: []
+      })
       if (this.state.type === "VOLUNTEER") {
-        for (var i = 0; i < response.length; i++) {
-          for (var j = 0; j < response[i].volunteerItems.length; j++) {
+        for (let i = 0; i < response.length; i++) {
+          for (let j = 0; j < response[i].volunteerItems.length; j++) {
             let table = this.state.table.slice();
             let k = 0;
             let searching = true;
@@ -96,8 +99,8 @@ class Dashboard extends React.Component {
           }
         }
       } else {
-        for (var i = 0; i < response.length; i++) {
-          for (var j = 0; j < response[i].shopItems.length; j++) {
+        for (let i = 0; i < response.length; i++) {
+          for (let j = 0; j < response[i].shopItems.length; j++) {
             let table = this.state.table.slice();
             let k = 0;
             let searching = true;
@@ -122,20 +125,20 @@ class Dashboard extends React.Component {
     });
   }
 
-  //This function should return the data for the table
+  //Return the data for the table
   generateTableData() {
     console.log(this.state.table);
     return this.state.table;
   }
 
-  //This function should return the headers for the table
+  //Return the headers for the table
   generateTableHead() {
     return ['Item', 'Count', 'ClientId', 'Total Price'];
   }
 
-  //This function should download a csv file to Users
+  //Download a csv file to Users
   print() {
-    var divToPrint = document.getElementsByClassName('outer')[0];
+    let divToPrint = document.getElementsByClassName('outer')[0];
     console.log(divToPrint);
     divToPrint.childNodes[0].removeChild(divToPrint.childNodes[0].childNodes[0]);
     let newWin = window.open("");
@@ -232,8 +235,8 @@ class Dashboard extends React.Component {
                     value={this.state.type}
                     onChange={this.handleTypeChange}
                 >
-                    <FormControlLabel value="SHOP" control={<Checkbox />} label="Shop" />
-                    <FormControlLabel value="VOLUNTEER" control={<Checkbox />} label="Volunteer" />
+                    <FormControlLabel value="SHOP" control={<Radio />} label="Shop" />
+                    <FormControlLabel value="VOLUNTEER" control={<Radio />} label="Volunteer" />
 
                 </RadioGroup>
             </FormControl>
