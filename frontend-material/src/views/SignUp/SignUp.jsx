@@ -82,9 +82,11 @@ class SignUp extends React.Component {
       <div>
         <center>
           <Card id="main-container">
-            <CardHeader style={{ width: "70%" }} color="success">
-              <h4><center>Create an Account</center></h4>
-            </CardHeader>
+            <center>
+              <CardHeader style={{ width: "70%" }} color="success">
+                <h4><center>Create an Account</center></h4>
+              </CardHeader>
+            </center>
 
             <CardBody style={{ padding: "25px 45px 45px 45px" }}>
               <div id="item-container">
