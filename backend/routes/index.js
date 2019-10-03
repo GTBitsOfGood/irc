@@ -142,7 +142,7 @@ router.post('/signup', function (req, res) {
       complete: true,
       userVerify: true,
       urlRedirect: "dashboard",
-      setCookies: { token: token }
+      setCookies: { token: null }
     };
     const message = response.generateOkResponse("Success", params);
     return res.json(message)
