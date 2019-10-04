@@ -1,12 +1,9 @@
-#main-container {
-  width: 60%;
-  min-width: 725px;
-  max-width: 725px;
-}
+/* ==================
+     SHARED STYLING
+   ================== */
 
 #item-container {
   width: 65%;
-  min-width: 200px;
 }
 
 #maskedInput {
@@ -15,11 +12,7 @@
   font: 15px Verdana;
 }
 
-#name-container {
-  display: inline-block;
-}
-
-.login:before {
+.link:before {
   background-color: #7BB771;
   -webkit-transition: 0.5s;
   transform: scaleX(0);
@@ -31,7 +24,7 @@
   content: "";
 }
 
-.login {
+.link {
   -webkit-transition: 0.5s;
   text-decoration: none;
   position: relative;
@@ -39,17 +32,17 @@
   color: #7BB771;
 }
 
-.login:hover:before {
+.link:hover:before {
   background-color: #4B7F3F;
   transform: scaleX(1);
   visibility: visible;
 }
 
-.login:hover {
+.link:hover {
   color: #4B7F3F;
 }
 
-#usedEmail {
+.errorMessage {
   font-weight: 400;
   font-size: 11px;
   color: #DD6247;
@@ -57,6 +50,33 @@
   padding: 0;
   margin: 0;
 }
+
+
+/* ==================
+     SIGNUP STYLING
+   ================== */
+
+#signup-container {
+  width: 725px;
+}
+
+#name-container {
+  display: inline-block;
+}
+
+
+/* =================
+     LOGIN STYLING
+   ================= */
+
+#login-container {
+  width: 500px;
+}
+
+
+/* =======================
+     GENERAL NECESSITIES
+   ======================= */
 
 .large-space-top {
   margin-top: 40px;
