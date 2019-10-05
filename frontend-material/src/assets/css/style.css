@@ -524,24 +524,18 @@ footer {
       margin: 0 8px;
       color: #666; }
 
-#main-container {
-  width: 60%;
-  min-width: 725px;
-  max-width: 725px; }
-
+/* ==================
+     SHARED STYLING
+   ================== */
 #item-container {
-  width: 65%;
-  min-width: 200px; }
+  width: 65%; }
 
 #maskedInput {
   -webkit-text-security: disc;
   letter-spacing: 0.5px;
   font: 15px Verdana; }
 
-#name-container {
-  display: inline-block; }
-
-.login:before, .makeAccount:before {
+.link:before {
   background-color: #7BB771;
   -webkit-transition: 0.5s;
   transform: scaleX(0);
@@ -552,22 +546,22 @@ footer {
   height: 2px;
   content: ""; }
 
-.login, .makeAccount {
+.link {
   -webkit-transition: 0.5s;
   text-decoration: none;
   position: relative;
   font-weight: 500;
   color: #7BB771; }
 
-.login:hover:before, .makeAccount:hover:before {
+.link:hover:before {
   background-color: #4B7F3F;
   transform: scaleX(1);
   visibility: visible; }
 
-.login:hover, .makeAccount:hover {
+.link:hover {
   color: #4B7F3F; }
 
-#usedEmail {
+.errorMessage {
   font-weight: 400;
   font-size: 11px;
   color: #DD6247;
@@ -575,6 +569,24 @@ footer {
   padding: 0;
   margin: 0; }
 
+/* ==================
+     SIGNUP STYLING
+   ================== */
+#signup-container {
+  width: 725px; }
+
+#name-container {
+  display: inline-block; }
+
+/* =================
+     LOGIN STYLING
+   ================= */
+#login-container {
+  width: 500px; }
+
+/* =======================
+     GENERAL NECESSITIES
+   ======================= */
 .large-space-top {
   margin-top: 40px; }
 

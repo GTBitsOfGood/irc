@@ -31,12 +31,12 @@ const UserSchema = new Schema({
   firstName: {
     type: String,
     required: false,
-    default: 'NA'
+    default: 'N/A'
   },
   lastName: {
     type: String,
     required: false,
-    default: 'NA'
+    default: 'N/A'
   }
 });
 
