@@ -29,7 +29,7 @@ class SignUp extends React.Component {
   updateValidity(index, value) {
     let updated = this.state.validity;
     updated[index] = value;
-    this.setState({ underline: updated });
+    this.setState({ validity: updated });
   }
 
   fnameCheck(e) {
@@ -79,75 +79,77 @@ class SignUp extends React.Component {
   render() {
     return (
       <center>
-        <Card id="signup-container">
-          <center>
-            <CardHeader style={{ width: "70%" }} color="success">
-              <h4><center>Create an Account</center></h4>
-            </CardHeader>
-          </center>
+        <form onSubmit={e => { e.preventDefault(); this.signup(); }}>
+          <Card id="signup-container">
+            <center>
+              <CardHeader style={{ width: "70%" }} color="success">
+                <h4><center>Create an Account</center></h4>
+              </CardHeader>
+            </center>
 
-          <CardBody style={{ padding: "15px 45px 45px 45px" }}>
-            <div id="item-container">
-              <div id="name-container" className="left">
+            <CardBody style={{ padding: "15px 45px 45px 45px" }}>
+              <div id="item-container">
+                <div id="name-container" className="left">
+                  <CustomInput
+                    labelText="First Name"
+                    formControlProps={{ fullWidth: false }}
+                    inputProps={{ onChange: (e) => {this.fnameCheck(e)} }}
+                    success={ this.state.validity[0] }
+                    error={ !this.state.validity[0] }
+                  />
+                </div>
+                <div id="name-container" className="right">
+                  <CustomInput
+                    labelText="Last Name"
+                    formControlProps={{ fullWidth: false }}
+                    inputProps={{ onChange: (e) => {this.lnameCheck(e)} }}
+                    success={ this.state.validity[1] }
+                    error={ !this.state.validity[1] }
+                  />
+                </div>
                 <CustomInput
-                  labelText="First Name"
-                  formControlProps={{ fullWidth: false }}
-                  inputProps={{ onChange: (e) => {this.fnameCheck(e)} }}
-                  success={ this.state.validity[0] }
-                  error={ !this.state.validity[0] }
+                  labelText="Email Address"
+                  formControlProps={{ fullWidth: true }}
+                  inputProps={{ onChange: (e) => {this.emailCheck(e)} }}
+                  success={ this.state.validity[2] }
+                  error={ !this.state.validity[2] }
                 />
-              </div>
-              <div id="name-container" className="right">
+                { this.state.emailInUse &&
+                  <span className="errorMessage">This email is already in use.</span>
+                }
                 <CustomInput
-                  labelText="Last Name"
-                  formControlProps={{ fullWidth: false }}
-                  inputProps={{ onChange: (e) => {this.lnameCheck(e)} }}
-                  success={ this.state.validity[1] }
-                  error={ !this.state.validity[1] }
+                  id="maskedInput"
+                  labelText="Password"
+                  formControlProps={{ fullWidth: true }}
+                  inputProps={{ onChange: (e) => {this.passwordCheck(e)} }}
+                  success={ this.state.validity[3] }
+                  error={ !this.state.validity[3] }
                 />
-              </div>
-              <CustomInput
-                labelText="Email Address"
-                formControlProps={{ fullWidth: true }}
-                inputProps={{ onChange: (e) => {this.emailCheck(e)} }}
-                success={ this.state.validity[2] }
-                error={ !this.state.validity[2] }
-              />
-              { this.state.emailInUse &&
-                <span className="errorMessage">This email is already in use.</span>
-              }
-              <CustomInput
-                id="maskedInput"
-                labelText="Password"
-                formControlProps={{ fullWidth: true }}
-                inputProps={{ onChange: (e) => {this.passwordCheck(e)} }}
-                success={ this.state.validity[3] }
-                error={ !this.state.validity[3] }
-              />
-              <CustomInput
-                id="maskedInput"
-                labelText="Confirm Password"
-                formControlProps={{ fullWidth: true }}
-                inputProps={{ onChange: (e) => {this.confirmCheck(e)} }}
-                success={ this.state.validity[4] }
-                error={ !this.state.validity[4] }
-              />
+                <CustomInput
+                  id="maskedInput"
+                  labelText="Confirm Password"
+                  formControlProps={{ fullWidth: true }}
+                  inputProps={{ onChange: (e) => {this.confirmCheck(e)} }}
+                  success={ this.state.validity[4] }
+                  error={ !this.state.validity[4] }
+                />
 
-              <div className="large-space-top">
-                <Button color="success" onClick={ () => {this.signup()} }>
-                  Sign Up
-                </Button>
-              </div>
+                <div className="large-space-top">
+                  <Button type="submit" color="success">
+                    Sign Up
+                  </Button>
+                </div>
 
-              <div className="small-space-top">
-                <span>Already have an account? &nbsp;</span>
-                <Link to="/login" className="link">
-                  Log in here.
-                </Link>
+                <div className="small-space-top">
+                  <span>Already have an account? &nbsp;</span>
+                  <Link to="/login" className="link">
+                    Log in here.
+                  </Link>
+                </div>
               </div>
-            </div>
-          </CardBody>
-        </Card>
+            </CardBody>
+          </Card>
+        </form>
       </center>
     );
   }
