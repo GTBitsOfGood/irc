@@ -45,6 +45,28 @@ TransactionItemSchema.statics.getMostRecentRevision = async function() {
     ))[0].items;
 };
 
+TransactionItemSchema.statics.getMostRecentRevision = async function() {
+    return (await this.aggregate(
+        [
+            // Group by revisionNumber, assembling an array of docs with each distinct value.
+            {
+                $group: {
+                    _id: '$revisionNumber',
+                    items: { $push: '$$ROOT' }
+                }
+            },
+            // Sort the groups by _id descending to put the max revisionNumber group first.
+            { $sort: { _id: -1 } },
+            // Return just the first (max revisionNumber) group of docs.
+            { $limit: 1 }
+        ]
+    ))[0].items;
+};
+
+TransactionItemSchema.statics.getMostRecentRevisionNumber = async function() {
+  return (await this.find({}).sort({revisionNumber: -1}).limit(1))[0].revisionNumber;
+};
+
 const ShopItem = mongoose.model('ShopItem', TransactionItemSchema);
 const VolunteerItem = mongoose.model('VolunteerItem', TransactionItemSchema);
 
