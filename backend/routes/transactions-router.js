@@ -107,13 +107,14 @@ router.get('/getTransaction', async (req, res, next) => {
 });
 
 router.post('/updateItems', async (req, res, next) => {
+    const { updatedItems, itemType } = req.body;
+
     let maxRevisionNumber;
     if (itemType === 'SHOP') {
         maxRevisionNumber = await ShopItem.getMostRecentRevisionNumber();
-    } else {
+    } else if (itemType === 'VOLUNTEER') {
         maxRevisionNumber = await VolunteerItem.getMostRecentRevisionNumber();
     }
-    const { updatedItems, itemType } = req.body;
     for (let i = 0; i < updatedItems.length; i++) {
         const item = updatedItems[i];
         item.revisionNumber = maxRevisionNumber + 1;
