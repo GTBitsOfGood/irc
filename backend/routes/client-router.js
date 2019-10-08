@@ -21,12 +21,8 @@ router.get('/:id?', async (req, res, next) => {
     try {
         const clientID = req.params.id;
 
-        let filter;
-        if (clientID == null) {
-            filter = {};
-        } else {
-            filter =  {caseNumber: clientID};
-        }
+        let filter = clientID == null ? {} : {caseNumber: clientID};
+
         const output = await clientModel.find(filter);
         res.json(RESPONSE.generateOkResponse("All is well.", output));
     } catch (err) {
