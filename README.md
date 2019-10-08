@@ -20,7 +20,7 @@ Requirements: Have [Node.js 10](https://nodejs.org/en/) and npm installed. npm i
 2. Open a new terminal instance and navigate to \frontend-material
 3. Run `npm start` in \frontend-material
 4. After 20-30 seconds, the frontend should popup in your browser. Otherwise try to navigate to localhost:3000
-5. If you encounter any errors, verify if you completed the setup correctly. Otherwise, message me :)
+5. If you encounter any errors, verify if you completed the setup correctly. Otherwise, message Sukhmai :)
 
 ## Structure
 
@@ -36,7 +36,7 @@ Message [Bryce](https://github.com/Navbryce) if you have questions [about the AP
 
 ## Code Style
 
-Indents should be made up of two spaces. Use double quotes ("") for strings, and not single quotes (''). Semicolons are optional in JavaScript but you should use them anyway. Use spaces within braces, but not within brackets. See `.eslintrc.yml` for the exact rules.
+Indents should be made up of two spaces. Use double quotes ("") for strings, and not single quotes (''). Semicolons are optional in JavaScript but you should use them anyway. Use spaces within braces, but not within brackets. See .eslintrc.yml and .eslintignore for more details.
 
 To fix the code style for a file, run
 
