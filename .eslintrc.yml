@@ -10,19 +10,24 @@ parserOptions:
   ecmaFeatures:
     jsx: true
   ecmaVersion: 2018
-  sourceType: module
 plugins:
   - react
 rules:
   indent:
-    - error
-    - 4
+    - warn
+    - 2
   linebreak-style:
-    - error
+    - off
     - unix
   quotes:
-    - error
+    - warn
     - double
   semi:
-    - error
+    - warn
     - always
+  object-curly-spacing:
+    - warn
+    - always
+  array-bracket-spacing:
+    - warn
+    - never

@@ -26,10 +26,20 @@ Requirements: Have [Node.js 10](https://nodejs.org/en/) and npm installed. npm i
 
 The program is divided into two folders.
 
- - [Frontend-Material](https://github.com/GTBitsOfGood/irc/blob/master/frontend-material/README.md): Controls the ui and sends requests to the backend.
+ - [Frontend-Material](https://github.com/GTBitsOfGood/irc/blob/master/frontend-material/README.md): Controls the UI and sends requests to the backend.
  - backend: Interacts with the database, provides data to the frontend
 
 The backend starts by running server.js.
 
 ## Backend API Docs
 Message [Bryce](https://github.com/Navbryce) if you have questions [about the API docs](https://app.swaggerhub.com/apis-docs/navbryce/irc/1.0.0)
+
+## Code Style
+
+Indents should be made up of two spaces. Use double quotes ("") for strings, and not single quotes (''). Semicolons are optional in JavaScript but you should use them anyway. Use spaces within braces, but not within brackets. See `.eslintrc.yml` for the exact rules.
+
+To fix the code style for a file, run
+
+```
+npx eslint --fix yourFile.js
+```
