@@ -7,30 +7,30 @@ import {
 const footerStyle = {
   block: {
     color: "inherit",
-    padding: "0.9375rem",
+    padding: "15px",
     textTransform: "uppercase",
-    borderRadius: "0.1875rem",
+    borderRadius: "3px",
     textDecoration: "none",
     position: "relative",
     display: "block",
     ...defaultFont,
     fontWeight: "500",
-    fontSize: "0.75rem"
+    fontSize: "12px"
   },
   left: {
     float: "left!important",
     display: "block"
   },
   right: {
-    padding: "0.9375rem 0",
+    padding: "15px 0",
     margin: "0",
-    fontSize: "0.875rem",
+    fontSize: "14px",
     float: "right!important"
   },
   footer: {
     bottom: "0",
-    borderTop: "0.0625rem solid #e7e7e7",
-    padding: "0.9375rem 0",
+    borderTop: "1px solid #e7e7e7",
+    padding: "15px 0",
     ...defaultFont
   },
   container,
@@ -46,7 +46,7 @@ const footerStyle = {
   },
   inlineBlock: {
     display: "inline-block",
-    padding: "0rem",
+    padding: "0px",
     width: "auto"
   }
 };

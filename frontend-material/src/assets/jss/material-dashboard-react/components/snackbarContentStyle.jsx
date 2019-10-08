@@ -13,21 +13,21 @@ const snackbarContentStyle = {
     ...defaultFont,
     flexWrap: "unset",
     position: "relative",
-    padding: "1.25rem 0.9375rem",
-    lineHeight: "1.25rem",
-    marginBottom: "1.25rem",
-    fontSize: "0.875rem",
+    padding: "20px 15px",
+    lineHeight: "20px",
+    marginBottom: "20px",
+    fontSize: "14px",
     backgroundColor: "white",
     color: "#555555",
-    borderRadius: "0.1875rem",
+    borderRadius: "3px",
     boxShadow:
-      "0 0.75rem 1.25rem -0.625rem rgba(255, 255, 255, 0.28), 0 0.25rem 1.25rem 0rem rgba(0, 0, 0, 0.12), 0 0.4375rem 0.5rem -0.3125rem rgba(255, 255, 255, 0.2)"
+      "0 12px 20px -10px rgba(255, 255, 255, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(255, 255, 255, 0.2)"
   },
   top20: {
-    top: "1.25rem"
+    top: "20px"
   },
   top40: {
-    top: "2.5rem"
+    top: "40px"
   },
   info: {
     backgroundColor: "#00d3ee",
@@ -65,22 +65,22 @@ const snackbarContentStyle = {
     maxWidth: "89%"
   },
   close: {
-    width: "0.6875rem",
-    height: "0.6875rem"
+    width: "11px",
+    height: "11px"
   },
   iconButton: {
-    width: "1.5rem",
-    height: "1.5rem",
-    padding: "0rem"
+    width: "24px",
+    height: "24px",
+    padding: "0px"
   },
   icon: {
     display: "block",
-    left: "0.9375rem",
+    left: "15px",
     position: "absolute",
     top: "50%",
-    marginTop: "-0.9375rem",
-    width: "1.875rem",
-    height: "1.875rem"
+    marginTop: "-15px",
+    width: "30px",
+    height: "30px"
   },
   infoIcon: {
     color: "#00d3ee"
@@ -101,7 +101,7 @@ const snackbarContentStyle = {
     color: "#eb3573"
   },
   iconMessage: {
-    paddingLeft: "3.125rem",
+    paddingLeft: "50px",
     display: "block"
   }
 };

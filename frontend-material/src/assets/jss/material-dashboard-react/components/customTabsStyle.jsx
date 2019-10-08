@@ -1,12 +1,12 @@
 const customTabsStyle = {
   cardTitle: {
     float: "left",
-    padding: "0.625rem 0.625rem 0.625rem 0rem",
-    lineHeight: "1.5rem"
+    padding: "10px 10px 10px 0px",
+    lineHeight: "24px"
   },
   cardTitleRTL: {
     float: "right",
-    padding: "0.625rem 0rem 0.625rem 0.625rem !important"
+    padding: "10px 0px 10px 10px !important"
   },
   displayNone: {
     display: "none !important"
@@ -25,22 +25,22 @@ const customTabsStyle = {
     height: "unset !important",
     maxWidth: "unset !important",
     maxHeight: "unset !important",
-    padding: "0.625rem 0.9375rem",
-    borderRadius: "0.1875rem",
-    lineHeight: "1.5rem",
+    padding: "10px 15px",
+    borderRadius: "3px",
+    lineHeight: "24px",
     border: "0 !important",
     color: "#fff !important",
-    marginLeft: "0.25rem",
+    marginLeft: "4px",
     "&:last-child": {
-      marginLeft: "0rem"
+      marginLeft: "0px"
     }
   },
   tabLabelContainer: {
-    padding: "0rem"
+    padding: "0px"
   },
   tabLabel: {
     fontWeight: "500",
-    fontSize: "0.75rem"
+    fontSize: "12px"
   },
   tabSelected: {
     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -56,7 +56,7 @@ const customTabsStyle = {
     maxHeight: "unset !important",
     "& > svg,& > .material-icons": {
       verticalAlign: "middle",
-      margin: "-0.0625rem 0.3125rem 0 0"
+      margin: "-1px 5px 0 0"
     }
   }
 };

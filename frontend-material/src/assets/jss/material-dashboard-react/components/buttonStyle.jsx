@@ -15,13 +15,13 @@ const buttonStyle = {
     backgroundColor: grayColor,
     color: "#FFFFFF",
     boxShadow:
-      "0 0.125rem 0.125rem 0 rgba(153, 153, 153, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba(153, 153, 153, 0.2), 0 0.0625rem 0.3125rem 0 rgba(153, 153, 153, 0.12)",
+      "0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12)",
     border: "none",
-    borderRadius: "0.1875rem",
+    borderRadius: "3px",
     position: "relative",
-    padding: "0.75rem 1.875rem",
-    margin: ".3125rem 0.0625rem",
-    fontSize: "0.75rem",
+    padding: "12px 30px",
+    margin: ".3125rem 1px",
+    fontSize: "12px",
     fontWeight: "400",
     textTransform: "uppercase",
     letterSpacing: "0",
@@ -38,7 +38,7 @@ const buttonStyle = {
       color: "#FFFFFF",
       backgroundColor: grayColor,
       boxShadow:
-        "0 0.875rem 1.625rem -0.75rem rgba(153, 153, 153, 0.42), 0 0.25rem 1.4375rem 0rem rgba(0, 0, 0, 0.12), 0 0.5rem 0.625rem -0.3125rem rgba(153, 153, 153, 0.2)"
+        "0 14px 26px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2)"
     },
     "& .fab,& .fas,& .far,& .fal, &.material-icons": {
       position: "relative",
@@ -47,29 +47,29 @@ const buttonStyle = {
       marginTop: "-1em",
       marginBottom: "-1em",
       fontSize: "1.1rem",
-      marginRight: "0.25rem",
+      marginRight: "4px",
       verticalAlign: "middle"
     },
     "& svg": {
       position: "relative",
       display: "inline-block",
       top: "0",
-      width: "1.125rem",
-      height: "1.125rem",
-      marginRight: "0.25rem",
+      width: "18px",
+      height: "18px",
+      marginRight: "4px",
       verticalAlign: "middle"
     },
     "&$justIcon": {
       "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-        marginTop: "0rem",
+        marginTop: "0px",
         position: "absolute",
         width: "100%",
         transform: "none",
-        left: "0rem",
-        top: "0rem",
+        left: "0px",
+        top: "0px",
         height: "100%",
-        lineHeight: "2.5625rem",
-        fontSize: "1.25rem"
+        lineHeight: "41px",
+        fontSize: "20px"
       }
     }
   },
@@ -82,61 +82,61 @@ const buttonStyle = {
   rose: {
     backgroundColor: roseColor,
     boxShadow:
-      "0 0.125rem 0.125rem 0 rgba(233, 30, 99, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba(233, 30, 99, 0.2), 0 0.0625rem 0.3125rem 0 rgba(233, 30, 99, 0.12)",
+      "0 2px 2px 0 rgba(233, 30, 99, 0.14), 0 3px 1px -2px rgba(233, 30, 99, 0.2), 0 1px 5px 0 rgba(233, 30, 99, 0.12)",
     "&:hover,&:focus": {
       backgroundColor: roseColor,
       boxShadow:
-        "0 0.875rem 1.625rem -0.75rem rgba(233, 30, 99, 0.42), 0 0.25rem 1.4375rem 0rem rgba(0, 0, 0, 0.12), 0 0.5rem 0.625rem -0.3125rem rgba(233, 30, 99, 0.2)"
+        "0 14px 26px -12px rgba(233, 30, 99, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(233, 30, 99, 0.2)"
     }
   },
   primary: {
     backgroundColor: primaryColor,
     boxShadow:
-      "0 0.125rem 0.125rem 0 rgba(156, 39, 176, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba(156, 39, 176, 0.2), 0 0.0625rem 0.3125rem 0 rgba(156, 39, 176, 0.12)",
+      "0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12)",
     "&:hover,&:focus": {
       backgroundColor: primaryColor,
       boxShadow:
-        "0 0.875rem 1.625rem -0.75rem rgba(156, 39, 176, 0.42), 0 0.25rem 1.4375rem 0rem rgba(0, 0, 0, 0.12), 0 0.5rem 0.625rem -0.3125rem rgba(156, 39, 176, 0.2)"
+        "0 14px 26px -12px rgba(156, 39, 176, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2)"
     }
   },
   info: {
     backgroundColor: infoColor,
     boxShadow:
-      "0 0.125rem 0.125rem 0 rgba(0, 188, 212, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba(0, 188, 212, 0.2), 0 0.0625rem 0.3125rem 0 rgba(0, 188, 212, 0.12)",
+      "0 2px 2px 0 rgba(0, 188, 212, 0.14), 0 3px 1px -2px rgba(0, 188, 212, 0.2), 0 1px 5px 0 rgba(0, 188, 212, 0.12)",
     "&:hover,&:focus": {
       backgroundColor: infoColor,
       boxShadow:
-        "0 0.875rem 1.625rem -0.75rem rgba(0, 188, 212, 0.42), 0 0.25rem 1.4375rem 0rem rgba(0, 0, 0, 0.12), 0 0.5rem 0.625rem -0.3125rem rgba(0, 188, 212, 0.2)"
+        "0 14px 26px -12px rgba(0, 188, 212, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 188, 212, 0.2)"
     }
   },
   success: {
     backgroundColor: successColor,
     boxShadow:
-      "0 0.125rem 0.125rem 0 rgba(76, 175, 80, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba(76, 175, 80, 0.2), 0 0.0625rem 0.3125rem 0 rgba(76, 175, 80, 0.12)",
+      "0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12)",
     "&:hover,&:focus": {
       backgroundColor: successColor,
       boxShadow:
-        "0 0.875rem 1.625rem -0.75rem rgba(76, 175, 80, 0.42), 0 0.25rem 1.4375rem 0rem rgba(0, 0, 0, 0.12), 0 0.5rem 0.625rem -0.3125rem rgba(76, 175, 80, 0.2)"
+        "0 14px 26px -12px rgba(76, 175, 80, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(76, 175, 80, 0.2)"
     }
   },
   warning: {
     backgroundColor: warningColor,
     boxShadow:
-      "0 0.125rem 0.125rem 0 rgba(255, 152, 0, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba(255, 152, 0, 0.2), 0 0.0625rem 0.3125rem 0 rgba(255, 152, 0, 0.12)",
+      "0 2px 2px 0 rgba(255, 152, 0, 0.14), 0 3px 1px -2px rgba(255, 152, 0, 0.2), 0 1px 5px 0 rgba(255, 152, 0, 0.12)",
     "&:hover,&:focus": {
       backgroundColor: warningColor,
       boxShadow:
-        "0 0.875rem 1.625rem -0.75rem rgba(255, 152, 0, 0.42), 0 0.25rem 1.4375rem 0rem rgba(0, 0, 0, 0.12), 0 0.5rem 0.625rem -0.3125rem rgba(255, 152, 0, 0.2)"
+        "0 14px 26px -12px rgba(255, 152, 0, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(255, 152, 0, 0.2)"
     }
   },
   danger: {
     backgroundColor: dangerColor,
     boxShadow:
-      "0 0.125rem 0.125rem 0 rgba(244, 67, 54, 0.14), 0 0.1875rem 0.0625rem -0.125rem rgba(244, 67, 54, 0.2), 0 0.0625rem 0.3125rem 0 rgba(244, 67, 54, 0.12)",
+      "0 2px 2px 0 rgba(244, 67, 54, 0.14), 0 3px 1px -2px rgba(244, 67, 54, 0.2), 0 1px 5px 0 rgba(244, 67, 54, 0.12)",
     "&:hover,&:focus": {
       backgroundColor: dangerColor,
       boxShadow:
-        "0 0.875rem 1.625rem -0.75rem rgba(244, 67, 54, 0.42), 0 0.25rem 1.4375rem 0rem rgba(0, 0, 0, 0.12), 0 0.5rem 0.625rem -0.3125rem rgba(244, 67, 54, 0.2)"
+        "0 14px 26px -12px rgba(244, 67, 54, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(244, 67, 54, 0.2)"
     }
   },
   simple: {
@@ -200,7 +200,7 @@ const buttonStyle = {
     borderRadius: "0.2rem"
   },
   round: {
-    borderRadius: "1.875rem"
+    borderRadius: "30px"
   },
   block: {
     width: "100% !important"
@@ -213,40 +213,40 @@ const buttonStyle = {
     }
   },
   justIcon: {
-    paddingLeft: "0.75rem",
-    paddingRight: "0.75rem",
-    fontSize: "1.25rem",
-    height: "2.5625rem",
-    minWidth: "2.5625rem",
-    width: "2.5625rem",
+    paddingLeft: "12px",
+    paddingRight: "12px",
+    fontSize: "20px",
+    height: "41px",
+    minWidth: "41px",
+    width: "41px",
     "& .fab,& .fas,& .far,& .fal,& svg,& .material-icons": {
-      marginRight: "0rem"
+      marginRight: "0px"
     },
     "&$lg": {
-      height: "3.5625rem",
-      minWidth: "3.5625rem",
-      width: "3.5625rem",
-      lineHeight: "3.5rem",
+      height: "57px",
+      minWidth: "57px",
+      width: "57px",
+      lineHeight: "56px",
       "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-        fontSize: "2rem",
-        lineHeight: "3.5rem"
+        fontSize: "32px",
+        lineHeight: "56px"
       },
       "& svg": {
-        width: "2rem",
-        height: "2rem"
+        width: "32px",
+        height: "32px"
       }
     },
     "&$sm": {
-      height: "1.875rem",
-      minWidth: "1.875rem",
-      width: "1.875rem",
+      height: "30px",
+      minWidth: "30px",
+      width: "30px",
       "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-        fontSize: "1.0625rem",
-        lineHeight: "1.8125rem"
+        fontSize: "17px",
+        lineHeight: "29px"
       },
       "& svg": {
-        width: "1.0625rem",
-        height: "1.0625rem"
+        width: "17px",
+        height: "17px"
       }
     }
   }

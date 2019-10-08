@@ -1,8 +1,8 @@
 const cardFooterStyle = {
   cardFooter: {
     padding: "0",
-    paddingTop: "0.625rem",
-    margin: "0 0.9375rem 0.625rem",
+    paddingTop: "10px",
+    margin: "0 15px 10px",
     borderRadius: "0",
     justifyContent: "space-between",
     alignItems: "center",
@@ -11,34 +11,34 @@ const cardFooterStyle = {
     border: "0"
   },
   cardFooterProfile: {
-    marginTop: "-0.9375rem"
+    marginTop: "-15px"
   },
   cardFooterPlain: {
-    paddingLeft: "0.3125rem",
-    paddingRight: "0.3125rem",
+    paddingLeft: "5px",
+    paddingRight: "5px",
     backgroundColor: "transparent"
   },
   cardFooterStats: {
-    borderTop: "0.0625rem solid #eee",
-    marginTop: "1.25rem",
+    borderTop: "1px solid #eee",
+    marginTop: "20px",
     "& svg": {
       position: "relative",
-      top: "0.25rem",
-      marginRight: "0.1875rem",
-      marginLeft: "0.1875rem",
-      width: "1rem",
-      height: "1rem"
+      top: "4px",
+      marginRight: "3px",
+      marginLeft: "3px",
+      width: "16px",
+      height: "16px"
     },
     "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      fontSize: "1rem",
+      fontSize: "16px",
       position: "relative",
-      top: "0.25rem",
-      marginRight: "0.1875rem",
-      marginLeft: "0.1875rem"
+      top: "4px",
+      marginRight: "3px",
+      marginLeft: "3px"
     }
   },
   cardFooterChart: {
-    borderTop: "0.0625rem solid #eee"
+    borderTop: "1px solid #eee"
   }
 };
 

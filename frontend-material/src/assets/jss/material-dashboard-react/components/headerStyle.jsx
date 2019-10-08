@@ -17,28 +17,28 @@ const headerStyle = theme => ({
     marginBottom: "0",
     position: "absolute",
     width: "100%",
-    paddingTop: "0.625rem",
+    paddingTop: "10px",
     zIndex: "1029",
     color: "#555555",
     border: "0",
-    borderRadius: "0.1875rem",
-    padding: "0.625rem 0",
+    borderRadius: "3px",
+    padding: "10px 0",
     transition: "all 150ms ease 0s",
-    minHeight: "3.125rem",
+    minHeight: "50px",
     display: "block"
   },
   container: {
     ...container,
-    minHeight: "3.125rem"
+    minHeight: "50px"
   },
   flex: {
     flex: 1
   },
   title: {
     ...defaultFont,
-    lineHeight: "1.875rem",
-    fontSize: "1.125rem",
-    borderRadius: "0.1875rem",
+    lineHeight: "30px",
+    fontSize: "18px",
+    borderRadius: "3px",
     textTransform: "none",
     color: "inherit",
     margin: "0",
@@ -47,7 +47,7 @@ const headerStyle = theme => ({
     }
   },
   appResponsive: {
-    top: "0.5rem"
+    top: "8px"
   },
   primary: {
     backgroundColor: primaryColor,

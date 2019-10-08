@@ -40,7 +40,7 @@ const sidebarStyle = theme => ({
       overflowY: "visible",
       borderTop: "none",
       textAlign: "left",
-      paddingRight: "0rem",
+      paddingRight: "0px",
       paddingLeft: "0",
       transform: `translate3d(${drawerWidth}px, 0, 0)`,
       ...transition
@@ -48,28 +48,28 @@ const sidebarStyle = theme => ({
   },
   logo: {
     position: "relative",
-    padding: "0.9375rem 0.9375rem",
+    padding: "15px 15px",
     zIndex: "4",
     "&:after": {
       content: '""',
       position: "absolute",
       bottom: "0",
 
-      height: "0.0625rem",
-      right: "0.9375rem",
-      width: "calc(100% - 1.875rem)",
+      height: "1px",
+      right: "15px",
+      width: "calc(100% - 30px)",
       backgroundColor: "rgba(180, 180, 180, 0.3)"
     }
   },
   logoLink: {
     ...defaultFont,
     textTransform: "uppercase",
-    padding: "0.3125rem 0",
+    padding: "5px 0",
     display: "block",
-    fontSize: "1.125rem",
+    fontSize: "18px",
     textAlign: "left",
     fontWeight: "400",
-    lineHeight: "1.875rem",
+    lineHeight: "30px",
     textDecoration: "none",
     backgroundColor: "transparent",
     "&,&:hover": {
@@ -77,15 +77,15 @@ const sidebarStyle = theme => ({
     }
   },
   logoImage: {
-    width: "1.875rem",
+    width: "30px",
     display: "inline-block",
-    maxHeight: "1.875rem",
-    marginLeft: "0.625rem",
-    marginRight: "0.9375rem"
+    maxHeight: "30px",
+    marginLeft: "10px",
+    marginRight: "15px"
   },
   img: {
-    width: "2.1875rem",
-    top: "1.375rem",
+    width: "35px",
+    top: "22px",
     position: "absolute",
     verticalAlign: "middle",
     border: "0"
@@ -112,7 +112,7 @@ const sidebarStyle = theme => ({
     }
   },
   list: {
-    marginTop: "1.25rem",
+    marginTop: "20px",
     paddingLeft: "0",
     paddingTop: "0",
     paddingBottom: "0",
@@ -131,21 +131,21 @@ const sidebarStyle = theme => ({
   itemLink: {
     width: "auto",
     transition: "all 300ms linear",
-    margin: "0.625rem 0.9375rem 0",
-    borderRadius: "0.1875rem",
+    margin: "10px 15px 0",
+    borderRadius: "3px",
     position: "relative",
     display: "block",
-    padding: "0.625rem 0.9375rem",
+    padding: "10px 15px",
     backgroundColor: "transparent",
     ...defaultFont
   },
   itemIcon: {
-    width: "1.5rem",
-    height: "1.875rem",
-    fontSize: "1.5rem",
-    lineHeight: "1.875rem",
+    width: "24px",
+    height: "30px",
+    fontSize: "24px",
+    lineHeight: "30px",
     float: "left",
-    marginRight: "0.9375rem",
+    marginRight: "15px",
     textAlign: "center",
     verticalAlign: "middle",
     color: "rgba(255, 255, 255, 0.8)"
@@ -153,8 +153,8 @@ const sidebarStyle = theme => ({
   itemText: {
     ...defaultFont,
     margin: "0",
-    lineHeight: "1.875rem",
-    fontSize: "0.875rem",
+    lineHeight: "30px",
+    fontSize: "14px",
     color: "#FFFFFF"
   },
   whiteFont: {
@@ -171,48 +171,48 @@ const sidebarStyle = theme => ({
   blue: {
     backgroundColor: infoColor,
     boxShadow:
-      "0 0.75rem 1.25rem -0.625rem rgba(0,188,212,.28), 0 0.25rem 1.25rem 0 rgba(0,0,0,.12), 0 0.4375rem 0.5rem -0.3125rem rgba(0,188,212,.2)",
+      "0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)",
     "&:hover": {
       backgroundColor: infoColor,
       boxShadow:
-        "0 0.75rem 1.25rem -0.625rem rgba(0,188,212,.28), 0 0.25rem 1.25rem 0 rgba(0,0,0,.12), 0 0.4375rem 0.5rem -0.3125rem rgba(0,188,212,.2)"
+        "0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)"
     }
   },
   green: {
     backgroundColor: successColor,
     boxShadow:
-      "0 0.75rem 1.25rem -0.625rem rgba(76,175,80,.28), 0 0.25rem 1.25rem 0 rgba(0,0,0,.12), 0 0.4375rem 0.5rem -0.3125rem rgba(76,175,80,.2)",
+      "0 12px 20px -10px rgba(76,175,80,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(76,175,80,.2)",
     "&:hover": {
       backgroundColor: successColor,
       boxShadow:
-        "0 0.75rem 1.25rem -0.625rem rgba(76,175,80,.28), 0 0.25rem 1.25rem 0 rgba(0,0,0,.12), 0 0.4375rem 0.5rem -0.3125rem rgba(76,175,80,.2)"
+        "0 12px 20px -10px rgba(76,175,80,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(76,175,80,.2)"
     }
   },
   orange: {
     backgroundColor: warningColor,
     boxShadow:
-      "0 0.75rem 1.25rem -0.625rem rgba(255,152,0,.28), 0 0.25rem 1.25rem 0 rgba(0,0,0,.12), 0 0.4375rem 0.5rem -0.3125rem rgba(255,152,0,.2)",
+      "0 12px 20px -10px rgba(255,152,0,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(255,152,0,.2)",
     "&:hover": {
       backgroundColor: warningColor,
       boxShadow:
-        "0 0.75rem 1.25rem -0.625rem rgba(255,152,0,.28), 0 0.25rem 1.25rem 0 rgba(0,0,0,.12), 0 0.4375rem 0.5rem -0.3125rem rgba(255,152,0,.2)"
+        "0 12px 20px -10px rgba(255,152,0,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(255,152,0,.2)"
     }
   },
   red: {
     backgroundColor: dangerColor,
     boxShadow:
-      "0 0.75rem 1.25rem -0.625rem rgba(244,67,54,.28), 0 0.25rem 1.25rem 0 rgba(0,0,0,.12), 0 0.4375rem 0.5rem -0.3125rem rgba(244,67,54,.2)",
+      "0 12px 20px -10px rgba(244,67,54,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(244,67,54,.2)",
     "&:hover": {
       backgroundColor: dangerColor,
       boxShadow:
-        "0 0.75rem 1.25rem -0.625rem rgba(244,67,54,.28), 0 0.25rem 1.25rem 0 rgba(0,0,0,.12), 0 0.4375rem 0.5rem -0.3125rem rgba(244,67,54,.2)"
+        "0 12px 20px -10px rgba(244,67,54,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(244,67,54,.2)"
     }
   },
   sidebarWrapper: {
     position: "relative",
-    height: "calc(100vh - 4.6875rem)",
+    height: "calc(100vh - 75px)",
     overflow: "auto",
-    width: "16.25rem",
+    width: "260px",
     zIndex: "4",
     overflowScrolling: "touch"
   },
@@ -220,7 +220,7 @@ const sidebarStyle = theme => ({
     [theme.breakpoints.up("md")]: {
       position: "absolute",
       width: "100%",
-      bottom: "0.8125rem"
+      bottom: "13px"
     }
   }
 });

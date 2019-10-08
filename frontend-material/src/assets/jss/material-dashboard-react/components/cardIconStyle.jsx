@@ -9,11 +9,11 @@ import {
 const cardIconStyle = {
   cardIcon: {
     "&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
-      borderRadius: "0.1875rem",
+      borderRadius: "3px",
       backgroundColor: "#999",
-      padding: "0.9375rem",
-      marginTop: "-1.25rem",
-      marginRight: "0.9375rem",
+      padding: "15px",
+      marginTop: "-20px",
+      marginRight: "15px",
       float: "left"
     }
   },

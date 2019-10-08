@@ -3,18 +3,18 @@ import { boxShadow } from "assets/jss/material-dashboard-react.jsx";
 const iconsStyle = {
   iframe: {
     width: "100%",
-    height: "31.25rem",
+    height: "500px",
     border: "0",
     ...boxShadow
   },
   iframeContainer: {
-    margin: "0 -1.25rem 0"
+    margin: "0 -20px 0"
   },
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
       color: "rgba(255,255,255,.62)",
       margin: "0",
-      fontSize: "0.875rem",
+      fontSize: "14px",
       marginTop: "0",
       marginBottom: "0"
     },
@@ -24,11 +24,11 @@ const iconsStyle = {
   },
   cardTitleWhite: {
     color: "#FFFFFF",
-    marginTop: "0rem",
+    marginTop: "0px",
     minHeight: "auto",
     fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "0.1875rem",
+    marginBottom: "3px",
     textDecoration: "none",
     "& small": {
       color: "#777",
