@@ -2,7 +2,6 @@ import React from "react";
 import "assets/css/style.css";
 
 import Card from "components/Card/Card.jsx";
-import ErrorDialog from "components/ErrorDialog";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import Button from "components/CustomButtons/Button.jsx";
@@ -15,7 +14,7 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 
 class SignUp extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       fname: "",
       lname: "",
@@ -30,7 +29,7 @@ class SignUp extends React.Component {
   updateValidity(index, value) {
     let updated = this.state.validity;
     updated[index] = value;
-    this.setState({ underline: updated });
+    this.setState({ validity: updated });
   }
 
   fnameCheck(e) {
@@ -79,16 +78,16 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <div>
-        <center>
-          <Card id="main-container">
+      <center>
+        <form onSubmit={e => { e.preventDefault(); this.signup(); }}>
+          <Card id="signup-container">
             <center>
               <CardHeader style={{ width: "70%" }} color="success">
                 <h4><center>Create an Account</center></h4>
               </CardHeader>
             </center>
 
-            <CardBody style={{ padding: "1.5625rem 2.8125rem 2.8125rem 2.8125rem" }}>
+            <CardBody style={{ padding: "15px 45px 45px 45px" }}>
               <div id="item-container">
                 <div id="name-container" className="left">
                   <CustomInput
@@ -116,7 +115,7 @@ class SignUp extends React.Component {
                   error={ !this.state.validity[2] }
                 />
                 { this.state.emailInUse &&
-                  <span id="usedEmail">This email is already in use.</span>
+                  <span className="errorMessage">This email is already in use.</span>
                 }
                 <CustomInput
                   id="maskedInput"
@@ -136,29 +135,30 @@ class SignUp extends React.Component {
                 />
 
                 <div className="large-space-top">
-                  <Button color="success" onClick={ () => {this.signup()} }>
+                  <Button type="submit" color="success">
                     Sign Up
                   </Button>
                 </div>
 
                 <div className="small-space-top">
                   <span>Already have an account? &nbsp;</span>
-                  <Link to="/login" className="login">
+                  <Link to="/login" className="link">
                     Log in here.
                   </Link>
                 </div>
-
               </div>
             </CardBody>
           </Card>
-        </center>
-      </div>
+        </form>
+      </center>
     );
   }
 
   signup() {
     if (this.state.validity.every(index => {return index})) {
       callBackendAPI('/api/signup', 'post', {
+        firstName: this.state.fname,
+        lastName: this.state.lname,
         email: this.state.email,
         password: this.state.password
       }).then(response => {

@@ -41,14 +41,11 @@ const TransactionSchema = new Schema({
  */
 TransactionSchema.statics.getItemsByType = async function(itemType) {
   return this.find({ type: itemType });
-};
 
 TransactionSchema.statics.getShopItems = async function() {
   return this.getItemsByType("SHOP");
-};
 
 TransactionSchema.statics.getVolunteerItems = async function() {
-  return this.getItemsByType("VOLUNTEER");
 };
 
 const Transaction = mongoose.model("Transaction", TransactionSchema);

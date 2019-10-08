@@ -3,8 +3,10 @@
 //
 const express = require("express");
 const router = express.Router({});
-const transactionsApi = require("./transactions");
-const Client = require("../model/client");
+const transactionsApi = require('./transactions-router')
+const userApi = require('./user-router');
+
+const Client = require('../model/client');
 
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
@@ -185,7 +187,10 @@ router.post("/verify", async function(req, res, next) {
         userVerify: true,
         user: {
           _id: user._id,
-          email: user.email }
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+         }
       };
       return res.json(response.generateOkResponse("Verify success", params));
     }
@@ -238,7 +243,11 @@ router.use(async function(req, res, next) {
 
 
 // ROUTES PROTECTED BELOW THIS LINE
-router.post("/changePassword", async function(req, res, next) {
+router.use('/user', userApi);
+router.use('/transactions', transactionsApi);
+
+// TODO: MOVE THIS ROUTE TO THE USER-ROUTER AND/OR A ROUTER DEDICATED TO LOGGIN IN
+router.post('/changePassword', async function(req, res, next) {
   const user = res.locals.user;
   let returnMessage;
   if (!user) {
@@ -260,7 +269,6 @@ router.post("/changePassword", async function(req, res, next) {
   }
   res.json(returnMessage);
 });
-router.use("/transactions", transactionsApi);
 
 router.post("/addClient", async(req, res, next) => {
   const client = req.body;

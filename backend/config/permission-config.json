@@ -1,0 +1,9 @@
+{
+  "user": {
+    "permissions": ["test"]
+  },
+  "admin": {
+    "inherit": ["user"],
+    "permissions": ["promote", "user-access"]
+  }
+}
