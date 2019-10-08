@@ -33,3 +33,6 @@ The backend starts by running server.js.
 
 ## Backend API Docs
 Message [Bryce](https://github.com/Navbryce) if you have questions [about the API docs](https://app.swaggerhub.com/apis-docs/navbryce/irc/1.0.0)
+
+## Code Style
+Run `npx eslint --fix /path_to/irc/` to check and fix the style of your code. Use semicolons and single quotes. See .eslintrc.yml and .eslintignore for details on the style guidelines.
