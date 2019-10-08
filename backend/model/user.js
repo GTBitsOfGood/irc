@@ -2,14 +2,14 @@
 // Header for model/user.js
 //
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const config = require('./../../config');
+const config = require("./../../config");
 mongoose.connect(config.db_url, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
-mongoose.set('useCreateIndex', true);
+mongoose.set("useCreateIndex", true);
 
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -24,23 +24,23 @@ const UserSchema = new Schema({
   }
 });
 
-UserSchema.pre('save', async function (next) {
+UserSchema.pre("save", async function(next) {
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
   next();
 });
 
-UserSchema.methods.isValidPassword = async function (password) {
+UserSchema.methods.isValidPassword = async function(password) {
   const user = this;
   const compare = await bcrypt.compare(password, user.password);
   return compare;
-}
+};
 
 UserSchema.statics.getCount = async function() {
   return this.countDocuments({});
-}
+};
 
-const UserModel = mongoose.model('User', UserSchema);
+const UserModel = mongoose.model("User", UserSchema);
 
 module.exports = UserModel;
 module.exports.__Schema = UserSchema;

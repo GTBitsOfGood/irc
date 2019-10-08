@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 let config = {};
 
 config.port = 5000;

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import {findDOMNode} from "react-dom"
+import { findDOMNode } from "react-dom";
 import CartScrollBar from "./CartScrollBar";
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Search from "@material-ui/icons/Search";
-import Input from '@material-ui/core/Input';
+import Input from "@material-ui/core/Input";
 import Icon from "@material-ui/core/Icon";
 import bag from "assets/img/bag.png";
 
@@ -23,7 +23,7 @@ class Header extends Component {
       handleSave: this.props.handleSave,
       handleReset: this.props.handleReset
     };
-    
+
   }
 
   handleCheckout() {
@@ -43,9 +43,9 @@ class Header extends Component {
   handleConfirm(e) {
     e.preventDefault();
     if(this.state.showConfirmReset) {
-        this.setState({
-          showConfirmReset: !this.state.showConfirmReset
-        });
+      this.setState({
+        showConfirmReset: !this.state.showConfirmReset
+      });
     }
     this.setState({
       showConfirm: !this.state.showConfirm
@@ -55,9 +55,9 @@ class Header extends Component {
   handleConfirmReset(e) {
     e.preventDefault();
     if(this.state.showConfirm) {
-        this.setState({
-          showConfirm: !this.state.showConfirm
-        });
+      this.setState({
+        showConfirm: !this.state.showConfirm
+      });
     }
     this.setState({
       showConfirmReset: !this.state.showConfirmReset
@@ -119,55 +119,55 @@ class Header extends Component {
   render() {
     let view;
     if (this.props.cartActive) {
-        let cartItems;
-        cartItems = this.state.cart.map(product => {
-          return (
-            <li className="cart-item" key={product.name}>
-              <img className="product-image" alt="" src={product.image} />
-              <div className="product-info">
-                <p className="product-name">{product.name}</p>
-                <p className="product-price">{product.price}</p>
-              </div>
-              <div className="product-total">
-                <p className="quantity">
-                  {product.quantity} {product.quantity > 1 ? "items" : "item"}{" "}
-                </p>
-                <p className="amount">{product.quantity * product.price}</p>
-              </div>
-              <a
-                className="product-remove"
-                href="?"
-                onClick={this.props.removeProduct.bind(this, product.id)}
-              >
-                ×
-              </a>
-            </li>
-          );
-        });
-        if (cartItems.length <= 0) {
-          view = <EmptyCart />;
-        } else {
-          view = (
-            <CSSTransitionGroup
-              transitionName="fadeIn"
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={300}
-              component="ul"
-              className="cart-items"
+      let cartItems;
+      cartItems = this.state.cart.map(product => {
+        return (
+          <li className="cart-item" key={product.name}>
+            <img alt="" className="product-image" src={product.image} />
+            <div className="product-info">
+              <p className="product-name">{product.name}</p>
+              <p className="product-price">{product.price}</p>
+            </div>
+            <div className="product-total">
+              <p className="quantity">
+                {product.quantity} {product.quantity > 1 ? "items" : "item"}{" "}
+              </p>
+              <p className="amount">{product.quantity * product.price}</p>
+            </div>
+            <a
+              className="product-remove"
+              href="?"
+              onClick={this.props.removeProduct.bind(this, product.id)}
             >
-              {cartItems}
-            </CSSTransitionGroup>
-          );
-        }
+                ×
+            </a>
+          </li>
+        );
+      });
+      if (cartItems.length <= 0) {
+        view = <EmptyCart />;
+      } else {
+        view = (
+          <CSSTransitionGroup
+            className="cart-items"
+            component="ul"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
+            transitionName="fadeIn"
+          >
+            {cartItems}
+          </CSSTransitionGroup>
+        );
+      }
     }
     return (
       <header>
         <div className="container">
           <div className="brand">
             <Icon
+              alt="IRC Brand Logo"
               className="logo"
               src={Search}
-              alt="IRC Brand Logo"
             />
           </div>
 
@@ -178,16 +178,16 @@ class Header extends Component {
               onClick={this.handleMobileSearch.bind(this)}
             >
               <img
-                src={Search}
                 alt="search"
+                src={Search}
               />
             </a>
             <form
               action="#"
-              method="get"
               className={
                 this.state.mobileSearch ? "search-form active" : "search-form"
               }
+              method="get"
             >
               <a
                 className="back-button"
@@ -195,125 +195,124 @@ class Header extends Component {
                 onClick={this.handleSearchNav.bind(this)}
               >
                 <img
-                  src={Search}
                   alt="back"
+                  src={Search}
                 />
               </a>
               <input
-                type="search"
-                ref="searchBox"
-                placeholder={this.props.placetext}
                 className="search-keyword"
                 onChange={this.props.handleSearch}
+                placeholder={this.props.placetext}
+                ref="searchBox"
+                type="search"
               />
             </form>
           </div>
           {this.props.cartActive?
-          <div className="cart">
-            <div className="cart-info">
-              <table>
-                <tbody>
-                  <tr>
-                    <td>{this.state.isVolunteer ? "No. of Volunter Hours" : "No. of items"}</td>
-                    <td>:</td>
-                    <td>
-                      <strong>{this.props.totalItems}</strong>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>{this.state.isVolunteer ? "Total Cost of Volunter Hours" : "Subtotal"}</td>
-                    <td>:</td>
-                    <td>
-                      <strong>{this.props.total}</strong>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <a
-              className="cart-icon"
-              href="#"
-              onClick={this.handleCart.bind(this)}
-              ref="cartButton"
-            >
-              <img
-                className={this.props.cartBounce ? "tada" : " "}
-                src={bag}
-                alt="Cart"
-              />
-              {this.props.totalItems ? (
-                <span className="cart-count">{this.props.totalItems}</span>
-              ) : (
-                ""
-              )}
-            </a>
-            <div
-              className={
-                this.state.showCart ? "cart-preview active" : "cart-preview"
-              }
-              ref="cartPreview"
-            >
-              <CartScrollBar>{view}</CartScrollBar>
-              <div className="action-block">
-                <center>
-                  Client Id: <Input onChange = {(e) => this.props.handleClientIdChange(e)} />
-                </center>
-                <button
-                  type="button"
-                  className={this.state.cart.length > 0 ? " " : "disabled"}
-                  onClick = {this.state.handleCheckout}
-                >
-                  PROCEED TO CHECKOUT
-                </button>
+            <div className="cart">
+              <div className="cart-info">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>{this.state.isVolunteer ? "No. of Volunter Hours" : "No. of items"}</td>
+                      <td>:</td>
+                      <td>
+                        <strong>{this.props.totalItems}</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{this.state.isVolunteer ? "Total Cost of Volunter Hours" : "Subtotal"}</td>
+                      <td>:</td>
+                      <td>
+                        <strong>{this.props.total}</strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </div>
-          </div> : <div className ={"confirm"}>
-                    <button
-                      type="button"
-                      onClick={this.handleConfirm.bind(this)}
-                    >
-                        SAVE
-                    </button>
-                    <div
-                      className={
-                        this.state.showConfirm ? "confirm-preview two active" : "confirm-preview"
-                      }
-                      ref="confirm"
-                    >
-                      <div className="action-block">
-                        <button
-                          type="button"
-                          className={""}
-                          onClick = {this.state.handleSave}
-                        >
-                          CONFIRM
-                        </button>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={this.handleConfirmReset.bind(this)}
-                    >
-                        RESET
-                    </button>
-                <div
-                  className={
-                    this.state.showConfirmReset ? "confirm-preview active" : "confirm-preview"
-                  }
-                  ref="confirm"
-                >
-                  <div className="action-block">
-                    <button
-                      type="button"
-                      className={""}
-                      onClick = {this.state.handleReset}
-                    >
-                      CONFIRM
-                    </button>
-                  </div>
+              <a
+                className="cart-icon"
+                href="#"
+                onClick={this.handleCart.bind(this)}
+                ref="cartButton"
+              >
+                <img
+                  alt="Cart"
+                  className={this.props.cartBounce ? "tada" : " "}
+                  src={bag}
+                />
+                {this.props.totalItems ? (
+                  <span className="cart-count">{this.props.totalItems}</span>
+                ) : (
+                  ""
+                )}
+              </a>
+              <div
+                className={
+                  this.state.showCart ? "cart-preview active" : "cart-preview"
+                }
+                ref="cartPreview"
+              >
+                <CartScrollBar>{view}</CartScrollBar>
+                <div className="action-block">
+                  <center>
+                  Client Id: <Input onChange={(e) => this.props.handleClientIdChange(e)} />
+                  </center>
+                  <button
+                    className={this.state.cart.length > 0 ? " " : "disabled"}
+                    onClick={this.state.handleCheckout}
+                    type="button"
+                  >
+                  PROCEED TO CHECKOUT
+                  </button>
                 </div>
-                 </div>
-        }
+              </div>
+            </div> : <div className={"confirm"}>
+              <button
+                onClick={this.handleConfirm.bind(this)}
+                type="button"
+              >
+                        SAVE
+              </button>
+              <div
+                className={
+                  this.state.showConfirm ? "confirm-preview two active" : "confirm-preview"
+                }
+                ref="confirm"
+              >
+                <div className="action-block">
+                  <button
+                    className={""}
+                    onClick={this.state.handleSave}
+                    type="button"
+                  >
+                          CONFIRM
+                  </button>
+                </div>
+              </div>
+              <button
+                onClick={this.handleConfirmReset.bind(this)}
+                type="button"
+              >
+                        RESET
+              </button>
+              <div
+                className={
+                  this.state.showConfirmReset ? "confirm-preview active" : "confirm-preview"
+                }
+                ref="confirm"
+              >
+                <div className="action-block">
+                  <button
+                    className={""}
+                    onClick={this.state.handleReset}
+                    type="button"
+                  >
+                      CONFIRM
+                  </button>
+                </div>
+              </div>
+            </div>}
         </div>
       </header>
     );

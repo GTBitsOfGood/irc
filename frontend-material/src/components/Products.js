@@ -22,19 +22,19 @@ class Products extends Component {
       .map(product => {
         return (
           <Product
-            edit={this.props.editMode}
-            key={product.id}
-            price={product.price}
-            name={product.name}
-            id={product.id}
-            percentageMatched={product.percentageMatched}
-            revisionNumber={product.revisionNumber}
             addToCart={this.props.addToCart}
-            productQuantity={this.props.productQuantity}
-            updateQuantity={this.props.updateQuantity}
-            updateProduct={this.props.updateProduct}
             deleteProduct={this.props.deleteProduct}
+            edit={this.props.editMode}
+            id={product.id}
+            key={product.id}
+            name={product.name}
+            percentageMatched={product.percentageMatched}
+            price={product.price}
+            productQuantity={this.props.productQuantity}
+            revisionNumber={product.revisionNumber}
             time={this.props.time}
+            updateProduct={this.props.updateProduct}
+            updateQuantity={this.props.updateQuantity}
           />
         );
       });
@@ -48,12 +48,12 @@ class Products extends Component {
     } else {
       let view_content;
       view_content = productsData.map(product => {
-            return (
-              <GridItem xs={12} sm={12} md={4}>
-                {product}
-              </GridItem>
-              );
-          });
+        return (
+          <GridItem md={4} sm={12} xs={12}>
+            {product}
+          </GridItem>
+        );
+      });
       view = (
         <GridContainer>
           {view_content}

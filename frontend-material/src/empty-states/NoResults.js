@@ -1,5 +1,5 @@
 import React from "react";
-import tree from "assets/img/bare-tree.png"
+import tree from "assets/img/bare-tree.png";
 
 
 const NoResults = () => {
@@ -7,8 +7,8 @@ const NoResults = () => {
     <div className="products">
       <div className="no-results">
         <img
-          src={tree}
           alt="Empty Tree"
+          src={tree}
         />
         <h2>Sorry, no products matched your search!</h2>
         <p>Enter a different keyword and try again.</p>

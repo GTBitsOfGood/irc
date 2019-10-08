@@ -5,7 +5,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
-import TextField from "@material-ui/core/TextField"
+import TextField from "@material-ui/core/TextField";
 
 class Product extends Component {
   constructor(props) {
@@ -93,79 +93,78 @@ class Product extends Component {
     let revisionNumber = this.props.revisionNumber;
     let quantity = this.state.quantity;
     if (!this.props.edit) {
-    return (
-      <div className="product">
-        <Card>
-          <CardHeader color="warning" stats icon>
-            <p className="product-name"><br></br>{this.props.name}</p>
-          </CardHeader>
-          {this.props.time? <div></div> : <center><h3 className="product-price">{this.props.price}</h3></center>}
+      return (
+        <div className="product">
+          <Card>
+            <CardHeader color="warning" icon={true} stats={true}>
+              <p className="product-name"><br />{this.props.name}</p>
+            </CardHeader>
+            {this.props.time? <div /> : <center><h3 className="product-price">{this.props.price}</h3></center>}
 
-          <center><Counter
-            productQuantity={this.state.quantity}
-            updateQuantity={this.updateQuantity}
-            resetQuantity={this.resetQuantity}
+            <center><Counter
+              productQuantity={this.state.quantity}
+              resetQuantity={this.resetQuantity}
+              updateQuantity={this.updateQuantity}
             /></center>
 
-              <center><div className="product-action">
-                <button
+            <center><div className="product-action">
+              <button
                 className={!this.state.isAdded ? "" : "added"}
-                type="button"
                 onClick={this.addToCart.bind(this, name, price, id, quantity, percentageMatched, revisionNumber)}
-                >
+                type="button"
+              >
                 {this.props.time? (!this.state.isAdded ? "ADD HOURS" : "✔ ADDED") : (!this.state.isAdded ? "ADD TO CART" : "✔ ADDED")}
               </button>
             </div></center>
-         </Card>
-      </div>
+          </Card>
+        </div>
       );
     } else {
       return (
-      <div className="product">
-        <Card>
-           <CardBody>
-          <TextField
-            label="Name"
-            variant="outlined"
-            margin="normal"
-            type="text"
-            value={this.props.name}
-            onChange={this.handleNameChange}
-          />
-          {this.props.time? <div></div> :
-          <TextField
-            label="Cost ($)"
-            variant="outlined"
-            margin="normal"
-            type="text"
-            value={this.props.price}
-            onChange={this.handlePriceChange}
-          />
-          }
-          <TextField
-            label="Match Amount (0-100%)"
-            variant="outlined"
-            margin="normal"
-            type="text"
-            value={this.props.matchAmount}
-            onChange={this.handleMatchAmountChange}
-          />
-          </CardBody>
-          <center>
+        <div className="product">
+          <Card>
+            <CardBody>
+              <TextField
+                label="Name"
+                margin="normal"
+                onChange={this.handleNameChange}
+                type="text"
+                value={this.props.name}
+                variant="outlined"
+              />
+              {this.props.time? <div /> :
+                <TextField
+                label="Cost ($)"
+                margin="normal"
+                onChange={this.handlePriceChange}
+                type="text"
+                value={this.props.price}
+                variant="outlined"
+                />}
+              <TextField
+                label="Match Amount (0-100%)"
+                margin="normal"
+                onChange={this.handleMatchAmountChange}
+                type="text"
+                value={this.props.matchAmount}
+                variant="outlined"
+              />
+            </CardBody>
+            <center>
               <div className="product-action">
                 <button
-                className={!this.state.isAdded ? "" : "added"}
-                type="button"
-                onClick={this.handleDelete}
+                  className={!this.state.isAdded ? "" : "added"}
+                  onClick={this.handleDelete}
+                  type="button"
                 >
                 DELETE
-              </button>
-            </div>
-          </center>
-         </Card>
-      </div>
-        );
-  }
+                </button>
+              </div>
+            </center>
+          </Card>
+        </div>
+      );
+    }
   }
 }
 

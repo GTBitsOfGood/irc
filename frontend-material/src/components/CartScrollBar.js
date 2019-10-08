@@ -14,7 +14,7 @@ class CartScrollBar extends Component {
   }
   handleScroll(event) {
     const positions = this.refs.scrollbars.getValues();
-    //When the bottom is reached and we're scrolling down, prevent scrolling of the window
+    // When the bottom is reached and we're scrolling down, prevent scrolling of the window
     if (positions.top >= 1) {
       console.log("Reached scroll end!");
       event.stopPropagation();
@@ -22,7 +22,7 @@ class CartScrollBar extends Component {
   }
   render() {
     return (
-      <Scrollbars style={{ width: 360, height: 320 }} ref="scrollbars">
+      <Scrollbars ref="scrollbars" style={{ width: 360, height: 320 }}>
         {this.props.children}
       </Scrollbars>
     );
