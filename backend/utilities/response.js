@@ -14,7 +14,7 @@ function generateResponseMessage(message, errorCode, error = null,
     errorCode: errorCode
   };
 
-  if (errorCode != OK_CODE) {
+  if (errorCode !== OK_CODE) {
     response.error = error;
   }
   if (additionalParameters) {

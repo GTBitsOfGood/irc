@@ -92,7 +92,6 @@ rules:
   react/default-props-match-prop-types: 2
   react/destructuring-assignment: 0
   react/display-name: 0
-  react/forbid-component-props: 2
   react/forbid-dom-props: 0
   react/forbid-elements: 0
   react/forbid-foreign-prop-types: 0
@@ -118,10 +117,6 @@ rules:
   react/jsx-fragments:
   - 2
   - syntax
-  react/jsx-handler-names:
-  - 2
-  - eventHandlerPrefix: handle
-    eventHandlerPropPrefix: 'on'
   react/jsx-indent:
   - 2
   - 2
@@ -129,15 +124,6 @@ rules:
   - 2
   - 2
   react/jsx-key: 2
-  react/jsx-max-props-per-line:
-  - 2
-  - maximum: 3
-    when: multiline
-  react/jsx-no-bind:
-  - 2
-  - allowArrowFunctions: false
-    allowBind: false
-    ignoreRefs: true
   react/jsx-no-comment-textnodes: 2
   react/jsx-no-duplicate-props: 2
   react/jsx-no-literals: 0
@@ -170,7 +156,6 @@ rules:
   react/no-is-mounted: 2
   react/no-multi-comp: 2
   react/no-redundant-should-component-update: 2
-  react/no-set-state: 2
   react/no-string-refs: 2
   react/no-this-in-sfc: 2
   react/no-typos: 2
@@ -182,10 +167,12 @@ rules:
   react/no-will-update-set-state: 2
   react/prefer-es6-class: 2
   react/prefer-read-only-props: 1
-  react/prefer-stateless-function:
-  - 2
-  - ignorePureComponents: true
-  react/prop-types: 2
+  # react/prefer-stateless-function:
+  # - 2
+  # - ignorePureComponents: true
+  react/prop-types:
+    - off
+    - 2
   react/react-in-jsx-scope: 2
   react/require-default-props: 2
   react/require-render-return: 2

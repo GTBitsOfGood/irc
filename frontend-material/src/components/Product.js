@@ -134,12 +134,12 @@ class Product extends Component {
               />
               {this.props.time? <div /> :
                 <TextField
-                label="Cost ($)"
-                margin="normal"
-                onChange={this.handlePriceChange}
-                type="text"
-                value={this.props.price}
-                variant="outlined"
+                  label="Cost ($)"
+                  margin="normal"
+                  onChange={this.handlePriceChange}
+                  type="text"
+                  value={this.props.price}
+                  variant="outlined"
                 />}
               <TextField
                 label="Match Amount (0-100%)"
