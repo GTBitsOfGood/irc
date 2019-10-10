@@ -3,10 +3,10 @@
 //
 const express = require('express');
 const router = express.Router({});
+
 const transactionsApi = require('./transactions-router')
 const userApi = require('./user-router');
-
-const Client = require('../model/client');
+const clientApi = require('./client-router');
 
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
@@ -244,6 +244,7 @@ router.use(async function (req, res, next) {
 
 // ROUTES PROTECTED BELOW THIS LINE
 router.use('/user', userApi);
+router.use('/client', clientApi);
 router.use('/transactions', transactionsApi);
 
 // TODO: MOVE THIS ROUTE TO THE USER-ROUTER AND/OR A ROUTER DEDICATED TO LOGGIN IN
@@ -270,28 +271,5 @@ router.post('/changePassword', async function(req, res, next) {
   }
   res.json(returnMessage);
 });
-
-router.post('/addClient', async (req, res, next) => {
-  const client = req.body;
-  Client.create(client, (err) => {
-    if (!!err) {
-      res.json(response.generateResponseMessage('Error 400 - Bad Request- ' +
-      'Invalid syntax when trying to' +
-      ' create client (see error)', 400, error = err));
-    } else {
-      res.json(response.generateOkResponse("Client added successfully"));
-    }
-  });
-});
-
-router.get('/getAllClients', async (req, res, next) => {
-  try {
-    const allClients = await Client.find({});
-    res.json(response.generateOkResponse("All is well.", allClients));
-  } catch (err) {
-    res.json(response.generateInternalServerError(err));
-  }
-});
-
 
 module.exports = router;
