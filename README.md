@@ -35,4 +35,4 @@ The backend starts by running server.js.
 Message [Bryce](https://github.com/Navbryce) if you have questions [about the API docs](https://app.swaggerhub.com/apis-docs/navbryce/irc/1.0.0)
 
 ## Code Style
-Run `npx eslint --fix /path_to/irc/` to check and fix the style of your code. Use semicolons and single quotes. See .eslintrc.yml and .eslintignore for details on the style guidelines.
+Run `npx eslint --fix /path_to/irc/` or `npx eslint --ext js,jsx --fix /path_to/irc/` (including .jsx files) to check and fix the style of your code. Use semicolons and single quotes. See .eslintrc.yml, frontend-material/.eslintrc.yml, and .eslintignore for details on the style guidelines. If you're getting an error from a trash style guideline, you can add `    name-of-style-error: off` to the bottom of .eslintrc.yml.

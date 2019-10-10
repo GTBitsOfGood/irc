@@ -4,37 +4,25 @@ env:
   node: true
 extends:
   - 'eslint:recommended'
-  - 'plugin:react/recommended'
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
 parserOptions:
-  ecmaFeatures:
-    jsx: true
   ecmaVersion: 2018
-  sourceType: module
-overrides:
-  - files:
-    - backend/**.js
-    parserOptions:
-      sourceType: script
-plugins:
-  - react
-settings:
-  react:
-    version: '16.10'
+  sourceType: script
 rules:
   no-unused-vars:
     - off
   indent:
     - warn
-    - 2
+    - 4
   linebreak-style:
     - off
     - unix
   quotes:
     - warn
     - single
+    - avoid-escape
   semi:
     - warn
     - always
@@ -84,5 +72,6 @@ rules:
     - warn
   eqeqeq:
     - warn
-  react/prop-types:
+    - smart
+  no-console:
     - off
