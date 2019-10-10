@@ -1,44 +1,44 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
-import {callBackendAPI} from "components/CallBackendApi";
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { callBackendAPI } from 'components/CallBackendApi';
 
 // @material-ui/core
-import withStyles from "@material-ui/core/styles/withStyles";
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
+import Card from 'components/Card/Card.jsx';
+import CardHeader from 'components/Card/CardHeader.jsx';
 
-import CardBody from "components/Card/CardBody.jsx";
-import Button from "components/CustomButtons/Button.jsx";
+import CardBody from 'components/Card/CardBody.jsx';
+import Button from 'components/CustomButtons/Button.jsx';
 
 import TextField from '@material-ui/core/TextField';
 
-import ErrorDialog from "components/ErrorDialog";
+import ErrorDialog from 'components/ErrorDialog';
 
 
-import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+import dashboardStyle from 'assets/jss/material-dashboard-react/views/dashboardStyle.jsx';
 
 class LandingPage extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       value: 0,
       open: false,
-      message: "",
-      fname: "",
-      lname: "",
+      message: '',
+      fname: '',
+      lname: '',
       isNotLoggedIn: false,
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       redirect: false
-    }
+    };
     this.handleClose = this.handleClose.bind(this);
   }
 
   componentWillMount() {
     callBackendAPI('/api/verify', 'post', {}).then(response => {
-      if (response.error === "Error 401 - Unauthorized - No login token  provided") {
+      if (response.error === 'Error 401 - Unauthorized - No login token  provided') {
         this.setState({
           isNotLoggedIn: true
         });
@@ -47,7 +47,7 @@ class LandingPage extends React.Component {
           username: response.user.email,
           fname: response.user.firstName,
           lname: response.user.lastName
-        })
+        });
       }
     });
   }
@@ -59,7 +59,7 @@ class LandingPage extends React.Component {
   }
 
   handleLogin() {
-    callBackendAPI('/api/login','post', {
+    callBackendAPI('/api/login', 'post', {
       email: this.state.username,
       password: this.state.password
     }).then(response => {
@@ -71,9 +71,9 @@ class LandingPage extends React.Component {
       } else {
         this.setState({
           redirect: response.urlRedirect
-        })
+        });
       }
-    })
+    });
   }
 
   handleSignup() {
@@ -89,9 +89,9 @@ class LandingPage extends React.Component {
       } else {
         this.setState({
           redirect: response.urlRedirect
-        })
+        });
       }
-    })
+    });
   }
 
   handleChange = (event, value) => {
@@ -112,7 +112,7 @@ class LandingPage extends React.Component {
       <div>
         {!this.state.isNotLoggedIn &&
           <center>
-            <Card style={{ width: "60%" }}>
+            <Card style={{ width: '60%' }}>
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}><center> Welcome, {this.state.fname}. </center></h4>
               </CardHeader>
@@ -126,9 +126,9 @@ class LandingPage extends React.Component {
           {this.state.isNotLoggedIn &&
             <center>
               <form onSubmit={e => { e.preventDefault(); this.handleLogin(); }}>
-                <Card style={{ width: "20rem" }}>
+                <Card style={{ width: '20rem' }}>
                   <CardBody>
-                    <CardHeader style={{ width: "10rem", bottom:"1rem" }} color="info">
+                    <CardHeader style={{ width: '10rem', bottom: '1rem' }} color="info">
                       <h4><center> Login/Signup </center></h4>
                     </CardHeader>
                     <TextField
@@ -139,13 +139,13 @@ class LandingPage extends React.Component {
                     <TextField
                       margin="normal"
                       label="Password"
-                      inputProps={{type: "password"}}
+                      inputProps={{ type: 'password' }}
                       onChange={e => this.setState({ password: e.target.value })}
                     />
                   </CardBody>
                   <CardBody>
                     <Button
-                      style={{ width: "5rem", right:"1rem" }}
+                      style={{ width: '5rem', right: '1rem' }}
                       color="success"
                       round={true}
                       type="submit"
@@ -153,7 +153,7 @@ class LandingPage extends React.Component {
                       Login
                     </Button>
                     <Button
-                      style={{ width:"5rem", left:"1rem" }}
+                      style={{ width: '5rem', left: '1rem' }}
                       color="success"
                       round={true}
                       onClick={() => this.handleSignup()}
@@ -168,13 +168,13 @@ class LandingPage extends React.Component {
         </div>
         {!this.state.isNotLoggedIn &&
           <center>
-          <Card style={{ width: "20rem" }}>
-            <CardBody>
-              <center>
-                <Button color="danger"> Log out </Button>
-              </center>
-            </CardBody>
-          </Card>
+            <Card style={{ width: '20rem' }}>
+              <CardBody>
+                <center>
+                  <Button color="danger"> Log out </Button>
+                </center>
+              </CardBody>
+            </Card>
           </center>
         }
         <ErrorDialog

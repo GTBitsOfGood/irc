@@ -1,26 +1,26 @@
-import React from "react";
-import "assets/css/style.css";
+import React from 'react';
+import 'assets/css/style.css';
 
-import Card from "components/Card/Card.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import Button from "components/CustomButtons/Button.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
+import Card from 'components/Card/Card.jsx';
+import CardBody from 'components/Card/CardBody.jsx';
+import CardHeader from 'components/Card/CardHeader.jsx';
+import Button from 'components/CustomButtons/Button.jsx';
+import CustomInput from 'components/CustomInput/CustomInput.jsx';
 
-import {Link} from "react-router-dom";
-import {callBackendAPI} from "components/CallBackendApi";
-import withStyles from "@material-ui/core/styles/withStyles";
-import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+import { Link } from 'react-router-dom';
+import { callBackendAPI } from 'components/CallBackendApi';
+import withStyles from '@material-ui/core/styles/withStyles';
+import dashboardStyle from 'assets/jss/material-dashboard-react/views/dashboardStyle.jsx';
 
 class SignUp extends React.Component {
   constructor() {
     super();
     this.state = {
-      fname: "",
-      lname: "",
-      email: "",
-      password: "",
-      confirmation: "",
+      fname: '',
+      lname: '',
+      email: '',
+      password: '',
+      confirmation: '',
       emailInUse: false,
       validity: [false, false, false, false, false]
     };
@@ -82,18 +82,18 @@ class SignUp extends React.Component {
         <form onSubmit={e => { e.preventDefault(); this.signup(); }}>
           <Card id="signup-container">
             <center>
-              <CardHeader style={{ width: "70%" }} color="success">
+              <CardHeader style={{ width: '70%' }} color="success">
                 <h4><center>Create an Account</center></h4>
               </CardHeader>
             </center>
 
-            <CardBody style={{ padding: "15px 45px 45px 45px" }}>
+            <CardBody style={{ padding: '15px 45px 45px 45px' }}>
               <div id="item-container">
                 <div id="name-container" className="left">
                   <CustomInput
                     labelText="First Name"
                     formControlProps={{ fullWidth: false }}
-                    inputProps={{ onChange: (e) => {this.fnameCheck(e)} }}
+                    inputProps={{ onChange: (e) => { this.fnameCheck(e); } }}
                     success={ this.state.validity[0] }
                     error={ !this.state.validity[0] }
                   />
@@ -102,7 +102,7 @@ class SignUp extends React.Component {
                   <CustomInput
                     labelText="Last Name"
                     formControlProps={{ fullWidth: false }}
-                    inputProps={{ onChange: (e) => {this.lnameCheck(e)} }}
+                    inputProps={{ onChange: (e) => { this.lnameCheck(e); } }}
                     success={ this.state.validity[1] }
                     error={ !this.state.validity[1] }
                   />
@@ -110,7 +110,7 @@ class SignUp extends React.Component {
                 <CustomInput
                   labelText="Email Address"
                   formControlProps={{ fullWidth: true }}
-                  inputProps={{ onChange: (e) => {this.emailCheck(e)} }}
+                  inputProps={{ onChange: (e) => { this.emailCheck(e); } }}
                   success={ this.state.validity[2] }
                   error={ !this.state.validity[2] }
                 />
@@ -121,7 +121,7 @@ class SignUp extends React.Component {
                   id="maskedInput"
                   labelText="Password"
                   formControlProps={{ fullWidth: true }}
-                  inputProps={{ onChange: (e) => {this.passwordCheck(e)} }}
+                  inputProps={{ onChange: (e) => { this.passwordCheck(e); } }}
                   success={ this.state.validity[3] }
                   error={ !this.state.validity[3] }
                 />
@@ -129,7 +129,7 @@ class SignUp extends React.Component {
                   id="maskedInput"
                   labelText="Confirm Password"
                   formControlProps={{ fullWidth: true }}
-                  inputProps={{ onChange: (e) => {this.confirmCheck(e)} }}
+                  inputProps={{ onChange: (e) => { this.confirmCheck(e); } }}
                   success={ this.state.validity[4] }
                   error={ !this.state.validity[4] }
                 />
@@ -155,7 +155,7 @@ class SignUp extends React.Component {
   }
 
   signup() {
-    if (this.state.validity.every(index => {return index})) {
+    if (this.state.validity.every(index => { return index; })) {
       callBackendAPI('/api/signup', 'post', {
         firstName: this.state.fname,
         lastName: this.state.lname,
@@ -166,11 +166,11 @@ class SignUp extends React.Component {
           this.setState({ emailInUse: true });
           this.updateValidity(2, false);
         } else {
-          callBackendAPI('/api/login','post', {
+          callBackendAPI('/api/login', 'post', {
             email: this.state.email,
             password: this.state.password
           }).then(() => {
-            window.location.href = "/landing";
+            window.location.href = '/landing';
           });
         }
       });

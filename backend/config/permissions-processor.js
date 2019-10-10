@@ -27,16 +27,16 @@ function formatPermissions(rawPermissions) {
 }
 function findGroupWithCompleteDependencies(groupNames, rawPerms, finalizedPerms) {
     const index = groupNames.findIndex((groupName) => {
-       const group = rawPerms[groupName];
-       let dependenciesComplete = true;
-       if (group.inherit != null) {
-           group.inherit.forEach((depndentGroup) => {
-              if (finalizedPerms[depndentGroup] == null) {
-                  dependenciesComplete = false;
-              }
-           });
-       }
-       return dependenciesComplete;
+        const group = rawPerms[groupName];
+        let dependenciesComplete = true;
+        if (group.inherit != null) {
+            group.inherit.forEach((depndentGroup) => {
+                if (finalizedPerms[depndentGroup] == null) {
+                    dependenciesComplete = false;
+                }
+            });
+        }
+        return dependenciesComplete;
     });
     let output = null;
     if (index >= 0) {
