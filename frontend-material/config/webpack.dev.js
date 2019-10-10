@@ -1,15 +1,15 @@
-const path = require("path");
-const webpack = require("webpack");
-const merge = require("webpack-merge");
+const path = require('path');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
 
-const webpackCommon = require("./webpack.common");
+const webpackCommon = require('./webpack.common');
 
 module.exports = merge.smart(webpackCommon, {
-  mode: "development",
+  mode: 'development',
   output: {
-    publicPath: "/", // deploy on server with /app/ folder name
-    filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "../docs")
+    publicPath: '/', // deploy on server with /app/ folder name
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, '../docs')
   },
   devServer: {
     hot: true,
@@ -17,10 +17,10 @@ module.exports = merge.smart(webpackCommon, {
     historyApiFallback: true,
     overlay: true,
     port: 8015,
-    contentBase: path.join(__dirname, "docs"),
-    host: "localhost",
-    publicPath: "/"
+    contentBase: path.join(__dirname, 'docs'),
+    host: 'localhost',
+    publicPath: '/'
   },
-  devtool: "cheap-eval-source-map",
+  devtool: 'cheap-eval-source-map',
   plugins: [new webpack.HotModuleReplacementPlugin()]
 });

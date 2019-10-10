@@ -1,36 +1,36 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 // @material-ui/core
-import withStyles from "@material-ui/core/styles/withStyles";
-import Icon from "@material-ui/core/Icon";
+import withStyles from '@material-ui/core/styles/withStyles';
+import Icon from '@material-ui/core/Icon';
 // @material-ui/icons
-import Store from "@material-ui/icons/Store";
-import DateRange from "@material-ui/icons/DateRange";
-import Accessibility from "@material-ui/icons/Accessibility";
+import Store from '@material-ui/icons/Store';
+import DateRange from '@material-ui/icons/DateRange';
+import Accessibility from '@material-ui/icons/Accessibility';
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
-import CustomTable from "components/Table/Table.jsx";
+import GridItem from 'components/Grid/GridItem.jsx';
+import GridContainer from 'components/Grid/GridContainer.jsx';
+import CustomTable from 'components/Table/Table.jsx';
 
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
+import Card from 'components/Card/Card.jsx';
+import CardHeader from 'components/Card/CardHeader.jsx';
+import CardIcon from 'components/Card/CardIcon.jsx';
 // import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
+import CardFooter from 'components/Card/CardFooter.jsx';
 
-//IRC added components
-import Button from "components/CustomButtons/Button.jsx";
+// IRC added components
+import Button from 'components/CustomButtons/Button.jsx';
 import Input from '@material-ui/core/Input';
-import {callBackendAPI} from "components/CallBackendApi";
+import { callBackendAPI } from 'components/CallBackendApi';
 
-import RadioGroup from '@material-ui/core/RadioGroup'
-import Radio from '@material-ui/core/Radio'
-import FormControl from '@material-ui/core/FormControl'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 
-import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+import dashboardStyle from 'assets/jss/material-dashboard-react/views/dashboardStyle.jsx';
 
 class Dashboard extends React.Component {
   state = {
@@ -38,10 +38,10 @@ class Dashboard extends React.Component {
     shopCount: 0,
     userCount: 0,
     volCount: 0,
-    from: "",
-    to: "",
+    from: '',
+    to: '',
     table: [],
-    type: "SHOP",
+    type: 'SHOP',
     clients: []
   };
   handleChange = (event, value) => {
@@ -62,23 +62,23 @@ class Dashboard extends React.Component {
         shopCount: response.shopCount,
         userCount: response.userCount,
         volCount: response.volunteerCount
-      })
-    })
+      });
+    });
     callBackendAPI('/api/getAllClients', 'get').then(response => {
       this.setState({
         clients: response
-      })
+      });
       console.log(this.state.clients);
     });
   }
 
-  //This function creates the table
+  // This function creates the table
   generateReport() {
     callBackendAPI('/api/transactions/getTransaction?transactionType='+this.state.type+'&startDate='+this.state.from+'&endDate='+this.state.to, 'get').then(response => {
       this.setState({
         table: []
-      })
-      if (this.state.type === "VOLUNTEER") {
+      });
+      if (this.state.type === 'VOLUNTEER') {
         for (let i = 0; i < response.length; i++) {
           for (let j = 0; j < response[i].volunteerItems.length; j++) {
             let table = this.state.table.slice();
@@ -95,7 +95,7 @@ class Dashboard extends React.Component {
             table.push([response[i].volunteerItems[j].item.name, response[i].volunteerItems[j].count, alienNumber, response[i].volunteerItems[j].item.price*response[i].volunteerItems[j].count]);
             this.setState({
               table: table
-            })
+            });
           }
         }
       } else {
@@ -115,33 +115,33 @@ class Dashboard extends React.Component {
             table.push([response[i].shopItems[j].item.name, response[i].shopItems[j].count, alienNumber, response[i].shopItems[j].item.price*response[i].shopItems[j].count]);
             this.setState({
               table: table
-            })
+            });
           }
         }
       }
       this.setState({
         isShown: true
-      })
+      });
     });
   }
 
-  //Return the data for the table
+  // Return the data for the table
   generateTableData() {
     console.log(this.state.table);
     return this.state.table;
   }
 
-  //Return the headers for the table
+  // Return the headers for the table
   generateTableHead() {
     return ['Item', 'Count', 'ClientId', 'Total Price'];
   }
 
-  //Download a csv file to Users
+  // Download a csv file to Users
   print() {
     let divToPrint = document.getElementsByClassName('outer')[0];
     console.log(divToPrint);
     divToPrint.childNodes[0].removeChild(divToPrint.childNodes[0].childNodes[0]);
-    let newWin = window.open("");
+    let newWin = window.open('');
     newWin.document.write(divToPrint.outerHTML);
     newWin.print();
     newWin.close();
@@ -150,13 +150,13 @@ class Dashboard extends React.Component {
   handleFromChange(event) {
     this.setState({
       from: event.target.value
-    })
+    });
   }
 
   handleToChange(event) {
     this.setState({
       to: event.target.value
-    })
+    });
   }
 
   render() {
@@ -228,34 +228,34 @@ class Dashboard extends React.Component {
           </GridItem>
         </GridContainer>
         <div>
-            <FormControl component="fieldset">
-                <RadioGroup
-                    aria-label="Type"
-                    name="type"
-                    value={this.state.type}
-                    onChange={this.handleTypeChange}
-                >
-                    <FormControlLabel value="SHOP" control={<Radio />} label="Shop" />
-                    <FormControlLabel value="VOLUNTEER" control={<Radio />} label="Volunteer" />
+          <FormControl component="fieldset">
+            <RadioGroup
+              aria-label="Type"
+              name="type"
+              value={this.state.type}
+              onChange={this.handleTypeChange}
+            >
+              <FormControlLabel value="SHOP" control={<Radio />} label="Shop" />
+              <FormControlLabel value="VOLUNTEER" control={<Radio />} label="Volunteer" />
 
-                </RadioGroup>
-            </FormControl>
+            </RadioGroup>
+          </FormControl>
         </div>
 
         <div className="outer">
-        {this.state.isShown &&
+          {this.state.isShown &&
           <div className="outerTable">
             <Button type="button" color="info" onClick = {() => this.print()}>
               Print
             </Button>
             <CustomTable
-            className = "printableTable"
-            tableHeaderColor="primary"
-            tableHead={this.generateTableHead()}
-            tableData={this.generateTableData()}
+              className = "printableTable"
+              tableHeaderColor="primary"
+              tableHead={this.generateTableHead()}
+              tableData={this.generateTableData()}
             />
           </div>
-        }
+          }
         </div>
 
       </div>

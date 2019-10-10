@@ -4,82 +4,82 @@ const mongoose = require('mongoose');
 const Transaction = require('../model/transaction.js');
 const UserModel = require('../model/user');
 const UserDB = mongoose.model('User', UserModel.__Schema);
-const { ShopItem, VolunteerItem } = require('../model/transactionItem.js')
+const { ShopItem, VolunteerItem } = require('../model/transactionItem.js');
 const response = require('../utilities/response.js');
 
-router.get('/client', async (req, res, next) => {
+router.get('/client', async(req, res, next) => {
     try {
         const allTransactionsByClient = await Transaction.find({
             clientId: req.query.id,
         });
-        const message = response.generateOkResponse("Success", allTransactionsByClient);
+        const message = response.generateOkResponse('Success', allTransactionsByClient);
         res.json(message);
     } catch (err) {
         res.json(response.generateInternalServerError(err));
     }
 });
 
-router.get('/authorizedUser', async (req, res, next) => {
+router.get('/authorizedUser', async(req, res, next) => {
     try {
         const allTransactionsByAuthorizer = await Transaction.find({
             authorizedUser: req.query.id
         });
-        const message = response.generateOkResponse("Success", allTransactionsByAuthorizer);
+        const message = response.generateOkResponse('Success', allTransactionsByAuthorizer);
         res.json(message);
     } catch (err) {
         res.json(response.generateInternalServerError(err));
     }
 });
 
-router.get('/getShopItems', async (req, res, next) => {
+router.get('/getShopItems', async(req, res, next) => {
     if (req.query.revisionNumber) {
         console.log(req.query.revisionNumber);
         try {
             const allItemsByVersion = await ShopItem.find({
                 revisionNumber: req.query.revisionNumber
             });
-            const message = response.generateOkResponse("Success", allItemsByVersion);
-            res.json(message)
+            const message = response.generateOkResponse('Success', allItemsByVersion);
+            res.json(message);
         } catch (err) {
             res.json(response.generateInternalServerError(err));
         }
     } else {
         try {
             let allItemsByMostRecentVersion = await ShopItem.getMostRecentRevision();
-            const message = response.generateOkResponse("Success", allItemsByMostRecentVersion);
-            res.json(message)
+            const message = response.generateOkResponse('Success', allItemsByMostRecentVersion);
+            res.json(message);
         } catch (err) {
             res.json(response.generateInternalServerError(err));
         }
     }
 });
 
-router.get('/getVolunteerItems', async (req, res, next) => {
+router.get('/getVolunteerItems', async(req, res, next) => {
     if (req.query.revisionNumber) {
         try {
             const allItemsByVersion = await VolunteerItem.find({
                 revisionNumber: req.query.revisionNumber
             });
-            const message = response.generateOkResponse("Success", allItemsByVersion);
-            res.json(message)
+            const message = response.generateOkResponse('Success', allItemsByVersion);
+            res.json(message);
         } catch (err) {
             res.json(response.generateInternalServerError(err));
         }
     } else {
         try {
             let allItemsByMostRecentVersion = await VolunteerItem.getMostRecentRevision();
-            const message = response.generateOkResponse("Success", 
-            allItemsByMostRecentVersion);
-            res.json(message)
+            const message = response.generateOkResponse('Success',
+                allItemsByMostRecentVersion);
+            res.json(message);
         } catch (err) {
             res.json(response.generateInternalServerError(err));
         }
     }
 });
 
-router.get('/getTransaction', async (req, res, next) => {
+router.get('/getTransaction', async(req, res, next) => {
     const { startDate, endDate, transactionType } = req.query;
-    
+
     let query = {};
     if (transactionType) {
         query.type = transactionType;
@@ -99,14 +99,14 @@ router.get('/getTransaction', async (req, res, next) => {
 
     try {
         const allTransactions = await Transaction.find(query);
-        const message = response.generateOkResponse("Success", allTransactions);
+        const message = response.generateOkResponse('Success', allTransactions);
         res.json(message);
     } catch (err) {
         res.json(response.generateInternalServerError(err));
     }
 });
 
-router.post('/updateItems', async (req, res, next) => {
+router.post('/updateItems', async(req, res, next) => {
     const { updatedItems, itemType } = req.body;
 
     let maxRevisionNumber;
@@ -130,7 +130,7 @@ router.post('/updateItems', async (req, res, next) => {
                 return;
             }
 
-            res.json(response.generateOkResponse("Success"));
+            res.json(response.generateOkResponse('Success'));
         });
     } else if (itemType === 'VOLUNTEER') {
         VolunteerItem.create(updatedItems, (err) => {
@@ -139,15 +139,15 @@ router.post('/updateItems', async (req, res, next) => {
                 return;
             }
 
-            res.json(response.generateOkResponse("Success"));
+            res.json(response.generateOkResponse('Success'));
         });
     } else {
-        res.json(response.generateInternalServerError("Invalid item type:" +
-        "should be either SHOP or VOLUNTEER."));
+        res.json(response.generateInternalServerError('Invalid item type:' +
+        'should be either SHOP or VOLUNTEER.'));
     }
 });
 
-router.post("/addTransaction", async (req, res, next) => {
+router.post('/addTransaction', async(req, res, next) => {
     const { transaction } = req.body;
     Transaction.create(transaction, (err) => {
         if (err) {
@@ -155,11 +155,11 @@ router.post("/addTransaction", async (req, res, next) => {
             return;
         }
 
-        res.json(response.generateOkResponse("Success"));
+        res.json(response.generateOkResponse('Success'));
     });
 });
 
-router.get("/getStats", async (req, res, next) => {
+router.get('/getStats', async(req, res, next) => {
     const userCount = await UserDB.getCount();
     const shopCount = (await Transaction.getShopItems()).length;
     const volunteerCount = (await Transaction.getVolunteerItems()).length;
@@ -167,8 +167,8 @@ router.get("/getStats", async (req, res, next) => {
         userCount,
         shopCount,
         volunteerCount
-    }
-    res.json(response.generateOkResponse("Statistics all good", output));
+    };
+    res.json(response.generateOkResponse('Statistics all good', output));
 });
 
 module.exports = router;

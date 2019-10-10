@@ -1,40 +1,40 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import Header from "components/Shop_Header";
-import Products from "components/Products";
-import ErrorDialog from "components/ErrorDialog";
-import {callBackendAPI} from "components/CallBackendApi";
+import Header from 'components/Shop_Header';
+import Products from 'components/Products';
+import ErrorDialog from 'components/ErrorDialog';
+import { callBackendAPI } from 'components/CallBackendApi';
 
-import "assets/css/style.css";
+import 'assets/css/style.css';
 
-import withStyles from "@material-ui/core/styles/withStyles";
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = {
   cardCategoryWhite: {
-    "&,& a,& a:hover,& a:focus": {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0"
+    '&,& a,& a:hover,& a:focus': {
+      color: 'rgba(255,255,255,.62)',
+      margin: '0',
+      fontSize: '14px',
+      marginTop: '0',
+      marginBottom: '0'
     },
-    "& a,& a:hover,& a:focus": {
-      color: "#FFFFFF"
+    '& a,& a:hover,& a:focus': {
+      color: '#FFFFFF'
     }
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    "& small": {
-      color: "#777",
-      fontSize: "65%",
-      fontWeight: "400",
-      lineHeight: "1"
+    marginBottom: '3px',
+    textDecoration: 'none',
+    '& small': {
+      color: '#777',
+      fontSize: '65%',
+      fontWeight: '400',
+      lineHeight: '1'
     }
   }
 };
@@ -47,12 +47,12 @@ class ShopStore extends Component {
       cart: [],
       totalItems: 0,
       totalAmount: 0,
-      term: "",
+      term: '',
       cartBounce: false,
       quantity: 1,
       modalActive: false,
       open: false,
-      message: "",
+      message: '',
       clientId: 0
     };
     this.handleSearch = this.handleSearch.bind(this);
@@ -71,7 +71,7 @@ class ShopStore extends Component {
 
   // Fetch Initial Set of Products from external API
   getProducts() {
-    callBackendAPI("/api/transactions/getShopItems", "get")
+    callBackendAPI('/api/transactions/getShopItems', 'get')
       .then(response => {
         if (response.error != null) {
           this.setState({
@@ -96,7 +96,7 @@ class ShopStore extends Component {
   }
   // Mobile Search Reset
   handleMobileSearch() {
-    this.setState({ term: "" });
+    this.setState({ term: '' });
   }
 
   // Add to Cart
@@ -169,15 +169,15 @@ class ShopStore extends Component {
     });
   }
 
-  //Reset Quantity
+  // Reset Quantity
   updateQuantity(qty) {
     this.setState({
       quantity: qty
     });
   }
 
-  //Handles the checking out of items
-  //Currently searches by aliennumber
+  // Handles the checking out of items
+  // Currently searches by aliennumber
   handleCheckout() {
     let postedCart = [];
     let userID;
@@ -196,15 +196,15 @@ class ShopStore extends Component {
           if (response[i].alienNumber === Number(this.state.clientId)) {
             callBackendAPI('/api/transactions/addTransaction', 'post', {
               transaction: {
-                volunteerItems:[],
+                volunteerItems: [],
                 shopItems: postedCart,
                 authorizedUser: userID,
                 clientId: response[i]._id,
-                type: "SHOP"
+                type: 'SHOP'
               }
             }).then(response => {
-              if (response) {console.log(response);}
-            })
+              if (response) { console.log(response); }
+            });
             searching = false;
           }
           i++;
@@ -212,7 +212,7 @@ class ShopStore extends Component {
         if (searching) {
           this.setState({
             open: true,
-            message: "Invalid Client Id!"
+            message: 'Invalid Client Id!'
           });
         }
       });

@@ -1,5 +1,5 @@
-import React from "react";
-import empty_cart from "assets/img/empty-cart.png"
+import React from 'react';
+import empty_cart from 'assets/img/empty-cart.png';
 
 const EmptyCart = props => {
   return (
