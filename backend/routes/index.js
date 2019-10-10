@@ -132,9 +132,7 @@ router.post('/signup', function(req, res) {
                 return res.json(response);
             }
 
-            return res.json(response.generateResponseMessage('Internal server error', 500,
-                error = 'Error 500 - Internal Server Error - Line 114 in main route.'));
-
+            return res.json(response.generateResponseMessage('Internal server error', 500, 'Error 500 - Internal Server Error - Line 114 in main route.'));
         }
 
         // Account created. Redirect to login
@@ -276,8 +274,7 @@ router.post('/addClient', async(req, res, next) => {
     Client.create(client, (err) => {
         if (err) {
             res.json(response.generateResponseMessage('Error 400 - Bad Request- ' +
-      'Invalid syntax when trying to' +
-      ' create client (see error)', 400, error = err));
+            'Invalid syntax when trying to create client (see error)', 400, err));
         } else {
             res.json(response.generateOkResponse('Client added successfully'));
         }

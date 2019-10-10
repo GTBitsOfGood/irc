@@ -93,7 +93,7 @@ class Login extends React.Component {
                 </div>
 
                 <div className="small-space-top">
-                  <span>Don't have an account? &nbsp;</span>
+                  <span>Don’t have an account? &nbsp;</span>
                   <Link to="/signup" className="link">
                     Sign up here.
                   </Link>

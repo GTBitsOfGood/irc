@@ -11,7 +11,7 @@ const JWTStrategy   = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 
 module.exports = function(passport) {
-    passport.use(new JWTstrategy({
+    passport.use(new JWTStrategy({
         secretOrKey: 'dragonsandpandas',
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     }, async(token, done) => {

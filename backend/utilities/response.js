@@ -14,7 +14,7 @@ function generateResponseMessage(message, errorCode, error = null,
         errorCode: errorCode
     };
 
-    if (errorCode != OK_CODE) {
+    if (errorCode !== OK_CODE) {
         response.error = error;
     }
     if (additionalParameters) {
@@ -49,7 +49,7 @@ function generateOkResponse(message, additionalParameters = null) {
 * @param {string} user email
 */
 function generateUserNotFoundError(email) {
-    return generateResponseMessage('User not found', 404, error = 'Error 404 - ' +
+    return generateResponseMessage('User not found', 404, 'Error 404 - ' +
     'Resource Not Found - A user could not be found with the associated email, '
     + email);
 }
@@ -59,7 +59,7 @@ function generateUserNotFoundError(email) {
  */
 function generateTokenError() {
     return generateResponseMessage('No token cookie provided', 401,
-        error = 'Error 401 - Unauthorized - No login token  provided');
+        'Error 401 - Unauthorized - No login token  provided');
 }
 
 /**
@@ -94,7 +94,7 @@ function generatePermissionsRoute(requiredPermissions) {
  */
 function generatePermissionsError(userGroup, permissionsNeeded) {
     return generateResponseMessage(`User of group ${userGroup} does not have the required permissions.`, 401,
-        error = 'Error 401 -  Does not have required permissions', { permissionsNeeded });
+        'Error 401 -  Does not have required permissions', { permissionsNeeded });
 }
 
 /**
@@ -103,7 +103,7 @@ function generatePermissionsError(userGroup, permissionsNeeded) {
  */
 function generateParameterError(invalidParametersMap) {
     return generateResponseMessage('The route was called with invalid parameters', 400,
-        error = 'Error 400 - Invalid/Bad request because of bad parameters', { invalidParameters: invalidParametersMap });
+        'Error 400 - Invalid/Bad request because of bad parameters', { invalidParameters: invalidParametersMap });
 }
 
 /**
