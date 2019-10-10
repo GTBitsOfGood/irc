@@ -121,7 +121,10 @@ class SignUp extends React.Component {
                   id="maskedInput"
                   labelText="Password"
                   formControlProps={{ fullWidth: true }}
-                  inputProps={{ onChange: (e) => { this.passwordCheck(e); } }}
+                  inputProps={{
+                    onChange: (e) => { this.passwordCheck(e); },
+                    type: "password"
+                  }}
                   success={ this.state.validity[3] }
                   error={ !this.state.validity[3] }
                 />
@@ -129,7 +132,10 @@ class SignUp extends React.Component {
                   id="maskedInput"
                   labelText="Confirm Password"
                   formControlProps={{ fullWidth: true }}
-                  inputProps={{ onChange: (e) => { this.confirmCheck(e); } }}
+                  inputProps={{
+                    onChange: (e) => { this.confirmCheck(e); },
+                    type: "password"
+                  }}
                   success={ this.state.validity[4] }
                   error={ !this.state.validity[4] }
                 />
