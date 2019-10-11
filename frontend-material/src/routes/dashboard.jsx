@@ -10,6 +10,7 @@ import List from '@material-ui/icons/List';
 // core components/views
 import LandingPage from 'views/LandingPage/LandingPage.jsx';
 import UserProfile from 'views/UserProfile/UserProfile.jsx';
+import Storefront from 'views/Storefront/Storefront.jsx';
 import ShopList from 'views/ShopList/ShopList.jsx';
 import TimeList from 'views/TimeList/TimeList.jsx';
 import SignUp from 'views/SignUp/SignUp.jsx';
@@ -63,6 +64,13 @@ const dashboardRoutes = [
     navbarName: 'Volunteer Time',
     icon: AccessTime,
     component: TimeList
+  },
+  {
+    path: '/storefront',
+    sidebarName: 'Storefront Test',
+    navbarName: 'Storefront Test',
+    icon: ShoppingCart,
+    component: Storefront
   },
   // Admin Features
   {
