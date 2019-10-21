@@ -1,99 +1,107 @@
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
-import AccountBox from "@material-ui/icons/AccountBox";
-import BubbleChart from "@material-ui/icons/BubbleChart";
-import AccessTime from "@material-ui/icons/AccessTime";
-import ShoppingCart from "@material-ui/icons/ShoppingCart";
-import List from "@material-ui/icons/List";
+import Dashboard from '@material-ui/icons/Dashboard';
+import Person from '@material-ui/icons/Person';
+import AccountBox from '@material-ui/icons/AccountBox';
+import BubbleChart from '@material-ui/icons/BubbleChart';
+import AccessTime from '@material-ui/icons/AccessTime';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import List from '@material-ui/icons/List';
 
 // core components/views
-import LandingPage from "views/LandingPage/LandingPage.jsx";
-import UserProfile from "views/UserProfile/UserProfile.jsx";
-import ShopList from "views/ShopList/ShopList.jsx";
-import TimeList from "views/TimeList/TimeList.jsx";
-import SignUp from "views/SignUp/SignUp.jsx";
+import LandingPage from 'views/LandingPage/LandingPage.jsx';
+import UserProfile from 'views/UserProfile/UserProfile.jsx';
+import Storefront from 'views/Storefront/Storefront.jsx';
+import ShopList from 'views/ShopList/ShopList.jsx';
+import TimeList from 'views/TimeList/TimeList.jsx';
+import SignUp from 'views/SignUp/SignUp.jsx';
 
 // admin views
-import DashboardPage from "views/Dashboard/Dashboard.jsx";
-import ShopModify from "views/ShopModify/ShopModify.jsx";
-import TimeModify from "views/TimeModify/TimeModify.jsx";
-import UserModify from "views/UserModify/UserModify.jsx";
-import Login from "views/Login/Login.jsx";
+import DashboardPage from 'views/Dashboard/Dashboard.jsx';
+import ShopModify from 'views/ShopModify/ShopModify.jsx';
+import TimeModify from 'views/TimeModify/TimeModify.jsx';
+import UserModify from 'views/UserModify/UserModify.jsx';
+import Login from 'views/Login/Login.jsx';
 
 const dashboardRoutes = [
   {
-    path: "/login",
-    sidebarName: "Login",
-    navbarName: "Login",
+    path: '/login',
+    sidebarName: 'Login',
+    navbarName: 'Login',
     icon: BubbleChart,
     component: Login
   },
   {
-    path: "/landing",
-    sidebarName: "Landing",
-    navbarName: "Landing Page",
+    path: '/landing',
+    sidebarName: 'Landing',
+    navbarName: 'Landing Page',
     icon: BubbleChart,
     component: LandingPage
   },
   {
-    path: "/signup",
-    sidebarName: "Sign Up",
-    navbarName: "Sign Up",
+    path: '/signup',
+    sidebarName: 'Sign Up',
+    navbarName: 'Sign Up',
     icon: Person,
     component: SignUp
   },
   {
-    path: "/user",
-    sidebarName: "User Profile",
-    navbarName: "Profile",
+    path: '/user',
+    sidebarName: 'User Profile',
+    navbarName: 'Profile',
     icon: Person,
     component: UserProfile
   },
   {
-    path: "/shop",
-    sidebarName: "Storefront",
-    navbarName: "Product Storefront",
+    path: '/shop',
+    sidebarName: 'Storefront',
+    navbarName: 'Product Storefront',
     icon: ShoppingCart,
     component: ShopList
   },
   {
-    path: "/time",
-    sidebarName: "Volunteer Time",
-    navbarName: "Volunteer Time",
+    path: '/time',
+    sidebarName: 'Volunteer Time',
+    navbarName: 'Volunteer Time',
     icon: AccessTime,
     component: TimeList
   },
+  {
+    path: '/storefront',
+    sidebarName: 'Storefront Test',
+    navbarName: 'Storefront Test',
+    icon: ShoppingCart,
+    component: Storefront
+  },
   // Admin Features
   {
-    path: "/dashboard",
-    sidebarName: "Reporting",
-    navbarName: "Reports Dashboard",
+    path: '/dashboard',
+    sidebarName: 'Reporting',
+    navbarName: 'Reports Dashboard',
     icon: Dashboard,
     component: DashboardPage
   },
   {
-    path: "/modifyShop",
-    sidebarName: "Modify Shop",
-    navbarName: "Modify Shop",
+    path: '/modifyShop',
+    sidebarName: 'Modify Shop',
+    navbarName: 'Modify Shop',
     icon: List,
     component: ShopModify
   },
   {
-    path: "/modifyTime",
-    sidebarName: "Modify Time",
-    navbarName: "Modify Time",
+    path: '/modifyTime',
+    sidebarName: 'Modify Time',
+    navbarName: 'Modify Time',
     icon: List,
     component: TimeModify
   },
   {
-    path: "/modifyUser",
-    sidebarName: "Edit Users",
-    navbarName: "Edit Users",
+    path: '/modifyUser',
+    sidebarName: 'Edit Users',
+    navbarName: 'Edit Users',
     icon: AccountBox,
     component: UserModify
   },
-  { redirect: true, path: "/", to: "/login", navbarName: "Redirect" }
+  { redirect: true, path: '/', to: '/login', navbarName: 'Redirect' }
 ];
 
 export default dashboardRoutes;

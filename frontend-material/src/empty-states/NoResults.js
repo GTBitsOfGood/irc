@@ -1,5 +1,5 @@
-import React from "react";
-import tree from "assets/img/bare-tree.png"
+import React from 'react';
+import tree from 'assets/img/bare-tree.png';
 
 
 const NoResults = () => {

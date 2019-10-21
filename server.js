@@ -4,7 +4,7 @@
 
 // Node/Express imports
 const config = require('./config');
-const express = require('express')
+const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const app = express();
@@ -20,14 +20,14 @@ mongoose.Promise = global.Promise;
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', api);
 
-//We still need to get front end connected to backend properly
+// We still need to get front end connected to backend properly
 // app.get('/*', (req, res) => {
 //   res.sendFile(__dirname + '/frontend-material/public/index.html');
 // });
 
 // Hosting
 app.listen(port, err => {
-  err ? console.error(err) : console.info(`Dragons are on port ${port}`);
+    err ? console.error(err) : console.info(`Dragons are on port ${port}`);
 });
 
 module.exports = app;

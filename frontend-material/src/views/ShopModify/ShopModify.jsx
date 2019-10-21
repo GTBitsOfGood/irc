@@ -1,39 +1,39 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import Header from "components/Shop_Header";
-import Products from "components/Products";
-import "assets/css/style.css";
-import withStyles from "@material-ui/core/styles/withStyles";
-import {callBackendAPI} from "components/CallBackendApi";
-import ErrorDialog from "components/ErrorDialog";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import Header from 'components/Shop_Header';
+import Products from 'components/Products';
+import 'assets/css/style.css';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { callBackendAPI } from 'components/CallBackendApi';
+import ErrorDialog from 'components/ErrorDialog';
 
 
 const styles = {
   cardCategoryWhite: {
-    "&,& a,& a:hover,& a:focus": {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0"
+    '&,& a,& a:hover,& a:focus': {
+      color: 'rgba(255,255,255,.62)',
+      margin: '0',
+      fontSize: '14px',
+      marginTop: '0',
+      marginBottom: '0'
     },
-    "& a,& a:hover,& a:focus": {
-      color: "#FFFFFF"
+    '& a,& a:hover,& a:focus': {
+      color: '#FFFFFF'
     }
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    "& small": {
-      color: "#777",
-      fontSize: "65%",
-      fontWeight: "400",
-      lineHeight: "1"
+    marginBottom: '3px',
+    textDecoration: 'none',
+    '& small': {
+      color: '#777',
+      fontSize: '65%',
+      fontWeight: '400',
+      lineHeight: '1'
     }
   }
 };
@@ -45,8 +45,8 @@ class ShopMod extends Component {
       products: [],
       totalItems: 0,
       totalAmount: 0,
-      term: "",
-      category: "",
+      term: '',
+      category: '',
       cartBounce: false,
       quantity: 1,
       modalActive: false,
@@ -66,7 +66,7 @@ class ShopMod extends Component {
   }
   // Fetch Initial Set of Products from external API
   getProducts() {
-    callBackendAPI("/api/transactions/getShopItems", "get")
+    callBackendAPI('/api/transactions/getShopItems', 'get')
       .then(response => {
         if (response.error != null) {
           this.setState({
@@ -94,7 +94,7 @@ class ShopMod extends Component {
   }
   // Mobile Search Reset
   handleMobileSearch() {
-    this.setState({ term: "" });
+    this.setState({ term: '' });
   }
   // Filter by Category
   handleCategory(event) {
@@ -102,9 +102,9 @@ class ShopMod extends Component {
     console.log(this.state.category);
   }
 
-  //Reset Quantity
+  // Reset Quantity
   updateQuantity(qty) {
-    console.log("quantity added...");
+    console.log('quantity added...');
     this.setState({
       quantity: qty
     });
@@ -114,11 +114,11 @@ class ShopMod extends Component {
   handleUpdateProduct(e, type, id, value) {
     let up_products = this.state.products;
     let index = up_products.findIndex(x => x.id === id);
-    if (type === "name") {
+    if (type === 'name') {
       up_products[index].name = value;
-    } else if (type === "price") {
+    } else if (type === 'price') {
       up_products[index].price = parseInt(value, 10);
-    } else if (type === "matched"){
+    } else if (type === 'matched') {
       up_products[index].percentageMatched = value;
     }
     this.setState({
@@ -138,23 +138,23 @@ class ShopMod extends Component {
   }
 
 
-  //This method handles if the admin wants to reset their changes
+  // This method handles if the admin wants to reset their changes
   handleReset() {
-      this.setState({
-        products: this.state.orig_products.slice()
-      });
+    this.setState({
+      products: this.state.orig_products.slice()
+    });
   }
 
-  //This method handles if the admin wants to save their changes to the database
+  // This method handles if the admin wants to save their changes to the database
   handleSave() {
     callBackendAPI('/api/transactions/updateItems', 'post', {
-      itemType: "SHOP",
+      itemType: 'SHOP',
       updatedItems: this.state.products
     }).then(response => {
       this.setState({
-        redirect: "/shop"
+        redirect: '/shop'
       });
-    })
+    });
   }
 
   handleClose() {
@@ -166,7 +166,7 @@ class ShopMod extends Component {
 
   render() {
     if (this.state.redirect !== false) {
-      return <Redirect to={this.state.redirect} />
+      return <Redirect to={this.state.redirect} />;
     }
 
     return (
