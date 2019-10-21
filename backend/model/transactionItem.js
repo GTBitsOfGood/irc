@@ -64,7 +64,7 @@ TransactionItemSchema.statics.getMostRecentRevision = async function() {
 };
 
 TransactionItemSchema.statics.getMostRecentRevisionNumber = async function() {
-  return (await this.find({}).sort({revisionNumber: -1}).limit(1))[0].revisionNumber;
+    return (await this.find({}).sort({ revisionNumber: -1 }).limit(1))[0].revisionNumber;
 };
 
 const ShopItem = mongoose.model('ShopItem', TransactionItemSchema);

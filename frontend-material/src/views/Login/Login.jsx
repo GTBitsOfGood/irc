@@ -78,7 +78,10 @@ class Login extends React.Component {
                   id="maskedInput"
                   labelText="Password"
                   formControlProps={{ fullWidth: true }}
-                  inputProps={{ onChange: (e) => { this.checkPassword(e); } }}
+                  inputProps={{
+                    onChange: (e) => { this.checkPassword(e); },
+                    type: "password"
+                  }}
                   success={ this.state.validity[1] }
                   error={ !this.state.validity[1] }
                 />
